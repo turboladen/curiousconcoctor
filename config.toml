@@ -1,6 +1,10 @@
 # The URL the site will be built for
 base_url = "https://curiousconcoctor.com"
 
+title = "The Curious Concoctor"
+description = "Exploring godly concoctions for mortals."
+author = "@turboladen"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
@@ -11,6 +15,19 @@ build_search_index = true
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
 highlight_code = false
+
+# When set to "true", emoji aliases translated to their corresponding
+# Unicode emoji equivalent in the rendered Markdown files. (e.g.: :smile: => 😄)
+render_emoji = true
+
+# Whether smart punctuation is enabled (changing quotes, dashes, dots in their typographic form)
+# For example, `...` into `…`, `"quote"` into `“curly”` etc
+smart_punctuation = true
+
+# Whether to set decoding="async" and loading="lazy" for all images
+# When turned on, the alt text must be plain text.
+# For example, `![xx](...)` is ok but `![*x*x](...)` isn’t ok
+lazy_async_image = true
 
 [extra]
 # Put all your custom variables here
