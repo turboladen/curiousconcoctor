@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="title">
+  {{ page.title }}
+</h1>
+<p class="subtitle"><strong>{{ page.date }}</strong></p>
+{{ page.content | safe }}
+
+<div id="taxonomies">
+  <ul id="drink_types">
+  {% for type in page.taxonomies.drink_types %}
+    <li><a href="{{ get_taxonomy_url(kind="drink_types", name=type) | safe }}">{{ type }}</a></li>
+  {% endfor %}
+  </ul>
+  <ul id="tags">
+  {% for tag in page.taxonomies.tags %}
+    <li><a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a></li>
+  {% endfor %}
+  </ul>
+</div>
+
+{% endblock content %}

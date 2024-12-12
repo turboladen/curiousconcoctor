@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+
+ <link rel="stylesheet" href="{{ get_url(path="main.css") | safe }}">
+</head>
+
+<body>
+  <nav>
+    <div id="subnav">
+      <a href="/search">&#8981;</a>
+    </div>
+
+    {% block nav %}
+    <ul id="breadcrumbs">
+      {% for tax in config.taxonomies %}
+      <li>/<a href="/{{tax.name}}/">{{tax.name}}</a>&nbsp;</li>
+      {% endfor %}
+    </ul>
+    <h1>{{ config.title }}</h1>
+    {% endblock nav %}
+  </nav>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        {% block content %}
+
+        {% endblock %}
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>
