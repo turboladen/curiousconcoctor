@@ -5,6 +5,7 @@ date = 2014-01-19
 [taxonomies]
 drink_types = ["mead"]
 tags = ["lemon", "recipe", "meyer lemon melomel #1"]
+post_types = ["start"]
 +++
 
 ![header](IMG_2853.jpg)

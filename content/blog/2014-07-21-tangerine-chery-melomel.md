@@ -5,6 +5,7 @@ date = 2014-07-21
 [taxonomies]
 drink_types = ["mead"]
 tags = ["tangerine", "cherry", "melomel", "recipe"]
+post_types = ["start"]
 
 [extra]
 source = "https://nectarformortals.wordpress.com/2014/07/21/tangerine-cherry-melomel/"

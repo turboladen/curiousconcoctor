@@ -5,6 +5,7 @@ date = 2013-12-31
 [taxonomies]
 drink_types = ["mead"]
 tags = ["lemon", "recipe", "sima", "sima #1"]
+post_types = ["start"]
 +++
 
 ![header](IMG_2257.jpg)

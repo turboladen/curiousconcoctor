@@ -9,9 +9,13 @@ author = "@turboladen"
 compile_sass = true
 
 # Whether to build a search index to be used later on by a JavaScript library
-build_search_index = true
+build_search_index = false
 
-taxonomies = [{ name = "drink_types", feed = true }, { name = "tags" }]
+taxonomies = [
+  { name = "drink_types", feed = true },
+  { name = "tags" },
+  { name = "post_types", feed = true },
+]
 
 [markdown]
 # Whether to do syntax highlighting
@@ -32,4 +36,3 @@ smart_punctuation = true
 lazy_async_image = true
 
 [extra]
-# Put all your custom variables here
