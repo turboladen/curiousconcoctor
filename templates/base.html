@@ -1,43 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
 
+  {% block head %}
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-<head>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+      {# title, description and RSS #}
+      <title>
+        {% block title %}
+          {{ config.title }}
+        {% endblock title %}
+      </title>
 
-  <title>{% block title %}{{ config.title }}{% endblock title %}</title>
+      <meta name="description"
+            content="{% block description %}{{ config.description }}{% endblock description %}" />
 
- <link rel="stylesheet" href="{{ get_url(path="main.css") | safe }}">
-</head>
+      <link rel="alternate"
+            type="application/rss+xml"
+            title="RSS"
+            href="{{ get_url(path="rss.xml") | safe }}">
+      {# Load favicon #}
+      <link rel="apple-touch-icon"
+            sizes="180x180"
+            href="{{ get_url(path="apple-touch-icon.png") | safe }}">
+      <link rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="{{ get_url(path="favicon-32x32.png") | safe }}">
+      <link rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="{{ get_url(path="favicon-16x16.png") | safe }}">
+      <link rel="manifest" href="{{ get_url(path="site.webmanifest") | safe }}> <link rel="mask-icon" href="{{ get_url(path="safari-pinned-tab.svg") | safe }} color="#5bbad5">
+      <meta name="msapplication-TileColor" content="#da532c">
+      <meta name="theme-color" content="#ffffff">
 
-<body>
-  <nav>
-    <div id="subnav">
-      <a href="/search">&#8981;</a>
-    </div>
+      {# Link google fonts #}
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <!-- <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@500..900&family=Noto+Serif+JP&family=Noto+Serif+SC:wght@500..900&family=Rock+Salt&family=Kode+Mono:wght@400..700&family=Fira+Code:wght@300..700&family=Noto+Sans+JP:wght@100..900&family=Noto+Sans+SC:wght@100..900&display=swap" rel="stylesheet"> -->
 
-    {% block nav %}
-    <ul id="breadcrumbs">
-      {% for tax in config.taxonomies %}
-      <li>/<a href="/{{tax.name}}/">{{tax.name}}</a>&nbsp;</li>
-      {% endfor %}
-    </ul>
-    <h1>{{ config.title }}</h1>
-    {% endblock nav %}
-  </nav>
+      {# Authentication (Mastodon) #}
+      {% if config.extra.mastodon %}<link href={{ config.extra.mastodon }} rel="me">{% endif %}
+      {# Authentication (Github) #}
+      {% if config.extra.github %}<link href={{ "https://github.com/" ~ config.extra.github }} rel="me">{% endif %}
+      {# Authentication (GSC) #}
+      {% if config.extra.google_search_console %}
+        <meta name="google-site-verification" content={{ config.extra.google_search_console }} />
+      {% endif %}
 
-  <main>
-    <section class="section">
-      <div class="container">
+      {# Load CSS (fastest way) #}
+
+      <!-- Minified version -->
+      <link rel="stylesheet" href="{{ get_url(path="light.min.css") | safe }}">
+      <link rel="stylesheet" href="{{ get_url(path="dark.min.css") | safe }}">
+      <link rel="stylesheet" href="{{ get_url(path="mono.min.css") | safe }}">
+
+      {% set cssdata = load_data(path="style.css", format="plain") -%}
+      <style>{{ cssdata | safe }}</style>
+
+      {% block seo -%}
+        <meta property="og:site_name" content="{{ config.title }}">
+        {% if config.author -%}<meta name="author" content="{{ config.author }}" />{%- endif %}
+        <meta property="og:title"
+              content="{% block ogtitle %}{{ config.title }}{% endblock ogtitle %}">
+        <meta property="og:description"
+              content="{% block ogdesc %}{{ config.description }}{% endblock ogdesc %}">
+        <meta property="og:url"
+              content="{% block ogurl %}{{ config.base_url | safe }}{% endblock ogurl %}">
+        {%- if config.extra.ogimage -%}
+          {% set ogimage = get_url(path=config.extra.ogimage) | safe %}
+        {%- else -%}
+          {% set ogimage = get_url(path="android-chrome-512x512.png") | safe %}
+        {%- endif -%}
+        <meta property="og:image"
+              content="{% block ogimage %}{{ ogimage }}{% endblock ogimage %}">
+        {% if page.date -%}
+          <meta property="og:type" content="article" />
+          <meta property="article:published_time"
+                content="{{ page.date | date(format="%+") }}" />
+        {%- endif %}
+        {% if page.higher -%}<link rel="prev" href="{{ page.higher.permalink | safe }}" />{%- endif %}
+        {% if page.lower -%}<link rel="next" href="{{ page.lower.permalink | safe }}" />{%- endif %}
+      {%- endblock seo -%}
+    </head>
+  {% endblock head %}
+
+  <body>
+    <main id="main" role="main">
+      {# Header of the site (font: rock salt) #}
+      {% block header %}
+        <header role="banner">
+          <h1 class="header-site-title">
+            <a href="{{ config.base_url | safe }}" title="Home">{{ config.title }}</a>
+          </h1>
+
+          <div class="marquee">
+            <div class="marquee-content">
+              <span>{{ config.description }}</span>
+            </div>
+          </div>
+
+          <!-- <p class="header-site-description">{{ config.description }}</p> -->
+
+          {# Page navigator in the head section #}
+          {% if config.extra.re137_menu_links %}
+            <nav class="header-site-nav" role="navigation">
+              {% for item in config.extra.re137_menu_links %}
+                <a href="{{ item.url | replace(from="$BASE_URL", to=config.base_url) | safe }}">{{ item.name }}</a>
+                {% if loop.last %}
+                {% else %}
+                  <span>·</span>
+                {% endif %}
+              {% endfor %}
+            </nav>
+          {% endif %}
+        </header>
+      {% endblock header %}
+
+      <div class="content container">
         {% block content %}
-
-        {% endblock %}
+          {# Group the posts by year #}
+          {% set map = get_section(path="_index.md") | get(key="pages") | group_by(attribute="year") %}
+          {% set_global years = [] %}
+          {# Convert the years map to an array (since maps do not have determined order) #}
+          {% for year, ignored in map %}
+            {% set_global years = years | concat(with=year) %}
+          {% endfor %}
+          {% for year in years | sort | reverse %}
+            {% set posts = map[year] %}
+            <h2 class="year-title">
+              <time>{{ year }}<sup>({{ posts | length }})</sup></time>
+            </h2>
+            <ul class="post-list">
+              {% for post in posts %}{{ macros::post_in_list(post=post) }}{% endfor %}
+            </ul>
+          {% endfor %}
+        {% endblock content %}
       </div>
-    </section>
-  </main>
 
-</body>
+      <footer class="site-footer" role="contentinfo">
+        {% block footer %}
+          <div>
+            <div>
+              {% if config.extra.establishdate %}
+                {% if config.extra.establishdate == now() | date(format="%Y") %}
+                  {{ now() | date(format="%Y") }} <span>©</span> {{ config.author }}
+                {% else %}
+                  {{ config.extra.establishdate }}-{{ now() | date(format="%Y") }} <span>©</span> {{ config.author }}
+                {% endif %}
+              {% else %}
+                <span>©</span> {{ config.author }}
+              {% endif %}
+              {% if config.extra.license %}
+                <span class="re137-aquo">«</span> <a href="https://creativecommons.org/licenses/by-nc/4.0/">CC BY-NC 4.0</a>
+              {% endif %}
+            </div>
+            <div>
+              {% if config.extra.show_zola_theme %}
+                <a href="https://www.getzola.org">Zola</a> <span class="re137-aquo">»</span> <b><a href="https://github.com/tinikov/re137">re137</a></b>
+              {% endif %}
+            </div>
+          </div>
+          {% if config.extra.indiewebring %}
+            <div>
+              <a href="https://xn--sr8hvo.ws/previous">←</a> &nbsp; <a href="https://xn--sr8hvo.ws/">🕸💍</a> &nbsp; <a href="https://xn--sr8hvo.ws/next">→</a>
+            </div>
+          {% endif %}
+        {% endblock footer %}
+      </footer>
+    </main>
+    {% block after_main %}
+    {% endblock after_main %}
+
+  </body>
 
 </html>
