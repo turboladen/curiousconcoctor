@@ -3,7 +3,7 @@ title = "Going Rogue with Cherries: Cherry Cordial #1"
 date = 2014-07-05
 
 [taxonomies]
-drink_types = ["cordial"]
+drink_types = ["liqueur"]
 tags = ["cherry cordial #1", "Lalvin 71B-1122 Yeast", "recipe", "cherry"]
 post_types = ["start"]
 +++

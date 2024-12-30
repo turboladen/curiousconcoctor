@@ -3,7 +3,7 @@ title = "Cherry Cordial #2"
 date = 2015-05-31
 
 [taxonomies]
-drink_types = ["cordial"]
+drink_types = ["liqueur"]
 tags = ["cherry cordial #2", "recipe", "cherry"]
 post_types = ["start"]
 +++
