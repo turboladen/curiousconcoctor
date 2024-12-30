@@ -4,8 +4,7 @@ date = 2014-08-10
 
 [taxonomies]
 drink_types = ["mead"]
-tags = ["fig melomel #1", "Lalvin RC-212 Yeast", "recipe", "fig", "cinnamon", "orange blossom
-  honey", "raisin", "vanilla", "orange blossom honey"]
+tags = ["fig melomel #1", "Lalvin RC-212 Yeast", "recipe", "fig", "cinnamon", "orange blossom honey", "raisin", "vanilla", "orange blossom honey"]
 post_types = ["start"]
 +++
 
