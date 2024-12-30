@@ -4,7 +4,7 @@ date = 2014-02-17
 
 [taxonomies]
 drink_types = ["mead"]
-tags = ["tangerine", "orange", "cherry", "melomel", "recipe"]
+tags = ["tangerine cherry melomel #1"]
 post_types = ["update"]
 +++
 
