@@ -8,7 +8,7 @@ tags = ["lemon", "recipe", "sima", "sima #1"]
 post_types = ["start"]
 +++
 
-![header](IMG_2257.jpg)
+<image src="header.jpg" width="100%">
 
 # The Story
 
