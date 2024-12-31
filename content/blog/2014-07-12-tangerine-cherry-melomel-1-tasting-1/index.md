@@ -8,11 +8,9 @@ tags = ["tangerine cherry melomel #1", "tasting"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Popped a bottle. It was still a bit mysteriously flavored, although the orange and cherry were both
 slightly evident in flavor.
 
 Still a little harsh, but is certainly getting drinkable.
 
-TODO: [Yum]
+<image src="IMG_2910.jpeg" width="100%" alt="Yum">

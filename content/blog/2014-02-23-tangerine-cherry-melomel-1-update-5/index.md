@@ -20,4 +20,4 @@ Added the sample back to the must; carboy is almost completely full for once. Af
 a good amount of bubbling. Drank a small glass: it’s sweet and nicely and slightly tart–just enough
 to add some complexity. I really like this tangerine and honey combo so far.
 
-TODO: [IMG_2352]
+<image src="IMG_2352.jpeg" width="100%" alt="racked">

@@ -4,7 +4,7 @@ date = 2014-02-15
 
 [taxonomies]
 drink_types = ["mead"]
-tags = ["tangerine", "orange", "cherry", "melomel", "recipe"]
+tags = ["tangerine", "orange", "cherry", "melomel", "recipe", "tangerine cherry melomel #1"]
 post_types = ["start"]
 +++
 
@@ -55,7 +55,7 @@ juice and leaving the fruit a little more in tact. I like to think of it like a 
 press. This is the first time I’ve used it, really, but think it’ll be getting a lot more use in the
 future.
 
-TODO: [IMG_2333](THERE WAS A PIC HERE)
+<image src="IMG_2333_1.jpeg" width="100%" alt="Ready to go">
 
 Filled the fermenter with 2L of water from the fridge. Added the OJ. Added the honey. Added about
 3oz of the cherries. Stirred for about 2 mins.

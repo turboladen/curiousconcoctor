@@ -11,3 +11,5 @@ post_types = ["update"]
 Bottled, still. 3 750s, 2 12oz. `FG: 1.000` (ABV: `13.39%`). Taste is pretty intriguing—good
 mouthfeel, aftertaste makes my mouth keep watering. It’s definitely bitter and sweet, but not
 off-putting.
+
+<image src="IMG_3025.jpeg" width="100%" alt="In the cellar">
