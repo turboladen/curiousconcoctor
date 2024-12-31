@@ -4,7 +4,7 @@ date = 2014-02-04
 
 [taxonomies]
 drink_types = ["mead"]
-tags = ["blackberry", "pear", "melomel"]
+tags = ["blackberry", "pear", "melomel", "blackberry pear melomel #1"]
 post_types = ["update"]
 +++
 
@@ -14,4 +14,8 @@ TODO: [insert video]
 
 So much fruit!
 
+<image src="IMG_2310.jpeg" width="100%" alt="So much fruit">
+
 Just look at it!
+
+<image src="IMG_2309.jpeg" width="100%" alt="Just look at it">

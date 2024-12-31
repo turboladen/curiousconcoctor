@@ -4,10 +4,10 @@ date = 2014-03-24
 
 [taxonomies]
 drink_types = ["mead"]
-tags = ["blackberry", "pear", "melomel"]
+tags = ["blackberry", "pear", "melomel", "blackberry pear melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+Tasting!
 
-TODO: [tasting]
+<image src="IMG_2379.jpeg" width="100%" alt="tasting">

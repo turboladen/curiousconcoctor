@@ -4,7 +4,7 @@ date = 2014-02-20
 
 [taxonomies]
 drink_types = ["mead"]
-tags = ["blackberry", "pear", "melomel"]
+tags = ["blackberry", "pear", "melomel", "blackberry pear melomel #1"]
 post_types = ["update"]
 +++
 
@@ -15,9 +15,7 @@ headspace. the bung didn’t really fit too well, so after I took the pic, I wra
 [Glad Press ‘N’ Seal](http://www.glad.com/food-storage/plastic-wrap/press-n-seal/) to keep as much
 oxygen out as possible.
 
-TODO: [2L]
-
-TODO: [An early bottle]
+<image src="IMG_2343.jpeg" width="100%" alt="2L">
 
 Secondary. 1 vanilla bean, split but didn’t clear seeds out; cut off top. SG: `1.003`. pH: `~3.8`.
 Bottled in a 2Q bottle, so barely any room in there for oxygen. Looks like I still managed to

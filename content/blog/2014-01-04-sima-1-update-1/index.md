@@ -18,5 +18,3 @@ Day 4
 
 And live action fermentation! You can actually hear the bubbling there if you turn up your volume
 enough…
-
-<!-- TODO: Insert video of bubbling -->
