@@ -21,8 +21,8 @@ fermentation. Bunged and airlocked with tap water and KMeta.
 
 Before the rack:
 
-Yum
+<image src="IMG_2298.jpeg" width="100%" alt="Yum">
 
 After the rack:
 
-Yum again
+<image src="IMG_2299.jpeg" width="100%" alt="Yum again">

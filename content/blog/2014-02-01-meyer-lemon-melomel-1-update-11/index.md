@@ -21,11 +21,11 @@ is 66F. Taste: yeast is gone, although a little yeast smell still. Honey is pres
 of lemon tartness. Could maybe use a little more sweetness, but it’s tasting pretty good. Capped the
 carboy and moved to my closet.
 
-TODO: [More racking]
+<image src="IMG_2301.jpeg" width="100%" alt="More racking">
 
 ## 1:45pm.
 
 Swapped cap for airlock. Also, more air in this carboy now. Could’ve probably gotten a little more
 liquid out, but didn’t wanna chance pulling in sediment. Am filtering the lees to drink now. 🙂
 
-TODO: [Drinky time]
+<image src="IMG_2303.jpeg" width="100%" alt="Drinky time">

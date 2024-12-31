@@ -1,6 +1,7 @@
 +++
 title = "Meyer Lemon Melomel #1: Taste #4"
 date = 2014-06-29
+description = "pants"
 
 [taxonomies]
 drink_types = ["mead"]
@@ -16,4 +17,4 @@ notes in the fragrance (ie honey isn’t lost). Nice color. A tiny hint of bitte
 back end–not sure if i don’t like the bitter or if that’s a good thing for evening out the
 sweetness.
 
-TODO: [IMG_2853]
+<image src="IMG_2853.jpeg" width="100%">

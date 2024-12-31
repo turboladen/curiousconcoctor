@@ -70,7 +70,7 @@ absolutely wasteful by dumping the juice down the drain.
 Boil all. Scrape off crap with a ladle. Don’t boil too hard. Add the lemon peel (from all 8 lemons),
 then the juice (from 4 or 5. Doing more since the Meyer lemons are so tasty). Let cool to `80F`.
 
-<!-- TODO: Insert some video -->
+<image src="Stirring.jpg" width="100%">
 
 ## 9pm.
 
