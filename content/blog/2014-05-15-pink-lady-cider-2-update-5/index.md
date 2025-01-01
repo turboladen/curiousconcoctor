@@ -8,8 +8,6 @@ tags = ["pink lady cider #2"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 My wife made me some sweet labels!
 
-TODO [labels]
+<image src="IMG_2600.jpeg" width="100%" alt="labels!">

@@ -19,3 +19,4 @@ lot of pulp into the fermenter, which ended up clogging the siphon & hose pretty
 Should’ve strained during the rack. Yielded 5 Belgian bottles and 8 12ozers.
 
 TODO: [bottling]
+<image src="IMG_2564.jpeg" width="100%" alt="bottling">

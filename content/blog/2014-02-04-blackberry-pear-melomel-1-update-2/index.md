@@ -10,8 +10,6 @@ post_types = ["update"]
 
 <image src="header.jpg" width="100%">
 
-TODO: [insert video]
-
 So much fruit!
 
 <image src="IMG_2310.jpeg" width="100%" alt="So much fruit">

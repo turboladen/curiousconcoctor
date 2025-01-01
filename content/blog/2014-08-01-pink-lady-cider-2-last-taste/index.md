@@ -8,13 +8,11 @@ tags = ["pink lady cider #2", "tasting"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 I’d given what turns out to be the last bottle of this stuff to a friend of mine to share with his
 wife probably two months ago. Come last Thursday night they still hadn’t cracked it open and he
 suggested we do so. What a nice little time capsule that turned out to be. 🙂
 
-TODO: [last ones]
+<image src="IMG_3035.jpeg" width="100%" alt="last ones">
 
 As you can see, it was still carbonated quite well (as I imagine it should be after only 3 months).
 Other than that though, really everything else about the cider had mellowed. The bouquet was really

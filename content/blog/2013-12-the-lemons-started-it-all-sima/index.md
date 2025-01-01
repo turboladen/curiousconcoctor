@@ -43,7 +43,7 @@ I deviated by…
 - Using maybe 10 raisins. Cause why not?
 - Using Brewer’s Yeast.
 
-  Brewer's Yeast
+<image src="IMG_2258.jpeg" width="100%" alt="Brewer's Yeast">
 
 **12/31/2013.** I’m not prepared with enough bottles to bottle the 4Q+ of must, so I dug up a 750ml
 flip-top and am just using that. After going through the directions for the first day, this is what
