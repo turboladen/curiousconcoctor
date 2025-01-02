@@ -8,11 +8,9 @@ tags = ["nectarine cider #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Racked to carboy. Serious white film on top of the cap. Mixed consistency–the first and last 1/2Gs
 were thin, the rest pretty thick.
 
-TODO: [what's this white stuff?]
+<image src="IMG_2842.jpeg" width="100%" alt="what's this white stuff?">
 
-TODO: [a closer look]
+<image src="IMG_2845.jpeg" width="100%" alt="a closer look">

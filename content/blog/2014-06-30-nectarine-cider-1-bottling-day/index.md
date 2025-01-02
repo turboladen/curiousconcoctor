@@ -13,10 +13,10 @@ post_types = ["update"]
 Racked the top layer to bucket with 70g priming sugar + 4 oz water. Racked the rest to a 1g carboy
 and added 1oz wildflower honey + 3oz water.
 
-TODO: [extras]
+<image src="IMG_2856.jpeg" width="100%" alt="extras">
 
-TODO: [in glass]
+<image src="IMG_2857.jpeg" width="100%" alt="in glass">
 
-TODO: [in glass 2]
+<image src="IMG_2858.jpeg" width="100%" alt="in glass 2">
 
-TODO: [bottles]
+<image src="IMG_2859.jpeg" width="100%" alt="bottles">

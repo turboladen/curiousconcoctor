@@ -8,8 +8,6 @@ tags = ["nectarine cider #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Looks like it’s separated quite well.
 
-TODO: [separation]
+<image src="IMG_2849.jpeg" width="100%" alt="separation">
