@@ -16,3 +16,4 @@ volcano and lost about a cup full of stuff. In order to knock that off, I added 
 and re-sealed. Thought about airlocking it, but this happened:
 
 TODO: [oops]
+<image src="explosions.jpeg" width="100%" alt="oops">

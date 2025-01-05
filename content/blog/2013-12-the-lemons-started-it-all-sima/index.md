@@ -4,7 +4,8 @@ date = 2013-12-31
 
 [taxonomies]
 drink_types = ["mead"]
-tags = ["lemon", "recipe", "sima", "sima #1"]
+tags = ["lemon", "recipe", "sima", "sima #1", "brewer's yeast powder", "brown sugar", "white sugar",
+"raisins"]
 post_types = ["start"]
 +++
 

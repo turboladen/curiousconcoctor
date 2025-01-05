@@ -8,8 +8,6 @@ tags = ["cherry cordial #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Into a 2L bottle, I…
 
 Scooped off the fruit at the top of the fermenter and funneled it into the bottle. At about 2/3 the
@@ -21,4 +19,4 @@ for the bottle and stuck it downstairs. Should age for maybe 3 months.
 There was a bunch left in the fermenter, so I strained that and added it to a flip top. Got about
 2/3 full. Tastes pretty good actually.
 
-TODO: [taste time]
+<image src="IMG_2915.jpeg" width="100%" alt="taste time">
