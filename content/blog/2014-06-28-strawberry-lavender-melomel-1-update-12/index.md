@@ -8,10 +8,8 @@ tags = ["strawberry lavender melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Steeped a coffee mug of water and a couple grams of dried lavender for about 15 minutes.
 
-TODO: [racking]
+<image src="IMG_2844.jpeg" width="100%" alt="racking">
 
-TODO: [lavender]
+<image src="IMG_2846.jpeg" width="100%" alt="lavender">

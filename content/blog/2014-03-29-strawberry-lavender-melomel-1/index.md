@@ -9,8 +9,6 @@ tags = ["lavender", "pear", "raisin", "strawberry", "strawberry lavender melomel
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
-
 ## The Story
 
 In this household, strawberry season means thinking of anything and everything to put strawberries
@@ -31,6 +29,8 @@ strawberry/lavender combo, and it even seems like it fits the picture I have for
 just fear that adding the lavender will be too much. I’m definitely leaning towards adding it, but I
 may renege on this. The fragrance of lavender is so refreshing and soothing though, that if I can
 get it right, I think this could be an excellent summer beverage.
+
+<image src="IMG_2395.jpeg" width="100%" alt="all the good things">
 
 ## Recipe
 
@@ -60,3 +60,4 @@ Juiced the pears, added juice. Added pear mash to strawberry mash in muslin bag,
 stirred my butt off. Covered with lid and cheesecloth.
 
 TODO: [yum]
+<image src="IMG_2397.jpeg" width="100%" alt="yum">

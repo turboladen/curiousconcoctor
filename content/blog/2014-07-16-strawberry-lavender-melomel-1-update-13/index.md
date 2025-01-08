@@ -8,11 +8,9 @@ tags = ["strawberry lavender melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Racked onto 1 teaspoon pectic enzyme (mixed with 1oz water). Tasted pretty strong of lavender, but
 overall really good! Should mellow with age. `SG: 1.002`.
 
-TODO: [gravity]
+<image src="IMG_2944.jpeg" width="100%" alt="gravity">
 
-TODO: [more gravity]
+<image src="IMG_2944.jpeg" width="100%" alt="more gravity">

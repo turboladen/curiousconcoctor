@@ -8,8 +8,6 @@ tags = ["strawberry lavender melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Racked off of the oak.
 
 I’m not sure if the lavender has just had time to mellow out or if the oaking has just covered it
@@ -17,4 +15,4 @@ up, but the taste is far more balanced now. Still has a honey nose, but not over
 lavender is definitely present too, but just enough. I think this can do about another week in the
 carboy then should be ready for bottling.
 
-TODO: [off of the oak]
+<image src="P1050221.jpeg" width="100%" alt="off the oak">
