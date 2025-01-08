@@ -8,8 +8,6 @@ tags = ["spiced apple cyser #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Racked.
 
-TODO [racked]
+<image src="IMG_2374.jpeg" width="100%" alt="racked">

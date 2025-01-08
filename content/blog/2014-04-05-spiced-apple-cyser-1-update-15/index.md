@@ -8,8 +8,6 @@ tags = ["spiced apple cyser #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+<image src="IMG_2422.jpeg" width="100%" alt="so clear">
 
-TODO: [so clear]
-
-TODO: [leftovers]
+<image src="IMG_2423.jpeg" width="100%" alt="leftovers">

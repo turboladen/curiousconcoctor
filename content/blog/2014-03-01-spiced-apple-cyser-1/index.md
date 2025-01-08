@@ -13,11 +13,11 @@ post_types = ["start"]
 
 ## The Story
 
-I had saved some apple juice from the 2Q carboy I bought for racking the Blackberry Pear Melomel a
-couple weeks ago, and it occurred to me that I should probably be putting it to good use–and that
-means, of course, concocting something new. I checked my cupboards and found that I had plenty of
-honey, vanilla, spices, yeast, etc. to make this happen, thus there was now no reason for it to not
-happen.
+I had saved some apple juice from the 2Q carboy I bought for racking the
+[Blackberry Pear Melomel](@/blog/2014-02-01-blackberry-pear-melomel/index.md) a couple weeks ago,
+and it occurred to me that I should probably be putting it to good use–and that means, of course,
+concocting something new. I checked my cupboards and found that I had plenty of honey, vanilla,
+spices, yeast, etc. to make this happen, thus there was now no reason for it to not happen.
 
 Given that a good amount of aging would put me at the holiday season for drinking, I figured I’d do
 some research for recipes for inspiration and came
@@ -59,7 +59,7 @@ Brought cinnamon and nutmeg to a boil in the muslin bag then removed from heat. 
 raisins to fermenter. Added orange peel to the muslin bag and added the bag to the must. Added
 honey. Used the boil water to rinse out the honey jar. Stirred for about 2m.
 
-TODO [putting it all together]
+<image src="IMG_2366.jpeg" width="100%" alt="putting it all together">
 
 Pitched yeast at 100F and let sit for 15m. Stirred and poured into fermenter. Stirred briskly for
 about 5m. Tested OG: `1.06x`. Too low so I added 1lb of the GG honey, stirred for another 3m or so.
