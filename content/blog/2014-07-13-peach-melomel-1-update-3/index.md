@@ -8,10 +8,8 @@ tags = ["peach melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Racked to carboy. Looks like about 4G yield.
 
-TODO: [yum]
+<image src="IMG_2922.jpeg" width="100%" alt="yum">
 
-TODO: [all racked up]
+<image src="IMG_2923.jpeg" width="100%" alt="all racked up">

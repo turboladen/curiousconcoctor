@@ -8,9 +8,9 @@ tags = ["peach melomel #1", "tasting"]
 post_types = ["update"]
 +++
 
-TODO: [one]
+<image src="P1050326.jpeg" width="100%" alt="one">
 
 I’m kinda bummed. I used all those peaches and the flavor here is completely dominated by the honey
 fragrance and taste. Hoping it’ll even out over time.
 
-TODO: [two]
+<image src="P1050327.jpeg" width="100%" alt="two">

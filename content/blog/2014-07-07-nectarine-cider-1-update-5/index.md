@@ -10,4 +10,4 @@ post_types = ["update"]
 
 This does not look promising.
 
-TODO: [video]
+<image src="white-stuff.jpg" width="100%" alt="white-stuff">

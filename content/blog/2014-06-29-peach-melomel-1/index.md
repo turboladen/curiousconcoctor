@@ -35,6 +35,8 @@ it–meaning that I could’ve probably done well to use more fruit in this mead
 this mead deviated a bit from the original plan, and won’t be quite as comparable to the cider as I
 would’ve liked (just because I’m curious), but it’ll still be tasty.
 
+<image src="IMG_2704.jpeg" width="100%">
+
 ## Recipe
 
 - ~15 lbs. July Flame/Summer Flame Peaches
@@ -47,9 +49,7 @@ would’ve liked (just because I’m curious), but it’ll still be tasty.
 
 ### 6/19.
 
-TODO: [peaches]
-
-TODO: [washing those peaches]
+<image src="IMG_2714.jpeg" width="100%" alt="washing those peaches">
 
 ### 6/29.
 
@@ -58,7 +58,7 @@ them and left them there for about and hour. Got almost all defrosted, then deci
 peaches in a pot and warm them, just to speed things up. Once about room temp, I was ready to start
 juicing.
 
-TODO: [heatin em up]
+<image src="IMG_2850.jpeg" width="100%" alt="heatin em up">
 
 Poured all the honey into the fermentor. Rinsed the honey jug with about a gallon of filtered water
 to get the remains of the honey. Added raisins.
@@ -67,7 +67,7 @@ Lined the fermenter with a 5G painters bag. Juiced all peaches and added them. A
 skins/pulp. Stirred for days with the baster. Took a gravity reading and it was off the scale!
 Tasted, and it seemed like it was all honey and water, so I stirred some more.
 
-TODO: [gravity]
+<image src="IMG_2852.jpeg" width="100%" alt="gravity">
 
 Mixed the pectic enzyme with about 4oz. tap water, added, and mixed for about another 5 minutes.
 `SG: 1.202`, at about 80F. Not sure how accurate this is, so going to let the juice settle and take

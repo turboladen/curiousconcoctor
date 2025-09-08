@@ -8,12 +8,10 @@ tags = ["peach melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Just gravity readings tonight.
 
 `SG: 0.990`.
 
-TODO: [even more gravity]
+<image src="IMG_2880.jpeg" width="100%" alt="gravity">
 
-TODO: [lil taste]
+<image src="IMG_2881.jpeg" width="100%" alt="lil taste">

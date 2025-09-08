@@ -8,15 +8,13 @@ tags = ["peach melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
-
 Racked tonight.
+
+<image src="IMG_3053.jpeg" width="100%" alt="pre-rack">
 
 Gravity hasn’t changed since last time–still `0.990`.
 
-TODO: [pre rack]
-
-TODO: [gravity]
+<image src="IMG_3054.jpeg" width="100%" alt="gravity">
 
 After letting it off-gas for a bit, I started to enjoy a bit of my sample. It’s still pretty easy,
 so to speak–easy on the fruit, and easier than I was wanting–and that’s what I get for going light
@@ -26,4 +24,4 @@ would need some added complexity–and I’m still not sure that it doesn’t–
 now and keep it simple. I still plan on carbonating this and some bubbles will help that out a bit,
 I think.
 
-TODO: [tasting]
+<image src="P1050323.jpeg" width="100%" alt="tasting">

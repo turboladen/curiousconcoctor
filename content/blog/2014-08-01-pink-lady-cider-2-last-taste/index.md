@@ -1,5 +1,5 @@
 +++
-title = "Pink Lady Cider #2: Laste Taste"
+title = "Pink Lady Cider #2: Last Taste"
 date = 2014-08-01
 
 [taxonomies]
