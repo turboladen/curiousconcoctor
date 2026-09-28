@@ -38,7 +38,9 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
   - `post_types` holds `start` for a batch's opening recipe post, `update` for a log entry, or
     `sidebar` for a standalone write-up.
   - `tags` holds ingredient tags plus a batch tag such as `"meyer lemon melomel #1"`. The batch tag
-    is the only thing that groups a batch's `start` and `update` posts together.
+    is the only thing that groups a batch's `start` and `update` posts together. The home page
+    treats any tag whose name contains `#` as a batch tag, so a batch tag needs a `#` and no other
+    tag may have one.
 - A batch's posts share a slug stem and a title prefix, such as `meyer-lemon-melomel-1` and "Meyer
   Lemon Melomel #1". The start post's slug usually ends with the stem, sometimes after a phrase, as
   in `the-next-step-meyer-lemon-melomel-1`, but a few differ, such as `blackberry-pear-melomel`
@@ -55,10 +57,12 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
 
 - `templates/base.html` defines the page shell: head and SEO meta, the header nav built from
   `extra.menu_links` in `config.toml`, and a default `content` block that lists every blog post
-  grouped by year. `templates/index.html` overrides that block with placeholder text, so the home
-  page does not show the year listing.
+  grouped by year. `templates/index.html` overrides that block with the brew log: every batch,
+  newest activity first, rendered by the `batch_summary` component, and then the `sidebar` posts
+  under Notes.
 - Each taxonomy has `list.html` and `single.html` under `templates/<taxonomy>/`.
-  `templates/components.html` holds `post_in_list`, which renders one post as a list item.
+  `templates/components.html` holds `post_in_list`, which renders one post as a list item, and
+  `batch_summary`, which renders one batch on the home page.
 - CSS comes from the vendored `static/{light,dark,mono}.min.css` files, with `dark` applied through
   `prefers-color-scheme`. Site-specific styles go in `sass/style.scss`, which Zola compiles and
   `base.html` inlines through `load_data`. `mono.min.css` sets the root font size to 10px and
