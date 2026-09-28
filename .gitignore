@@ -11,3 +11,6 @@
 
 # Superpowers plans stay local. Durable decisions go in docs/decisions/.
 /docs/superpowers/
+
+# Playwright MCP writes screenshots and page snapshots here.
+/.playwright-mcp/
