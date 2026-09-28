@@ -8,3 +8,6 @@
 .beads-credential-key
 .beads/proxieddb/
 *.gate.lock*
+
+# Superpowers plans stay local. Durable decisions go in docs/decisions/.
+/docs/superpowers/
