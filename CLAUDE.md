@@ -60,7 +60,9 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
   grouped by year. `templates/index.html` overrides that block with the brew log: every batch,
   newest start date first, rendered by the `batch_summary` component, and then the `sidebar` posts
   under Notes.
-- Each taxonomy has `list.html` and `single.html` under `templates/<taxonomy>/`.
+- Each taxonomy has `list.html` and `single.html` under `templates/<taxonomy>/`. Each `single.html`
+  heads its page with what it lists, such as "Tagged: lemon", shows a post count, and lists posts
+  with `post_in_list`, newest first. A batch tag's page is its brew log, listed oldest first.
   `templates/components.html` holds `post_in_list`, which renders one post as a list item, and
   `batch_summary`, which renders one batch on the home page.
 - CSS comes from the vendored `static/{light,dark,mono}.min.css` files, with `dark` applied through
