@@ -1,4 +1,6 @@
-{% extends "index.html" %} {% block content %} {% if terms %}
+{% extends "index.html" %} {% block content %}
+<h1 class="title">{{ taxonomy.name | replace(from="_", to=" ") | title }}</h1>
+ {% if terms %}
 <ul id="tax_list">
   {% for term in terms %}
   <li>
