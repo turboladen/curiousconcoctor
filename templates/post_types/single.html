@@ -1,6 +1,6 @@
 {% extends "index.html" %} {% block content %}
 {% set count = term.pages | length %}
-<h1 class="title">Post type: {{ term.name }}</h1>
+<h1 class="title">{{<term_title taxonomy={taxonomy} term={term} />}}</h1>
 <p class="term-count">{{ count }} {% if count == 1 %}post{% else %}posts{% endif %}</p>
 <ul>
   {% for post in term.pages %}{{<post_in_list post={post} />}}{% endfor %}

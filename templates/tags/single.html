@@ -3,13 +3,13 @@
 {% set noun %}{% if count == 1 %}post{% else %}posts{% endif %}{% endset %}
 {% if "#" in term.name %}
 {# A batch tag's page is its brew log, so it reads oldest first. #}
-<h1 class="title">{{ term.name | title }}</h1>
+<h1 class="title">{{<term_title taxonomy={taxonomy} term={term} />}}</h1>
 <p class="term-count">Brew log · {{ count }} {{ noun }}</p>
 <ul>
   {% for post in term.pages | reverse %}{{<post_in_list post={post} />}}{% endfor %}
 </ul>
 {% else %}
-<h1 class="title">Tagged: {{ term.name }}</h1>
+<h1 class="title">{{<term_title taxonomy={taxonomy} term={term} />}}</h1>
 <p class="term-count">{{ count }} {{ noun }}</p>
 <ul>
   {% for post in term.pages %}{{<post_in_list post={post} />}}{% endfor %}
