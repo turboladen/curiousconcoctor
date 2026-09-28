@@ -71,10 +71,10 @@
 
         <meta property="og:image"
               content="{% block ogimage %}{{ ogimage }}{% endblock ogimage %}">
-        {% if page.date -%}
+        {% if page is defined and page.date -%}
           <meta property="og:type" content="article" />
           <meta property="article:published_time"
-                content="{{ page.date | date(format="%+") }}" />
+                content="{{ page.date | date(format="%Y-%m-%d") }}" />
         {%- endif %}
 
       {%- endblock seo -%}
@@ -109,20 +109,14 @@
 
       <div class="content container">
         {% block content %}
-          {# Group the posts by year #}
-          {% set map = get_section(path="_index.md") | get(key="pages") | group_by(attribute="year") %}
-          {% set_global years = [] %}
-          {# Convert the years map to an array (since maps do not have determined order) #}
-          {% for year, ignored in map %}
-            {% set_global years = years | concat(with=year) %}
-          {% endfor %}
-          {% for year in years | sort | reverse %}
-            {% set posts = map[year] %}
+          {# group_by keeps the section's newest-first date order, so years come out descending. #}
+          {% set blog = get_section(path="blog/_index.md") %}
+          {% for year, posts in blog.pages | group_by(attribute="year") %}
             <h2 class="year-title">
               <time>{{ year }}<sup>({{ posts | length }})</sup></time>
             </h2>
             <ul>
-              {% for post in posts %}{{ macros::post_in_list(post=post) }}{% endfor %}
+              {% for post in posts %}{{<post_in_list post={post} />}}{% endfor %}
             </ul>
           {% endfor %}
         {% endblock content %}

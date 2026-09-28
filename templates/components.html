@@ -1,0 +1,6 @@
+{% component post_in_list(post) %}
+<li>
+  <a href="{{ post.permalink | safe }}">{{ post.title }}</a>
+  <time datetime="{{ post.date | date(format="%Y-%m-%d") }}">{{ post.date | date(format="%Y/%m/%d") }}</time>
+</li>
+{% endcomponent %}

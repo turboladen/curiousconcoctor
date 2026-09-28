@@ -1,10 +1,4 @@
-{% extends "index.html" %} {% block nav %}
-<ul id="breadcrumbs">
-  <li><a href="/">{{config.title}}</a>&nbsp;&#8594;&nbsp;</li>
-  <li>{{ taxonomy.name }}</li>
-</ul>
-<h1>{{ taxonomy.name }}</h1>
-{% endblock nav %} {% block content %} {% if terms %}
+{% extends "index.html" %} {% block content %} {% if terms %}
 <ul id="tax_list">
   {% for term in terms %}
   <li>
