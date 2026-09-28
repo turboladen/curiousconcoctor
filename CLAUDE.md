@@ -39,8 +39,15 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
     `sidebar` for a standalone write-up.
   - `tags` holds ingredient tags plus a batch tag such as `"meyer lemon melomel #1"`. The batch tag
     is the only thing that groups a batch's `start` and `update` posts together.
-- Post titles follow `"<Batch Name> #N: Update K"` for updates, and the slug ends in `-update-K`,
-  `-bottling-day`, or `-taste-K`.
+- A batch's posts share a slug stem and a title prefix, such as `meyer-lemon-melomel-1` and "Meyer
+  Lemon Melomel #1". The start post's slug usually ends with the stem, sometimes after a phrase, as
+  in `the-next-step-meyer-lemon-melomel-1`, but a few differ, such as `blackberry-pear-melomel`
+  without its `-1`. Later posts add a suffix, and the tree uses these variants:
+  - `-update-K`, titled "Update K" or occasionally "Update #K", for log entries.
+  - `-bottling-day`, titled "Bottling Day!" or "Bottling Day".
+  - `-taste-K` and `-tasting-K`, titled "Taste #K", "Tasting K", or "Tasting #K", for tasting notes.
+  - `-last-taste`, titled "Last Taste".
+- Standalone write-ups, such as `2014-07-22-i-learned-some-stuff-about-kmeta`, have no batch stem.
 
 `content/pages/` holds one-off pages such as `resources.md`. They reuse the blog templates.
 
