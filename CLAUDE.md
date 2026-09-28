@@ -58,7 +58,7 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
 - `templates/base.html` defines the page shell: head and SEO meta, the header nav built from
   `extra.menu_links` in `config.toml`, and a default `content` block that lists every blog post
   grouped by year. `templates/index.html` overrides that block with the brew log: every batch,
-  newest activity first, rendered by the `batch_summary` component, and then the `sidebar` posts
+  newest start date first, rendered by the `batch_summary` component, and then the `sidebar` posts
   under Notes.
 - Each taxonomy has `list.html` and `single.html` under `templates/<taxonomy>/`.
   `templates/components.html` holds `post_in_list`, which renders one post as a list item, and

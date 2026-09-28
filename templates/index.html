@@ -2,11 +2,17 @@
 <h1 class="title">Brew log</h1>
 
 <h2>Batches</h2>
-{% set tags = get_taxonomy(kind="tags") %}
+{% set blog = get_section(path="blog/_index.md") %}
 <ul class="batch-list">
-  {# Each term's pages run newest first, so pages.0.date is the batch's latest activity. #}
-  {% for term in tags.items | sort(attribute="pages.0.date") | reverse %}
-    {% if "#" in term.name %}{{<batch_summary term={term} />}}{% endif %}
+  {# Posts run newest first, so a batch appears when the loop reaches its oldest post, which orders batches by start date. #}
+  {% for page in blog.pages %}
+    {% for tag in page.taxonomies.tags %}
+      {% if "#" in tag %}
+        {% set term = get_taxonomy_term(kind="tags", term=tag) %}
+        {% set oldest = term.pages | last %}
+        {% if oldest.permalink == page.permalink %}{{<batch_summary term={term} />}}{% endif %}
+      {% endif %}
+    {% endfor %}
   {% endfor %}
 </ul>
 
