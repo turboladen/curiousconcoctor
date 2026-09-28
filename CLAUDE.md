@@ -17,8 +17,9 @@ of 2014-era brew logs ported into Markdown. There is no application code, and th
   Add `--skip-external-links` to check only internal links, which is fast and works offline.
 - `dprint fmt` formats Markdown, TOML, and the other configured types. `dprint check` reports
   without writing. Markdown is hard-wrapped at 100 columns (`textWrap: always`), so reformatting a
-  post reflows its paragraphs. Templates (`templates/**/*.html`) and the vendored
-  `static/**/*.min.css` files are excluded from formatting.
+  post reflows its paragraphs. Templates (`templates/**/*.html`), the vendored `static/**/*.min.css`
+  files, and the files that `bd` writes are excluded from formatting. The beads block in this file
+  sits between `dprint-ignore-start` and `dprint-ignore-end` markers, so `bd` can rewrite it.
 
 ## Content model
 
@@ -79,7 +80,7 @@ These are visible in the current tree and may be intentional work in progress:
 - The README lists an open idea: separating recipe-and-log posts from reflective write-ups on the
   site.
 
-
+<!-- dprint-ignore-start -->
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:1105d646 -->
 ## Beads Issue Tracker
 
@@ -134,3 +135,4 @@ This protocol applies when ending a Beads implementation workflow. It is subordi
 - Do not commit or push without clear authority from the active profile or the current user request.
 - If a required sync or push is blocked, stop and report the exact command and error.
 <!-- END BEADS INTEGRATION -->
+<!-- dprint-ignore-end -->
