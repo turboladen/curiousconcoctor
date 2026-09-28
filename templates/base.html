@@ -9,11 +9,14 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
       {# title, description and RSS #}
-      <title>
-        {% block title %}
-          {{ config.title }}
-        {% endblock title %}
-      </title>
+      {% set page_title -%}
+        {%- if page is defined -%}{{ page.title }}
+        {%- elif term is defined -%}{{<term_title taxonomy={taxonomy} term={term} />}}
+        {%- elif taxonomy is defined -%}{{ taxonomy.name | replace(from="_", to=" ") | title }}
+        {%- elif section is defined and current_path != "/" -%}{{ section.title }}
+        {%- endif -%}
+      {%- endset %}
+      <title>{% if page_title %}{{ page_title }} · {% endif %}{{ config.title }}</title>
 
       <meta name="description"
             content="{% block description %}{{ config.description }}{% endblock description %}" />
@@ -57,11 +60,11 @@
         <meta property="og:site_name" content="{{ config.title }}">
         {% if config.author -%}<meta name="author" content="{{ config.author }}" />{%- endif %}
         <meta property="og:title"
-              content="{% block ogtitle %}{{ config.title }}{% endblock ogtitle %}">
+              content="{% if page_title %}{{ page_title }}{% else %}{{ config.title }}{% endif %}">
         <meta property="og:description"
               content="{% block ogdesc %}{{ config.description }}{% endblock ogdesc %}">
         <meta property="og:url"
-              content="{% block ogurl %}{{ config.base_url | safe }}{% endblock ogurl %}">
+              content="{{ current_url | safe }}">
 
         {%- if config.extra.ogimage -%}
           {% set ogimage = get_url(path=config.extra.ogimage) | safe %}

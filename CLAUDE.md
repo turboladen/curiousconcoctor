@@ -60,6 +60,11 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
   grouped by year. `templates/index.html` overrides that block with the brew log: every batch,
   newest start date first, rendered by the `batch_summary` component, and then the `sidebar` posts
   under Notes.
+- `base.html` builds each page's `<title>` and `og:title` from a `page_title` it computes: the post
+  or page title, the `term_title` component's wording on term pages, the taxonomy name on taxonomy
+  list pages, or the section title. The home page's title is the site name alone. Tera 2 does not
+  let a block appear twice or a child template set top-level variables, so child templates cannot
+  supply the title themselves.
 - Each taxonomy has `list.html` and `single.html` under `templates/<taxonomy>/`. Each `single.html`
   heads its page with what it lists, such as "Tagged: lemon", shows a post count, and lists posts
   with `post_in_list`, newest first. A batch tag's page is its brew log, listed oldest first.

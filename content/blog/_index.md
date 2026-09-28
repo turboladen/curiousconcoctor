@@ -1,5 +1,5 @@
 +++
-title = "List of blog posts"
+title = "All posts"
 
 # Used to sort pages by "date", "update_date", "title", "title_bytes", "weight", "slug" or "none".
 # See below for more information.
