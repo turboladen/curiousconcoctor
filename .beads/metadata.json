@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "curiousconcoctor",
+  "project_id": "0bee8e2d-575f-4666-a231-42f0f4810b01"
+}
