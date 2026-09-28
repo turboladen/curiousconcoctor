@@ -1,17 +1,18 @@
 {% extends "index.html" %} {% block content %}
-<h1 class="title">{{ term.name }}</h1>
-
-<ul class="search-results__items">
-  {% for page in term.pages %}
-  <li class="search-results__item">
-    <code datetime="{{ page.date }}" >{{ page.date}}</code>
-    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-    {% if page.description %}
-    <div class="search-results__teaser">
-      {{ page.description | safe }}
-    </div>
-    {% endif %}
-  </li>
-  {% endfor %}
+{% set count = term.pages | length %}
+{% set noun %}{% if count == 1 %}post{% else %}posts{% endif %}{% endset %}
+{% if "#" in term.name %}
+{# A batch tag's page is its brew log, so it reads oldest first. #}
+<h1 class="title">{{ term.name | title }}</h1>
+<p class="term-count">Brew log · {{ count }} {{ noun }}</p>
+<ul>
+  {% for post in term.pages | reverse %}{{<post_in_list post={post} />}}{% endfor %}
 </ul>
+{% else %}
+<h1 class="title">Tagged: {{ term.name }}</h1>
+<p class="term-count">{{ count }} {{ noun }}</p>
+<ul>
+  {% for post in term.pages %}{{<post_in_list post={post} />}}{% endfor %}
+</ul>
+{% endif %}
 {% endblock content %}

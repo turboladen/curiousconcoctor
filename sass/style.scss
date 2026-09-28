@@ -98,3 +98,11 @@
 .batch-meta {
   color: var(--fg);
 }
+
+// The count line under a term page's heading matches the home page's
+// batch details line.
+.term-count {
+  margin: -1rem 0 2rem;
+  font-size: 1.5rem;
+  color: var(--fg);
+}
