@@ -1,16 +1,8 @@
 {% extends "index.html" %} {% block content %}
-<h1 class="title">{{ term.name }}</h1>
-
-<ul class="search-results__items">
-  {% for page in term.pages %}
-  <li class="search-results__item">
-    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-    {% if page.description %}
-    <div class="search-results__teaser">
-      {{ page.description | safe }}
-    </div>
-    {% endif %}
-  </li>
-  {% endfor %}
+{% set count = term.pages | length %}
+<h1 class="title">Drink type: {{ term.name }}</h1>
+<p class="term-count">{{ count }} {% if count == 1 %}post{% else %}posts{% endif %}</p>
+<ul>
+  {% for post in term.pages %}{{<post_in_list post={post} />}}{% endfor %}
 </ul>
 {% endblock content %}
