@@ -1,6 +1,6 @@
 +++
-title = "Backyard Pyment #1"
-date = 2014-07-02
+title = "Backyard Pyment #1: Bottling Day!"
+date = 2015-03-09
 
 [taxonomies]
 drink_types = ["mead"]

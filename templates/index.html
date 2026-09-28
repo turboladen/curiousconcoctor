@@ -1,7 +1,24 @@
 {% extends "base.html" %} {% block content %}
-<h1 class="title">
-  This is my blog made with Zola.
-</h1>
-<p><a href="{{ get_url(path='@/blog/_index.md') }}">Posts</a>.</p>
-<p><a href="{{ get_url(path='@/pages/_index.md') }}">Pages</a>.</p>
+<h1 class="title">Brew log</h1>
+
+<h2>Batches</h2>
+{% set blog = get_section(path="blog/_index.md") %}
+<ul class="batch-list">
+  {# Posts run newest first, so a batch appears when the loop reaches its oldest post, which orders batches by start date. #}
+  {% for page in blog.pages %}
+    {% for tag in page.taxonomies.tags %}
+      {% if "#" in tag %}
+        {% set term = get_taxonomy_term(kind="tags", term=tag) %}
+        {% set oldest = term.pages | last %}
+        {% if oldest.permalink == page.permalink %}{{<batch_summary term={term} />}}{% endif %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</ul>
+
+<h2>Notes</h2>
+{% set notes = get_taxonomy_term(kind="post_types", term="sidebar") %}
+<ul>
+  {% for post in notes.pages %}{{<post_in_list post={post} />}}{% endfor %}
+</ul>
 {% endblock content %}
