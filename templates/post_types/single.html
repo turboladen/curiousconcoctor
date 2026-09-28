@@ -1,4 +1,6 @@
 {% extends "index.html" %} {% block content %}
+<h1 class="title">{{ term.name }}</h1>
+
 <ul class="search-results__items">
   {% for page in term.pages %}
   <li class="search-results__item">
