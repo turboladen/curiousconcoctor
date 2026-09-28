@@ -4,3 +4,20 @@
   <time datetime="{{ post.date | date(format="%Y-%m-%d") }}">{{ post.date | date(format="%Y/%m/%d") }}</time>
 </li>
 {% endcomponent %}
+
+{% component batch_summary(term) %}
+{% set newest = term.pages | first %}
+{% set oldest = term.pages | last %}
+{% set count = term.pages | length %}
+{% set first_month = oldest.date | date(format="%Y-%m") %}
+{% set last_month = newest.date | date(format="%Y-%m") %}
+<li class="batch">
+  <h3 class="batch-name"><a href="{{ term.permalink | safe }}">{{ term.name | title }}</a></h3>
+  <p class="batch-meta">
+    {{ newest.taxonomies.drink_types | first }}
+    · {{ first_month }}{% if last_month != first_month %} → {{ last_month }}{% endif %}
+    · {{ count }} {% if count == 1 %}post{% else %}posts{% endif %}
+  </p>
+  <p class="batch-start"><a href="{{ oldest.permalink | safe }}">Start at the beginning</a></p>
+</li>
+{% endcomponent %}
