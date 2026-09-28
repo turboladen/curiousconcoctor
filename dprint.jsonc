@@ -13,6 +13,7 @@
     "**/node_modules",
     "**/*-lock.json",
     "templates/**/*.html",
+    "static/**/*.min.css",
     "themes",
   ],
   "plugins": [

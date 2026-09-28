@@ -11,8 +11,7 @@ post_types = ["update"]
 <image src="header.jpg" width="100%">
 
 Alright, so since
-[I fubared my last racking of this
-mead](@/blog/2014-07-20-strawberry-lavender-melomel-1-update-14/index.md),
+[I fubared my last racking of this mead](@/blog/2014-07-20-strawberry-lavender-melomel-1-update-14/index.md),
 I made another attempt tonight.
 
 Once again, to sterilize the oak chips I boiled them in a small skillet (a skillet, just to heat the
