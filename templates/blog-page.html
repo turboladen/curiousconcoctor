@@ -9,14 +9,14 @@
 {{ page.content | safe }}
 </div>
 
-{% set drink_types = page.taxonomies.drink_types | default(value=[]) %}
-{% set tags = page.taxonomies.tags | default(value=[]) %}
+{% set drink_types = page.taxonomies.drink_types %}
+{% set tags = page.taxonomies.tags %}
 {% if drink_types or tags %}
-{# One line lists the drink type and then the tags. first tracks whether a separator is due, and set_global carries it across both loops. #}
-{% set_global first = true %}
+{# One line lists the drink type and then the tags. need_sep records whether a link has been written, and set_global carries it across both loops. #}
+{% set_global need_sep = false %}
 <p class="post-filed">Filed under:
-  {%- for type in drink_types %}{% if not first %} ·{% endif %} <a href="{{ get_taxonomy_url(kind="drink_types", name=type) | safe }}">{{ type }}</a>{% set_global first = false %}{% endfor %}
-  {%- for tag in tags %}{% if not first %} ·{% endif %} <a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a>{% set_global first = false %}{% endfor %}
+  {%- for type in drink_types %}{% if need_sep %} ·{% endif %} <a href="{{ get_taxonomy_url(kind="drink_types", name=type) | safe }}">{{ type }}</a>{% set_global need_sep = true %}{% endfor %}
+  {%- for tag in tags %}{% if need_sep %} ·{% endif %} <a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a>{% set_global need_sep = true %}{% endfor %}
 </p>
 {% endif %}
 

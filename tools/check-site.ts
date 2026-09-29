@@ -35,8 +35,9 @@ function decode(value: string): string {
     .replace(/&amp;/g, "&");
 }
 
-// The selectors whose text content a Page records, one entry per matching element.
-const TEXT_SELECTORS = ["title", "style", ".post-filed"];
+// The selectors whose text content a Page records, one entry per matching element. Text goes to
+// the most recently opened match, so a selector here must not match elements nested in each other.
+const TEXT_SELECTORS = ["title", "style", ".post-filed", ".site-mark"];
 
 class Page {
   elements: Element[] = [];
@@ -248,7 +249,7 @@ check(function* batchDatesDistinct() {
 });
 
 check(function* noJumpMenus(site) {
-  // Term lists are short enough to show in full on every screen, so no page needs a <select>.
+  // Every term list is short enough to scan as plain links, so no page needs a <select>.
   for (const [rel, page] of site.pages) {
     if (page.find("select").length) yield [rel, "has a <select>; list the terms as links"];
   }
@@ -268,11 +269,8 @@ check(function* postsShowFiledUnder(site) {
 check(function* titleMarkIsText(site) {
   // U+FE0E asks for the text form of the alembic, so it takes the honey color instead of
   // rendering as a color emoji.
-  const mark = site.pages.get("index.html")!.elements.some(e =>
-    (e.attrs.class ?? "").split(/\s+/).includes("site-mark")
-  );
-  const html = readFileSync(join(site.build, "index.html"), "utf8");
-  if (!mark || !html.includes("\u2697\uFE0E")) yield ["index.html", "the site mark lacks U+FE0E after the alembic"];
+  const mark = site.pages.get("index.html")!.texts.get(".site-mark")![0];
+  if (mark !== "\u2697\uFE0E") yield ["index.html", "the site mark is not the alembic followed by U+FE0E"];
 });
 
 check(function* brewLogNumbering(site) {

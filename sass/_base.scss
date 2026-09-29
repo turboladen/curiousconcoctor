@@ -96,6 +96,9 @@ code {
   background-color: var(--card);
   border: 1px solid color-mix(in srgb, var(--rule) 25%, transparent);
   border-radius: 3px;
+  // A chip that wraps gets a closed border on each line.
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 // The handwritten notes: the site tagline and each post's date.

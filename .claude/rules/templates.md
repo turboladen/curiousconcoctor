@@ -22,8 +22,9 @@ paths:
   first. `templates/components.html` holds `post_in_list`, which renders one post as a list item,
   `batch_summary`, which renders one batch on the home page, `term_title`, which words a term page's
   heading and title, and `taxonomy_list`.
-- `blog-page.html` ends each post with a single "Filed under:" line that links its drink type and
-  then its tags. `set_global` tracks whether a separator is due, because the line joins two loops.
+- `blog-page.html` ends each post that has a drink type or tags with a single "Filed under:" line
+  that links its drink type and then its tags. `set_global` tracks whether a separator is due,
+  because the line joins two loops.
 - `templates/404.html` extends `base.html`. Zola sets no page or section variables for it, so it
   overrides the `title` block, which wraps the computed `<title>`, and empties the `seo` block.
   GitHub Pages serves it at whatever missing path was requested, so its links must be absolute, as

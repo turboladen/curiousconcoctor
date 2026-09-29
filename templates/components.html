@@ -35,7 +35,7 @@
 {% if terms %}
 <ul class="term-list">
   {% for term in terms %}
-  <li><a href="{{ term.permalink | safe }}">{{ term.name }}</a> <span class="term-size">[{{ term.pages | length }}]</span></li>
+  <li><a href="{{ term.permalink | safe }}">{{ term.name }}</a>&nbsp;<span class="term-size">[{{ term.pages | length }}]</span></li>
   {% endfor %}
 </ul>
 {% endif %}
