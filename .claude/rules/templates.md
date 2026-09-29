@@ -21,4 +21,9 @@ paths:
   `templates/components.html` holds `post_in_list`, which renders one post as a list item,
   `batch_summary`, which renders one batch on the home page, and `term_title`, which words a term
   page's heading and title.
+- `templates/404.html` extends `base.html`. Zola sets no page or section variables for it, so it
+  overrides the `title` block, which wraps the computed `<title>`, and empties the `seo` block.
+  GitHub Pages serves it at whatever missing path was requested, so its links must be absolute, as
+  `get_url` and `config.base_url` make them.
+- `templates/blog.html` lists every post at `/blog/` with `post_in_list`.
 - `templates/_old-base.html` is not referenced by any other template.

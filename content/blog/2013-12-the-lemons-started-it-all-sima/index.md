@@ -11,7 +11,7 @@ post_types = ["start"]
 
 <image src="header.jpg" width="100%">
 
-# The Story
+## The Story
 
 It’s winter–New Years Eve Day actually–and I’ve got boxes and boxes of Meyer lemons from our tree in
 the backyard. I’ve already made lemon meringue pies, loads of Hot Toddies, and have put lemon in
@@ -27,7 +27,7 @@ I won’t repost the full recipe here, and my version deviated a bit, so check t
 full monty. Instead, I’m posting the ingredients here just to give you an idea of what this is all
 about.
 
-## Ingredients
+### Ingredients
 
 - 4 quarts of water
 - 1 cup brown sugar

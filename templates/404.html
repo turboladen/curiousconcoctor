@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{# GitHub Pages serves this page at whatever missing path was requested, so every link must be absolute. base.html builds its links with get_url, which makes them absolute. #}
+{% block title %}Page not found · {{ config.title }}{% endblock title %}
+
+{% block seo %}{% endblock seo %}
+
+{% block content %}
+<h1 class="title">Page not found</h1>
+<p>This page isn't in the notebook. It may have moved when the site did.</p>
+<p><a href="{{ config.base_url | safe }}">Browse the brew log</a> or look through the <a href="{{ get_url(path="tags") | safe }}">tags</a>.</p>
+{% endblock content %}

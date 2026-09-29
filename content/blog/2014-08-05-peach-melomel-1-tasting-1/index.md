@@ -1,6 +1,6 @@
 +++
 title = "Peach Melomel #1: Tasting 1"
-date = 2014-08-05
+date = 2014-08-05T21:00:00
 
 [taxonomies]
 drink_types = ["mead"]
