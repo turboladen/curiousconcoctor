@@ -36,6 +36,8 @@ Before creating a file under one of those paths, read the matching rules file fi
   CSS restart.
 - `.claude/rules/icons.md` covers regenerating the icons and the share image.
 - `.claude/rules/site-config.md` covers feeds, `include_in_feeds`, and syntax highlighting.
+- `.claude/rules/deploy.md` covers the GitHub Pages deploy workflow, the pinned Zola release, and
+  the subpath the site lives under.
 
 ## Known gaps
 
