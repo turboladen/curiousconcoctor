@@ -8,7 +8,6 @@
 body {
   margin: 0;
   font-family: var(--mono);
-  font-size: 1rem;
   line-height: 1.65;
   // Long URLs in post text would otherwise widen the page on phones.
   overflow-wrap: break-word;
@@ -44,7 +43,6 @@ h3 {
 
 a {
   color: var(--ink);
-  text-decoration: underline;
   text-decoration-color: var(--honey);
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
@@ -101,4 +99,13 @@ select {
   background-color: var(--card);
   border: 1px solid var(--rule);
   padding: 0.4rem;
+}
+
+// The handwritten notes: the site tagline and each post's date.
+.site-tagline,
+.post-date {
+  font-family: var(--hand);
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--honey-ink);
 }

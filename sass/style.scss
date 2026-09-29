@@ -1,6 +1,4 @@
-// base.html inlines this file into a <style> element. Keep every Sass file
-// ASCII-only: a non-ASCII character makes the compiler emit a byte-order
-// mark, which then breaks the first selector. Put glyphs in templates.
+// base.html inlines the compiled file into a <style> element.
 @use "tokens";
 @use "base";
 @use "layout";

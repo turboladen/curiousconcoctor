@@ -21,7 +21,6 @@
   line-height: 1.2;
 
   a {
-    color: var(--ink);
     text-decoration: none;
   }
 }
@@ -33,11 +32,7 @@
 .site-tagline {
   display: inline-block;
   margin: 0.25rem 0 0;
-  font-family: var(--hand);
   font-size: 1.5rem;
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--honey-ink);
   transform: rotate(-1.5deg);
   transform-origin: left center;
 }
@@ -59,8 +54,7 @@
 }
 
 main > .container {
-  padding-top: 2rem;
-  padding-bottom: 1rem;
+  padding-block: 2rem 1rem;
 }
 
 .site-footer {

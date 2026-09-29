@@ -16,9 +16,8 @@
 // Each batch is a specimen label: a card with an offset honey shadow and a
 // numbered badge riding on its top border.
 .batch {
-  // index.html resets the named counter to one more than the batch count. A
-  // named counter behaves the same in every engine, which the built-in
-  // list-item counter on a reversed list does not.
+  // index.html resets this counter. styling.md explains why the badge does
+  // not read the list's own numbering.
   counter-increment: batch -1;
   position: relative;
   margin: 0 0 1.75rem;

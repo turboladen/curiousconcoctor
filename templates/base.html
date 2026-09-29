@@ -36,6 +36,8 @@
       <meta name="theme-color" content="#0f2340" media="(prefers-color-scheme: dark)">
 
       {# Font URLs go through get_url so they resolve under the site's subpath. The inlined style.css cannot use relative url() paths, because they would resolve against each page's own path. #}
+      <link rel="preload" as="font" type="font/woff2" crossorigin
+            href="{{ get_url(path="fonts/ibm-plex-mono-latin-400-normal.woff2") | safe }}">
       <style>
         @font-face { font-family: "IBM Plex Mono"; font-style: normal; font-weight: 400; font-display: swap;
           src: url("{{ get_url(path="fonts/ibm-plex-mono-latin-400-normal.woff2") | safe }}") format("woff2"); }
@@ -80,7 +82,7 @@
 
   <body>
     {% block header %}
-      <header role="banner" class="site-header container content">
+      <header role="banner" class="site-header container">
         <p class="site-title">
           <a href="{{ config.base_url | safe }}"><span class="site-mark" aria-hidden="true">⚗</span> {{ config.title }}</a>
         </p>
@@ -97,7 +99,7 @@
 
     <main id="main">
 
-      <div class="content container">
+      <div class="container">
         {% block content %}
           {# group_by keeps the section's newest-first date order, so years come out descending. #}
           {% set blog = get_section(path="blog/_index.md") %}
@@ -114,7 +116,7 @@
 
     </main>
 
-    <footer role="contentinfo" class="site-footer container content">
+    <footer role="contentinfo" class="site-footer container">
       {% block footer %}
         <p>©2013 {{ config.author }}</p>
       {% endblock footer %}

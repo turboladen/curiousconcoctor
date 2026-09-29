@@ -18,9 +18,6 @@ Several constraints shape how any restyle has to be built:
   through `get_url` or be relative to the page.
 - `base.html` inlines the compiled `style.css` into a `<style>` element, so a relative `url()` in
   that CSS resolves against each page's own path, not against the style sheet.
-- Zola's Sass compiler prefixes `style.css` with a UTF-8 byte-order mark whenever the output holds a
-  non-ASCII character, even one written as an escape. Inside an inlined `<style>` element the mark
-  becomes part of the first selector, and the browser drops that rule without any error.
 - Generic `monospace` and `sans-serif` stacks render in a different face on every operating system.
 - A reversed `<ol>` read through `counter(list-item)` numbers inconsistently: on a normal page load,
   Chromium resolves the list's starting value before the items are parsed, so the numbers count down
@@ -40,11 +37,10 @@ Several constraints shape how any restyle has to be built:
 - **Fonts:** IBM Plex Mono for all text and Caveat for the tagline and post dates, both self-hosted
   as woff2 files in `static/fonts/` beside their OFL licenses. Their `@font-face` rules live in a
   `<style>` block in `base.html`, where each URL goes through `get_url`.
-- **ASCII-only Sass:** no Sass file contains a non-ASCII character. Glyphs such as the ⚗ title mark
-  go in templates.
 - **Batch numbering:** the brew log is an `<ol reversed>` with an explicit `start`, and its badges
   read a named `batch` counter. `index.html` resets that counter inline to one more than the number
-  of batch tags, and each card decrements it, so the oldest batch is always BATCH 01.
+  of batch cards, counted with the same loop and test that renders them, and each card decrements
+  it, so the oldest batch is always BATCH 01.
 
 ## Consequences
 
@@ -52,11 +48,5 @@ Several constraints shape how any restyle has to be built:
   The four font files add about 100 KB, loaded with `font-display: swap`.
 - Styling changes go through the tokens and partials, and `.claude/rules/styling.md` records the
   rules above for future edits. There is no upstream framework to update, and nothing to override.
-- Anyone editing Sass must keep it ASCII-only. A slip fails silently, by dropping the first rule in
-  `style.css`, so a check for a leading byte-order mark belongs in any verification of a style
-  change.
-- The batch count comes from every tag whose name contains `#`, while cards render only for batches
-  whose first post is in `blog/`. A batch tag used only outside `blog/` would shift the badge
-  numbers.
 - The notebook direction sets the vocabulary for later design work: labeled tags on posts (fxq.5)
   and links between posts in a batch (fxq.6) should read as parts of the same notebook.
