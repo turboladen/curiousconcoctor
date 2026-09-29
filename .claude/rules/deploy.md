@@ -27,10 +27,20 @@ paths:
   `fallback: none` makes a version missing from that manifest fail the build. To upgrade Zola,
   change the version in `tool`. The site depends on Tera 2 features, so check the Zola changelog
   before upgrading.
-- Each action is pinned to a commit SHA with its version in a comment. Nothing updates those pins
-  automatically, so they are updated by hand, together with the Zola version in `tool` (set in both
-  workflows), the `bun-version` in both workflows, the `dprint-version` in `ci.yml`, and the dprint
-  plugin URLs in `dprint.jsonc`.
+- Each action is pinned to a commit SHA with its version in a comment. Dependabot
+  (`.github/dependabot.yml`) checks weekly and opens one grouped pull request for every pinned
+  action with a newer release, updating each SHA and its comment together. It cannot see tool
+  versions passed as inputs, so these are updated by hand: the Zola version in `tool` and the
+  `bun-version`, both set in both workflows, the `dprint-version` in `ci.yml`, and the dprint plugin
+  URLs in `dprint.jsonc`.
+- Both workflows run on `ubuntu-24.04`, not `ubuntu-latest`, so moving to a newer Ubuntu release
+  takes a deliberate edit. GitHub still refreshes the image's packages weekly. Dependabot does not
+  bump it.
+- `ci.yml` also runs `zizmor`, which audits the workflows and `dependabot.yml` and fails on any
+  finding. Its version is pinned in `ci.yml` and `Justfile`, and it is updated by hand.
+- The workflows default to `contents: read`. Only the deploy job gets `pages: write` and
+  `id-token: write`, which `deploy-pages` needs. Checkouts set `persist-credentials: false`, since
+  no step pushes.
 - The repository's Pages source is set to GitHub Actions. That is a one-time repository setting, not
   part of the workflow.
 - To rehearse a deploy locally, build with

@@ -15,7 +15,8 @@ ported into Markdown. There is no application code. `tools/check-site.ts` checks
 - `just serve` runs `zola serve`, a live-reloading dev server on http://127.0.0.1:1111.
 - `just serve-and-open` does the same and opens a browser.
 - `just check` runs what CI runs on pull requests: `zola build`, `zola check`, `dprint check`, and
-  `tools/check-site.ts`, a Bun script that checks the built HTML in `public/`.
+  `tools/check-site.ts`, a Bun script that checks the built HTML in `public/`, and `zizmor`, which
+  audits the GitHub workflows. It needs Bun and uv installed.
 - `zola build` writes the site to `public/`, which is gitignored. `zola check` also validates links.
   Add `--skip-external-links` to check only internal links, which is fast and works offline.
 - `dprint fmt` formats Markdown, TOML, and the other configured types. `dprint check` reports
