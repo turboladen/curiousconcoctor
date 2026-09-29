@@ -63,13 +63,14 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
 - `base.html` builds each page's `<title>` and `og:title` from a `page_title` it computes: the post
   or page title, the `term_title` component's wording on term pages, the taxonomy name on taxonomy
   list pages, or the section title. The home page's title is the site name alone. Tera 2 does not
-  let a block appear twice or a child template set top-level variables, so child templates cannot
-  supply the title themselves.
+  let a block appear twice or a child template set top-level variables, so one block cannot feed
+  both `<title>` and `og:title`, and `base.html` computes the title itself.
 - Each taxonomy has `list.html` and `single.html` under `templates/<taxonomy>/`. Each `single.html`
   heads its page with what it lists, such as "Tagged: lemon", shows a post count, and lists posts
   with `post_in_list`, newest first. A batch tag's page is its brew log, listed oldest first.
-  `templates/components.html` holds `post_in_list`, which renders one post as a list item, and
-  `batch_summary`, which renders one batch on the home page.
+  `templates/components.html` holds `post_in_list`, which renders one post as a list item,
+  `batch_summary`, which renders one batch on the home page, and `term_title`, which words a term
+  page's heading and title.
 - CSS comes from the vendored `static/{light,dark,mono}.min.css` files, with `dark` applied through
   `prefers-color-scheme`. Site-specific styles go in `sass/style.scss`, which Zola compiles and
   `base.html` inlines through `load_data`. `mono.min.css` sets the root font size to 10px and
