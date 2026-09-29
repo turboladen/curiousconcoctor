@@ -23,6 +23,11 @@ ported into Markdown. There is no application code, and there are no tests.
   `dprint-ignore-end` markers, so `bd` can rewrite it.
 - Running `zola build` while `zola serve` is up rewrites `public/`, which the server also reads, so
   pages can briefly load without CSS. Check styling after the build finishes.
+- Style changes are verified in Playwright. Useful checks: sweep every `<loc>` in `/sitemap.xml`
+  through 375px iframes for `scrollWidth > clientWidth`, and compute text contrast from computed
+  styles in both color schemes (`browser_emulate_media`).
+- Built pages inline `style.css`, so grepping `public/` for a class name also matches the CSS. Match
+  the attribute instead, such as `class="post-date"`.
 
 ## Rules files
 
@@ -38,6 +43,9 @@ Before creating a file under one of those paths, read the matching rules file fi
 - `.claude/rules/site-config.md` covers feeds, `include_in_feeds`, and syntax highlighting.
 - `.claude/rules/deploy.md` covers the GitHub Pages deploy workflow, the pinned Zola release, and
   the subpath the site lives under.
+
+Durable design decisions are ADRs in `docs/decisions/`, numbered `NNNN-topic.md`. Superpowers specs
+and plans stay in the gitignored `docs/superpowers/` and are never committed.
 
 ## Known gaps
 
