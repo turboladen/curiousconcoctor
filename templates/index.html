@@ -1,10 +1,20 @@
 {% extends "base.html" %} {% block content %}
 <h1 class="title">Brew log</h1>
 
-<h2>Batches</h2>
+<h2 class="section-label">Batches</h2>
 {% set blog = get_section(path="blog/_index.md") %}
-<ul class="batch-list">
-  {# Posts run newest first, so a batch appears when the loop reaches its oldest post, which orders batches by start date. #}
+{# A batch renders where the loop reaches its oldest post, which orders batches by start date. The first pass counts them with the same test, so the badges number down to BATCH 01. #}
+{% set_global batch_total = 0 %}
+{% for page in blog.pages %}
+  {% for tag in page.taxonomies.tags %}
+    {% if "#" in tag %}
+      {% set term = get_taxonomy_term(kind="tags", term=tag) %}
+      {% set oldest = term.pages | last %}
+      {% if oldest.permalink == page.permalink %}{% set_global batch_total = batch_total + 1 %}{% endif %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+<ol class="batch-list" reversed start="{{ batch_total }}" style="counter-reset: batch {{ batch_total + 1 }}">
   {% for page in blog.pages %}
     {% for tag in page.taxonomies.tags %}
       {% if "#" in tag %}
@@ -14,9 +24,9 @@
       {% endif %}
     {% endfor %}
   {% endfor %}
-</ul>
+</ol>
 
-<h2>Notes</h2>
+<h2 class="section-label">Notes</h2>
 {% set notes = get_taxonomy_term(kind="post_types", term="sidebar") %}
 <ul>
   {% for post in notes.pages %}{{<post_in_list post={post} />}}{% endfor %}

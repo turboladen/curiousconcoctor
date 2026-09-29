@@ -1,0 +1,38 @@
+// Colors and font stacks for both themes. --honey is decorative only: it
+// fails 4.5:1 as text on the light paper, so honey-colored text uses
+// --honey-ink, and text on a honey fill uses --on-honey.
+:root {
+  color-scheme: light dark;
+  --paper: #fbf7ee;
+  --grid: rgba(80, 120, 170, 0.1);
+  --margin: rgba(200, 60, 60, 0.35);
+  --ink: #2d2a26;
+  --muted: #6b6358;
+  --honey: #c98a12;
+  --honey-ink: #8a5a00;
+  --on-honey: #2d2a26;
+  --card: #ffffff;
+  --rule: #2d2a26;
+  --tape: rgba(230, 200, 120, 0.65);
+  --shadow: rgba(0, 0, 0, 0.15);
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  --hand: "Caveat", cursive;
+}
+
+// The blueprint theme: navy paper with a light-blue grid.
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0f2340;
+    --grid: rgba(150, 190, 240, 0.12);
+    --margin: rgba(240, 120, 120, 0.3);
+    --ink: #f1e8d4;
+    --muted: #a9b8cc;
+    --honey: #e0a43a;
+    --honey-ink: #f2bd5c;
+    --on-honey: #0f2340;
+    --card: #16305a;
+    --rule: #a9b8cc;
+    --tape: rgba(224, 164, 58, 0.45);
+    --shadow: rgba(0, 0, 0, 0.45);
+  }
+}

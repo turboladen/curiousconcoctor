@@ -1,0 +1,37 @@
+.post-date {
+  margin: 0 0 0.1rem;
+  font-size: 1.4rem;
+}
+
+// Zola wraps each post heading in a link to itself. It reads as a heading,
+// so its underline appears only on hover.
+.zola-anchor {
+  text-decoration: none;
+}
+
+.zola-anchor:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--honey);
+}
+
+// Every post photo is a snapshot print: a card-colored border that is
+// deeper at the bottom, a soft shadow, and a strip of tape drawn as a
+// gradient across the top border, since an img cannot have pseudo-elements.
+.post-body img {
+  display: block;
+  width: 100%;
+  margin: 1.75rem 0;
+  padding: 0.9rem 0.6rem 1.75rem;
+  background:
+    linear-gradient(var(--tape), var(--tape)) center top / 5.5rem 0.9rem
+    no-repeat,
+    var(--card);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+// The count line under a term page's heading.
+.term-count {
+  margin: -0.5rem 0 1.5rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
