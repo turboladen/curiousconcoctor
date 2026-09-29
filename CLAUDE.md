@@ -18,9 +18,9 @@ ported into Markdown. There is no application code, and there are no tests.
   Add `--skip-external-links` to check only internal links, which is fast and works offline.
 - `dprint fmt` formats Markdown, TOML, and the other configured types. `dprint check` reports
   without writing. Markdown is hard-wrapped at 100 columns (`textWrap: always`), so reformatting a
-  post reflows its paragraphs. Templates (`templates/**/*.html`), the vendored `static/**/*.min.css`
-  files, and the files that `bd` writes are excluded from formatting. The beads block in this file
-  sits between `dprint-ignore-start` and `dprint-ignore-end` markers, so `bd` can rewrite it.
+  post reflows its paragraphs. Templates (`templates/**/*.html`) and the files that `bd` writes are
+  excluded from formatting. The beads block in this file sits between `dprint-ignore-start` and
+  `dprint-ignore-end` markers, so `bd` can rewrite it.
 - Running `zola build` while `zola serve` is up rewrites `public/`, which the server also reads, so
   pages can briefly load without CSS. Check styling after the build finishes.
 
@@ -32,8 +32,8 @@ Before creating a file under one of those paths, read the matching rules file fi
 - `.claude/rules/content.md` covers posts, one-off pages, front matter, batch tags, and `@/` links.
 - `.claude/rules/templates.md` covers `base.html`, page titles, the term pages, and the components.
 - `.claude/rules/tera2.md` covers the Tera 2 syntax rules that templates must follow.
-- `.claude/rules/styling.md` covers the CSS sources, the 10px root font size, and the `zola serve`
-  CSS restart.
+- `.claude/rules/styling.md` covers the Sass partials, the color tokens, the self-hosted fonts, and
+  the `zola serve` CSS restart.
 - `.claude/rules/icons.md` covers regenerating the icons and the share image.
 - `.claude/rules/site-config.md` covers feeds, `include_in_feeds`, and syntax highlighting.
 - `.claude/rules/deploy.md` covers the GitHub Pages deploy workflow, the pinned Zola release, and

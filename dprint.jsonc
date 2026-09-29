@@ -13,7 +13,6 @@
     "**/node_modules",
     "**/*-lock.json",
     "templates/**/*.html",
-    "static/**/*.min.css",
     // bd init and bd upgrades write these files, so dprint leaves them alone.
     ".beads/**",
     ".agents/**",
