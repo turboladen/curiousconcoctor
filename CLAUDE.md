@@ -8,12 +8,14 @@ repository.
 This repository holds the source for The Curious Concoctor, a homebrewing blog (mead, cider,
 liqueur) built with the [Zola](https://www.getzola.org) static site generator and published at
 https://turboladen.github.io/curiousconcoctor/. Most of the content consists of 2014-era brew logs
-ported into Markdown. There is no application code, and there are no tests.
+ported into Markdown. There is no application code. `tools/check-site.ts` checks the built site.
 
 ## Commands
 
 - `just serve` runs `zola serve`, a live-reloading dev server on http://127.0.0.1:1111.
 - `just serve-and-open` does the same and opens a browser.
+- `just check` runs what CI runs on pull requests: `zola build`, `zola check`, `dprint check`, and
+  `tools/check-site.ts`, a Bun script that checks the built HTML in `public/`.
 - `zola build` writes the site to `public/`, which is gitignored. `zola check` also validates links.
   Add `--skip-external-links` to check only internal links, which is fast and works offline.
 - `dprint fmt` formats Markdown, TOML, and the other configured types. `dprint check` reports
@@ -41,8 +43,9 @@ Before creating a file under one of those paths, read the matching rules file fi
   the `zola serve` CSS restart.
 - `.claude/rules/icons.md` covers regenerating the icons and the share image.
 - `.claude/rules/site-config.md` covers feeds, `include_in_feeds`, and syntax highlighting.
-- `.claude/rules/deploy.md` covers the GitHub Pages deploy workflow, the pinned Zola release, and
-  the subpath the site lives under.
+- `.claude/rules/deploy.md` covers the CI and deploy workflows, the pinned Zola release, and the
+  subpath the site lives under.
+- `.claude/rules/checks.md` covers `tools/check-site.ts` and how to add a check.
 
 Durable design decisions are ADRs in `docs/decisions/`, numbered `NNNN-topic.md`. Superpowers specs
 and plans stay in the gitignored `docs/superpowers/` and are never committed.
