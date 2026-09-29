@@ -5,9 +5,10 @@ repository.
 
 ## What this is
 
-This repository holds the source for curiousconcoctor.com, a homebrewing blog (mead, cider, liqueur)
-built with the [Zola](https://www.getzola.org) static site generator. Most of the content consists
-of 2014-era brew logs ported into Markdown. There is no application code, and there are no tests.
+This repository holds the source for The Curious Concoctor, a homebrewing blog (mead, cider,
+liqueur) built with the [Zola](https://www.getzola.org) static site generator and published at
+https://turboladen.github.io/curiousconcoctor/. Most of the content consists of 2014-era brew logs
+ported into Markdown. There is no application code, and there are no tests.
 
 ## Commands
 
@@ -35,6 +36,8 @@ Before creating a file under one of those paths, read the matching rules file fi
   CSS restart.
 - `.claude/rules/icons.md` covers regenerating the icons and the share image.
 - `.claude/rules/site-config.md` covers feeds, `include_in_feeds`, and syntax highlighting.
+- `.claude/rules/deploy.md` covers the GitHub Pages deploy workflow, the pinned Zola release, and
+  the subpath the site lives under.
 
 ## Known gaps
 
