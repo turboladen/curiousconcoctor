@@ -1,6 +1,8 @@
 ---
 paths:
   - "content/**"
+  - "templates/index.html"
+  - "templates/components.html"
 ---
 
 # Content

@@ -1,6 +1,7 @@
 ---
 paths:
   - "config.toml"
+  - "content/pages/**"
 ---
 
 # Site configuration

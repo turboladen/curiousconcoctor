@@ -2,7 +2,7 @@
 paths:
   - "sass/**"
   - "static/*.css"
-  - "templates/base.html"
+  - "templates/**"
 ---
 
 # Styling
