@@ -14,6 +14,8 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
   directory is how images get added to it.
 - Posts embed images with raw `<image src="IMG_0050.jpeg" width="100%" alt="...">` tags that use
   paths relative to the post directory, not Markdown image syntax.
+- The template renders the title as the page's only `h1`, so Markdown headings in a post or page
+  start at `##`.
 - Links between posts use Zola's `@/` form, e.g.
   `[text](@/blog/2014-03-15-pink-lady-cider-1/index.md)`. The target must match the file's current
   path, so moving a flat post into a directory breaks every `@/` link that points at it.
@@ -25,6 +27,8 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
     is the only thing that groups a batch's `start` and `update` posts together. The home page
     treats any tag whose name contains `#` as a batch tag, so a batch tag needs a `#` and no other
     tag may have one.
+- Zola orders posts with the same date by permalink, so two posts in one batch must not share a
+  `date`. Give the later one a time, such as `date = 2014-08-05T21:00:00`. Pages show only the day.
 - A batch's posts share a slug stem and a title prefix, such as `meyer-lemon-melomel-1` and "Meyer
   Lemon Melomel #1". The start post's slug usually ends with the stem, sometimes after a phrase, as
   in `the-next-step-meyer-lemon-melomel-1`, but a few differ, such as `blackberry-pear-melomel`

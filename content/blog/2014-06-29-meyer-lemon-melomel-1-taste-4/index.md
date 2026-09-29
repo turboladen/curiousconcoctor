@@ -1,7 +1,6 @@
 +++
 title = "Meyer Lemon Melomel #1: Taste #4"
 date = 2014-06-29
-description = "pants"
 
 [taxonomies]
 drink_types = ["mead"]

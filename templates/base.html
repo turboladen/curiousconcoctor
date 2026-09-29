@@ -16,7 +16,7 @@
         {%- elif section is defined and current_path != "/" -%}{{ section.title }}
         {%- endif -%}
       {%- endset %}
-      <title>{% if page_title %}{{ page_title }} · {% endif %}{{ config.title }}</title>
+      <title>{% block title %}{% if page_title %}{{ page_title }} · {% endif %}{{ config.title }}{% endblock title %}</title>
 
       <meta name="description"
             content="{% block description %}{{ config.description }}{% endblock description %}" />

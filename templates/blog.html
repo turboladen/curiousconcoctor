@@ -1,16 +1,6 @@
 {% extends "base.html" %} {% block content %}
-<h1 class="title">
-  {{ section.title }}
-</h1>
+<h1 class="title">{{ section.title }}</h1>
 <ul>
-  <!-- If you are using pagination, section.pages will be empty.
-       You need to use the paginator object -->
-  {% for page in section.pages %}
-  <li>
-    <code datetime="{{ page.date }}" >{{ page.date}}</code>
-    <a href="{{ page.permalink | safe }}">{{ page.title }}</a>
-  </li>
-  {% endfor %}
+  {% for post in section.pages %}{{<post_in_list post={post} />}}{% endfor %}
 </ul>
-
 {% endblock content %}

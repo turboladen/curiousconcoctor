@@ -97,6 +97,20 @@ const dirOf = (path: string) => (path.endsWith("/") ? path : posix.dirname(path)
 
 const isExternal = (url: string) => /^[a-z][a-z0-9+.-]*:/i.test(url) || /^(\/\/|#)/.test(url);
 
+type Post = { file: string; date: string; tags: string[] };
+
+// Reads the front matter of every post in content/blog/.
+function blogPosts(): Post[] {
+  const files = [...new Bun.Glob("content/blog/**/*.md").scanSync({ cwd: ROOT })].sort();
+  return files.filter(f => !f.endsWith("_index.md")).map(file => {
+    const front = readFileSync(join(ROOT, file), "utf8").split(/^\+\+\+$/m)[1];
+    const meta = Bun.TOML.parse(front) as { date?: unknown; taxonomies?: { tags?: string[] } };
+    // Zola reads a bare date as midnight UTC and a time without an offset as UTC.
+    const date = String(meta.date ?? "").replace(/Z$/, "");
+    return { file, date: date.includes("T") ? date : `${date}T00:00:00`, tags: meta.taxonomies?.tags ?? [] };
+  });
+}
+
 class Site {
   baseUrl: string = config.base_url.replace(/\/$/, "");
   pages = new Map<string, Page>();
@@ -193,11 +207,39 @@ check(function* urlsStayInSite(site) {
 
 check(function* oneTitleAndMain(site) {
   for (const [rel, page] of site.pages) {
-    // Zola renders 404.html from its built-in template, not from base.html.
-    if (rel === "404.html") continue;
     if (!page.title.trim()) yield [rel, "has no <title> text"];
     const mains = page.find("main").length;
     if (mains !== 1) yield [rel, `has ${mains} <main> elements, expected 1`];
+  }
+});
+
+check(function* oneH1(site) {
+  for (const [rel, page] of site.pages) {
+    const h1s = page.find("h1").length;
+    if (h1s !== 1) yield [rel, `has ${h1s} <h1> elements, expected 1`];
+  }
+});
+
+check(function* iconLinked(site) {
+  // Under a subpath, a page with no icon link makes browsers request the host root's favicon.ico.
+  for (const [rel, page] of site.pages) {
+    if (!page.find("link").some(a => (a.rel ?? "").split(/\s+/).includes("icon"))) {
+      yield [rel, "has no <link rel=\"icon\">"];
+    }
+  }
+});
+
+check(function* batchDatesDistinct() {
+  // Zola orders posts with equal dates by permalink, so two posts in a batch on the same day can
+  // read out of order. The later one needs a time on its date.
+  const seen = new Map<string, string>();
+  for (const post of blogPosts()) {
+    for (const tag of post.tags.filter(t => t.includes("#"))) {
+      const key = `${tag} ${post.date}`;
+      const other = seen.get(key);
+      if (other) yield [post.file, `shares the date ${post.date} with ${other} in ${tag}`];
+      else seen.set(key, post.file);
+    }
   }
 });
 

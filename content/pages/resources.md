@@ -10,39 +10,39 @@ tags = []
 post_types = ["start"]
 +++
 
-# Info About Concocting
+## Info About Concocting
 
-## How-tos
+### How-tos
 
-### Mead
+#### Mead
 
 - [Beer Judge Certification Program (BJCP) Mead Exam Resources](http://www.bjcp.org/mead.php)
 
-## Ingredient Characteristics
+### Ingredient Characteristics
 
-### Apples
+#### Apples
 
 - [Apple Varieties for Cooking, Baking, and Cider](http://extension.wsu.edu/maritimefruit/pages/appleusechart.aspx)
 - [Cider Apple Varieties](http://homepage.ntlworld.com/scrumpy/cider/ciderapp.htm)
 
-## Recipe Sources
+### Recipe Sources
 
 - [Mead Recipes on stormthecastle.com](http://www.stormthecastle.com/mead/mead-recipes.htm)
 
-# Supplies for Concocting
+## Supplies for Concocting
 
-## Supplies & Equipment Sources
+### Supplies & Equipment Sources
 
 - [Midwest Supplies](http://www.midwestsupplies.com/)
 - [Ss Brew Technologies](http://www.ssbrewtech.com)
 
-## Ingredient Sources
+### Ingredient Sources
 
-### Honey
+#### Honey
 
 - [Shamrock S Bees](http://www.shamrocksbees.com/)
 - [The Bee Folks](http://www.beefolks.com/)
 
-### Produce
+#### Produce
 
 - [Agrilicious](http://www.agrilicious.org/)

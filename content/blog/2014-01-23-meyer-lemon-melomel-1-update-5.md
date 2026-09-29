@@ -1,6 +1,6 @@
 +++
 title = "Meyer Lemon Melomel #1: Update 5"
-date = 2014-01-23
+date = 2014-01-23T21:00:00
 
 [taxonomies]
 drink_types = ["mead"]
