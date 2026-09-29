@@ -5,8 +5,6 @@ paths:
 
 # Templates
 
-How the Tera templates in `templates/` fit together.
-
 - `templates/base.html` defines the page shell: head and SEO meta, the header nav built from
   `extra.menu_links` in `config.toml`, and a default `content` block that lists every blog post
   grouped by year. `templates/index.html` overrides that block with the brew log: every batch,

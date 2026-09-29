@@ -5,8 +5,6 @@ paths:
 
 # Site configuration
 
-What `config.toml` turns on.
-
 - `config.toml` turns on feeds with `generate_feeds` and names them `rss.xml`, so Zola builds
   `/rss.xml` from its built-in RSS template, plus a feed for each term of the taxonomies that set
   `feed = true`, such as `/drink-types/mead/rss.xml`. Each item's content carries `xml:base` set to

@@ -25,18 +25,16 @@ of 2014-era brew logs ported into Markdown. There is no application code, and th
 
 ## Rules files
 
-Topic rules live in `.claude/rules/`. Each file loads when Claude reads a file it covers:
+Topic rules live in `.claude/rules/`. Each file loads only when Claude reads a file it covers.
+Before creating a file under one of those paths, read the matching rules file first.
 
-- `.claude/rules/content.md`: posts, one-off pages, front matter, batches, and `@/` links; loads for
-  `content/`.
-- `.claude/rules/templates.md`: `base.html`, page titles, term pages, and components; loads for
-  `templates/`.
-- `.claude/rules/tera2.md`: Tera 2 syntax rules; loads for `templates/`.
-- `.claude/rules/styling.md`: CSS sources, the root font size, and the `zola serve` CSS restart;
-  loads for `sass/`, `static/*.css`, and `base.html`.
-- `.claude/rules/icons.md`: regenerating the icons and share image; loads for the icon files and
-  `tools/icons/`.
-- `.claude/rules/site-config.md`: feeds and syntax highlighting; loads for `config.toml`.
+- `.claude/rules/content.md` covers posts, one-off pages, front matter, batch tags, and `@/` links.
+- `.claude/rules/templates.md` covers `base.html`, page titles, the term pages, and the components.
+- `.claude/rules/tera2.md` covers the Tera 2 syntax rules that templates must follow.
+- `.claude/rules/styling.md` covers the CSS sources, the 10px root font size, and the `zola serve`
+  CSS restart.
+- `.claude/rules/icons.md` covers regenerating the icons and the share image.
+- `.claude/rules/site-config.md` covers feeds, `include_in_feeds`, and syntax highlighting.
 
 ## Known gaps
 

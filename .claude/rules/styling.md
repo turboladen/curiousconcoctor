@@ -7,8 +7,6 @@ paths:
 
 # Styling
 
-Where the site's CSS comes from and how it reaches the page.
-
 - CSS comes from the vendored `static/{light,dark,mono}.min.css` files, with `dark` applied through
   `prefers-color-scheme`. Site-specific styles go in `sass/style.scss`, which Zola compiles and
   `base.html` inlines through `load_data`. `mono.min.css` sets the root font size to 10px and

@@ -8,8 +8,6 @@ paths:
 
 # Icons and share image
 
-How the site icon, app icons, and share image are made.
-
 - `static/favicon.svg` is the site icon's source, and the pages in `tools/icons/` render the PNGs
   from it. Zola does not build `tools/`. To regenerate, serve the repo root with
   `python3 -m http.server`, open each page in Playwright with the viewport set to the file's size,

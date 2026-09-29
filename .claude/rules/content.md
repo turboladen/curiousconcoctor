@@ -5,8 +5,6 @@ paths:
 
 # Content
 
-How posts, one-off pages, and batches are laid out under `content/`.
-
 Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-page.html`.
 
 - A post without images is a flat file, `YYYY-MM-DD-slug.md`. A post with images is a directory,
