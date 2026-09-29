@@ -35,3 +35,19 @@
   font-size: 0.9rem;
   color: var(--muted);
 }
+
+// The post count after each term on a taxonomy list page.
+.term-size {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+// The line under a post that links its drink type and tags. The dashed rule matches the
+// header and footer rules.
+.post-filed {
+  margin: 2.5rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--muted);
+  font-size: 0.9rem;
+  color: var(--muted);
+}

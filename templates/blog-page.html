@@ -9,17 +9,15 @@
 {{ page.content | safe }}
 </div>
 
-<div id="taxonomies">
-  <ul id="drink_types">
-  {% for type in page.taxonomies.drink_types %}
-    <li><a href="{{ get_taxonomy_url(kind="drink_types", name=type) | safe }}">{{ type }}</a></li>
-  {% endfor %}
-  </ul>
-  <ul id="tags">
-  {% for tag in page.taxonomies.tags %}
-    <li><a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a></li>
-  {% endfor %}
-  </ul>
-</div>
+{% set drink_types = page.taxonomies.drink_types | default(value=[]) %}
+{% set tags = page.taxonomies.tags | default(value=[]) %}
+{% if drink_types or tags %}
+{# One line lists the drink type and then the tags. first tracks whether a separator is due, and set_global carries it across both loops. #}
+{% set_global first = true %}
+<p class="post-filed">Filed under:
+  {%- for type in drink_types %}{% if not first %} ·{% endif %} <a href="{{ get_taxonomy_url(kind="drink_types", name=type) | safe }}">{{ type }}</a>{% set_global first = false %}{% endfor %}
+  {%- for tag in tags %}{% if not first %} ·{% endif %} <a href="{{ get_taxonomy_url(kind="tags", name=tag) | safe }}">{{ tag }}</a>{% set_global first = false %}{% endfor %}
+</p>
+{% endif %}
 
 {% endblock content %}

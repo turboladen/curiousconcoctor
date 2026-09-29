@@ -1,20 +1,2 @@
-{% extends "index.html" %} {% block content %}
-<h1 class="title">{{ taxonomy.name | replace(from="_", to=" ") | title }}</h1>
- {% if terms %}
-<ul id="tax_list">
-  {% for term in terms %}
-  <li>
-    <a href="{{ term.permalink | safe }}">{{ term.name }}</a>&nbsp;[{{
-    term.pages | length }}]
-  </li>
-  {% endfor %}
-</ul>
-<select id="mobile" onChange="window.location.href=this.value" name="Taxonomies">
-  <option disabled selected>{{ taxonomy.name }}</option>
-  {% for term in terms %}
-  <option value="{{ term.permalink | safe }}">
-    {{ term.name }}&nbsp;[{{ term.pages | length }}]
-  </option>
-  {% endfor %}
-</select>
-{% endif %} {% endblock content %}
+{% extends "index.html" %}
+{% block content %}{{<taxonomy_list taxonomy={taxonomy} terms={terms} />}}{% endblock content %}
