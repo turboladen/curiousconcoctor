@@ -21,3 +21,11 @@
   <p class="batch-start"><a href="{{ oldest.permalink | safe }}">Start at the beginning</a></p>
 </li>
 {% endcomponent %}
+
+{% component term_title(taxonomy, term) %}
+{%- if taxonomy.name == "tags" and "#" in term.name -%}{{ term.name | title }}
+{%- elif taxonomy.name == "tags" -%}Tagged: {{ term.name }}
+{%- elif taxonomy.name == "drink_types" -%}Drink type: {{ term.name }}
+{%- elif taxonomy.name == "post_types" -%}Post type: {{ term.name }}
+{%- else -%}{{ term.name }}{%- endif -%}
+{% endcomponent %}
