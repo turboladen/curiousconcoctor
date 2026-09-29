@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 class="title">
-  {{ page.title }}
-</h1>
-<p class="subtitle"><strong>{{ page.date }}</strong></p>
+{% if page.date %}
+<p class="post-date"><time datetime="{{ page.date | date(format="%Y-%m-%d") }}">{{ page.date | date(format="%b %-d, %Y") }}</time></p>
+{% endif %}
+<h1 class="title">{{ page.title }}</h1>
+<div class="post-body">
 {{ page.content | safe }}
+</div>
 
 <div id="taxonomies">
   <ul id="drink_types">
