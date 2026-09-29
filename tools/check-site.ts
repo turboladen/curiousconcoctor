@@ -122,7 +122,11 @@ class Site {
     } else {
       path = posix.join(dirOf(fromPath), url);
     }
-    path = decodeURIComponent(path.replace(/[?#].*$/, ""));
+    path = path.replace(/[?#].*$/, "");
+    // A stray "%" makes decodeURIComponent throw, so such a path is checked as written.
+    try {
+      path = decodeURIComponent(path);
+    } catch {}
     return posix.normalize(path).replace(/\/$/, "") + (path.endsWith("/") ? "/" : "");
   }
 
@@ -131,8 +135,9 @@ class Site {
     if (/^\/(?!\/)/.test(url)) return true;
     if (isExternal(url)) return false;
     // A relative path that climbs above the site root lands outside the subpath.
+    // posix.join drops the trailing slash, so "../.." up to the site root yields "/root" exactly.
     const joined = posix.join("/root", dirOf(fromPath), url.replace(/[?#].*$/, ""));
-    return !joined.startsWith("/root/");
+    return joined !== "/root" && !joined.startsWith("/root/");
   }
 
   // Yields [path, site path, URLs] for every built page and for the web manifest.
@@ -156,7 +161,7 @@ check(function* builtForBaseUrl(site) {
   // A build made with another base_url makes every absolute link look external.
   const home = site.pages.get("index.html")!;
   const ogUrl = home.find("meta").find(a => a.property === "og:url")?.content ?? "";
-  if (!ogUrl.startsWith(site.baseUrl)) {
+  if (ogUrl !== site.baseUrl && !ogUrl.startsWith(site.baseUrl + "/")) {
     yield ["index.html", `og:url is not under ${site.baseUrl}; build with the base_url in config.toml`];
   }
 });
