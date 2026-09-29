@@ -10,3 +10,4 @@ check:
     zola check --skip-external-links
     dprint check
     bun tools/check-site.ts public
+    uvx zizmor@1.30.1 --offline .

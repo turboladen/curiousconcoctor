@@ -34,6 +34,8 @@ paths:
   the `dprint-version` in `ci.yml`, and the dprint plugin URLs in `dprint.jsonc`.
 - Both workflows run on `ubuntu-24.04`, not `ubuntu-latest`, so a runner image change arrives as a
   deliberate edit rather than a surprise. Dependabot does not bump it.
+- `ci.yml` also runs `zizmor`, which audits the workflows and `dependabot.yml` and fails on any
+  finding. Its version is pinned in `ci.yml` and `Justfile`, and it is updated by hand.
 - The workflows default to `contents: read`. Only the deploy job gets `pages: write` and
   `id-token: write`, which `deploy-pages` needs. Checkouts set `persist-credentials: false`, since
   no step pushes.
