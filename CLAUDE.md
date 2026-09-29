@@ -91,6 +91,11 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
     matches the committed image only when rendered on macOS.
 - Running `zola build` while `zola serve` is up rewrites `public/`, which the server also reads, so
   pages can briefly load without CSS. Check styling after the build finishes.
+- `config.toml` turns on feeds with `generate_feeds` and names them `rss.xml`, so Zola builds
+  `/rss.xml` from its built-in RSS template, plus a feed for each term of the taxonomies that set
+  `feed = true`, such as `/drink-types/mead/rss.xml`. Each item's content carries `xml:base` set to
+  the post's URL, which is how readers resolve the posts' relative image paths. A page with
+  `include_in_feeds = false` in its front matter, such as Resources, stays out of the feeds.
 
 ## Tera 2
 

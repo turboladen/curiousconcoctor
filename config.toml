@@ -11,6 +11,10 @@ compile_sass = true
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = false
 
+# Build rss.xml for the site and for each taxonomy term whose taxonomy sets feed = true.
+generate_feeds = true
+feed_filenames = ["rss.xml"]
+
 taxonomies = [
   { name = "drink_types", feed = true },
   { name = "tags" },

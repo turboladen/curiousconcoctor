@@ -1,6 +1,8 @@
 +++
 title = "Resources"
 date = 2016-01-07
+# Resources is a reference page, not a post, so it stays out of the RSS feed.
+include_in_feeds = false
 
 [taxonomies]
 drink_types = []
