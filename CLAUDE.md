@@ -20,103 +20,29 @@ of 2014-era brew logs ported into Markdown. There is no application code, and th
   post reflows its paragraphs. Templates (`templates/**/*.html`), the vendored `static/**/*.min.css`
   files, and the files that `bd` writes are excluded from formatting. The beads block in this file
   sits between `dprint-ignore-start` and `dprint-ignore-end` markers, so `bd` can rewrite it.
-
-## Content model
-
-Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-page.html`.
-
-- A post without images is a flat file, `YYYY-MM-DD-slug.md`. A post with images is a directory,
-  `YYYY-MM-DD-slug/index.md`, and its images sit beside `index.md`. Converting a flat post to a
-  directory is how images get added to it.
-- Posts embed images with raw `<image src="IMG_0050.jpeg" width="100%" alt="...">` tags that use
-  paths relative to the post directory, not Markdown image syntax.
-- Links between posts use Zola's `@/` form, e.g.
-  `[text](@/blog/2014-03-15-pink-lady-cider-1/index.md)`. The target must match the file's current
-  path, so moving a flat post into a directory breaks every `@/` link that points at it.
-- Front matter is TOML (`+++`) with three taxonomies, all declared in `config.toml`:
-  - `drink_types` holds one value: `mead`, `cider`, or `liqueur`.
-  - `post_types` holds `start` for a batch's opening recipe post, `update` for a log entry, or
-    `sidebar` for a standalone write-up.
-  - `tags` holds ingredient tags plus a batch tag such as `"meyer lemon melomel #1"`. The batch tag
-    is the only thing that groups a batch's `start` and `update` posts together. The home page
-    treats any tag whose name contains `#` as a batch tag, so a batch tag needs a `#` and no other
-    tag may have one.
-- A batch's posts share a slug stem and a title prefix, such as `meyer-lemon-melomel-1` and "Meyer
-  Lemon Melomel #1". The start post's slug usually ends with the stem, sometimes after a phrase, as
-  in `the-next-step-meyer-lemon-melomel-1`, but a few differ, such as `blackberry-pear-melomel`
-  without its `-1`. Later posts add a suffix, and the tree uses these variants:
-  - `-update-K`, titled "Update K" or occasionally "Update #K", for log entries.
-  - `-bottling-day`, titled "Bottling Day!" or "Bottling Day".
-  - `-taste-K` and `-tasting-K`, titled "Taste #K", "Tasting K", or "Tasting #K", for tasting notes.
-  - `-last-taste`, titled "Last Taste".
-- Standalone write-ups, such as `2014-07-22-i-learned-some-stuff-about-kmeta`, have no batch stem.
-
-`content/pages/` holds one-off pages such as `resources.md`. They reuse the blog templates.
-
-## Templates and styling
-
-- `templates/base.html` defines the page shell: head and SEO meta, the header nav built from
-  `extra.menu_links` in `config.toml`, and a default `content` block that lists every blog post
-  grouped by year. `templates/index.html` overrides that block with the brew log: every batch,
-  newest start date first, rendered by the `batch_summary` component, and then the `sidebar` posts
-  under Notes.
-- `base.html` builds each page's `<title>` and `og:title` from a `page_title` it computes: the post
-  or page title, the `term_title` component's wording on term pages, the taxonomy name on taxonomy
-  list pages, or the section title. The home page's title is the site name alone. Tera 2 does not
-  let a block appear twice or a child template set top-level variables, so one block cannot feed
-  both `<title>` and `og:title`, and `base.html` computes the title itself.
-- Each taxonomy has `list.html` and `single.html` under `templates/<taxonomy>/`. Each `single.html`
-  heads its page with what it lists, such as "Tagged: lemon", shows a post count, and lists posts
-  with `post_in_list`, newest first. A batch tag's page is its brew log, listed oldest first.
-  `templates/components.html` holds `post_in_list`, which renders one post as a list item,
-  `batch_summary`, which renders one batch on the home page, and `term_title`, which words a term
-  page's heading and title.
-- CSS comes from the vendored `static/{light,dark,mono}.min.css` files, with `dark` applied through
-  `prefers-color-scheme`. Site-specific styles go in `sass/style.scss`, which Zola compiles and
-  `base.html` inlines through `load_data`. `mono.min.css` sets the root font size to 10px and
-  restores 18px only on `.container`, so any element outside a `.container` renders at 10px.
-- `zola serve` recompiles `style.css` when `sass/style.scss` changes, but pages keep the CSS that
-  was inlined when the server started. Restart the server to see a style change.
-- The header, the page content, and the footer each carry the `container content` classes, which
-  keep all three on the same column.
-- `templates/_old-base.html` is not referenced by any other template.
-- `static/favicon.svg` is the site icon's source, and the pages in `tools/icons/` render the PNGs
-  from it. Zola does not build `tools/`. To regenerate, serve the repo root with
-  `python3 -m http.server`, open each page in Playwright with the viewport set to the file's size,
-  and save a screenshot into `static/` with `scale: 'css'`:
-  - `render-icon.html` at 32, 192, and 512 for `favicon-32x32.png`, `icon-192.png`, and
-    `icon-512.png`, with `omitBackground: true` so the tile's corners stay transparent.
-  - `render-touch.html` at 180 for `apple-touch-icon.png`, which is opaque.
-  - `render-og.html` at 1200×630 for `og-image.png`. Its fonts are `-apple-system` and Menlo, so it
-    matches the committed image only when rendered on macOS.
 - Running `zola build` while `zola serve` is up rewrites `public/`, which the server also reads, so
   pages can briefly load without CSS. Check styling after the build finishes.
-- `config.toml` turns on feeds with `generate_feeds` and names them `rss.xml`, so Zola builds
-  `/rss.xml` from its built-in RSS template, plus a feed for each term of the taxonomies that set
-  `feed = true`, such as `/drink-types/mead/rss.xml`. Each item's content carries `xml:base` set to
-  the post's URL, which is how readers resolve the posts' relative image paths. A page with
-  `include_in_feeds = false` in its front matter, such as Resources, stays out of the feeds.
 
-## Tera 2
+## Rules files
 
-The site targets Zola 0.23, which uses Tera 2, and most Tera 1 examples found online no longer work:
+Topic rules live in `.claude/rules/`. Each file loads when Claude reads a file it covers:
 
-- Macros and `{% import %}` no longer exist. Reusable fragments are components, defined with
-  `{% component name(arg) %}` in `templates/components.html` and called as
-  `{{<name arg={value} />}}`.
-- Referencing an undefined variable is an error. `base.html` renders both pages and sections, so it
-  guards page-only fields with `page is defined and ...`.
-- A child template may only override blocks that a parent defines.
-- `date` formats use strftime specifiers, and `%+` is not supported.
-- Syntax highlighting is configured under `[markdown.highlighting]`, and `highlight_code` is
-  rejected.
+- `.claude/rules/content.md`: posts, one-off pages, front matter, batches, and `@/` links; loads for
+  `content/`.
+- `.claude/rules/templates.md`: `base.html`, page titles, term pages, and components; loads for
+  `templates/`.
+- `.claude/rules/tera2.md`: Tera 2 syntax rules; loads for `templates/`.
+- `.claude/rules/styling.md`: CSS sources, the root font size, and the `zola serve` CSS restart;
+  loads for `sass/`, `static/*.css`, and `base.html`.
+- `.claude/rules/icons.md`: regenerating the icons and share image; loads for the icon files and
+  `tools/icons/`.
+- `.claude/rules/site-config.md`: feeds and syntax highlighting; loads for `config.toml`.
 
 ## Known gaps
 
 These are visible in the current tree and may be intentional work in progress:
 
 - The nav links to `/about`, but there is no about page in `content/`.
-- The nav links to `/rss.xml`, but `config.toml` does not set `generate_feeds`.
 - The README lists an open idea: separating recipe-and-log posts from reflective write-ups on the
   site.
 

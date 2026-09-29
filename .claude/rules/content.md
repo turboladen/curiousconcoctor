@@ -1,0 +1,38 @@
+---
+paths:
+  - "content/**"
+---
+
+# Content
+
+How posts, one-off pages, and batches are laid out under `content/`.
+
+Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-page.html`.
+
+- A post without images is a flat file, `YYYY-MM-DD-slug.md`. A post with images is a directory,
+  `YYYY-MM-DD-slug/index.md`, and its images sit beside `index.md`. Converting a flat post to a
+  directory is how images get added to it.
+- Posts embed images with raw `<image src="IMG_0050.jpeg" width="100%" alt="...">` tags that use
+  paths relative to the post directory, not Markdown image syntax.
+- Links between posts use Zola's `@/` form, e.g.
+  `[text](@/blog/2014-03-15-pink-lady-cider-1/index.md)`. The target must match the file's current
+  path, so moving a flat post into a directory breaks every `@/` link that points at it.
+- Front matter is TOML (`+++`) with three taxonomies, all declared in `config.toml`:
+  - `drink_types` holds one value: `mead`, `cider`, or `liqueur`.
+  - `post_types` holds `start` for a batch's opening recipe post, `update` for a log entry, or
+    `sidebar` for a standalone write-up.
+  - `tags` holds ingredient tags plus a batch tag such as `"meyer lemon melomel #1"`. The batch tag
+    is the only thing that groups a batch's `start` and `update` posts together. The home page
+    treats any tag whose name contains `#` as a batch tag, so a batch tag needs a `#` and no other
+    tag may have one.
+- A batch's posts share a slug stem and a title prefix, such as `meyer-lemon-melomel-1` and "Meyer
+  Lemon Melomel #1". The start post's slug usually ends with the stem, sometimes after a phrase, as
+  in `the-next-step-meyer-lemon-melomel-1`, but a few differ, such as `blackberry-pear-melomel`
+  without its `-1`. Later posts add a suffix, and the tree uses these variants:
+  - `-update-K`, titled "Update K" or occasionally "Update #K", for log entries.
+  - `-bottling-day`, titled "Bottling Day!" or "Bottling Day".
+  - `-taste-K` and `-tasting-K`, titled "Taste #K", "Tasting K", or "Tasting #K", for tasting notes.
+  - `-last-taste`, titled "Last Taste".
+- Standalone write-ups, such as `2014-07-22-i-learned-some-stuff-about-kmeta`, have no batch stem.
+
+`content/pages/` holds one-off pages such as `resources.md`. They reuse the blog templates.
