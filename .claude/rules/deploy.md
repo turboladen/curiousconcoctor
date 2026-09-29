@@ -18,14 +18,14 @@ paths:
 - `.github/workflows/deploy.yml` builds and deploys on every push to `main`, and it can also be run
   by hand from the Actions tab. It runs `zola build` and `zola check --skip-external-links` before
   publishing, so a broken build or internal link stops the deploy.
-- The workflow downloads a pinned Zola release and verifies its SHA-256 before using it. To upgrade
-  Zola, change `ZOLA_VERSION` and `ZOLA_SHA256` together. Take the checksum from the release asset's
-  `digest` (`gh api repos/getzola/zola/releases/tags/v<version>`) or compute it with
-  `shasum -a 256`. The site depends on Tera 2 features, so check the Zola changelog before
-  upgrading.
+- The workflow installs Zola with `taiki-e/install-action`, pinned to an exact version in its
+  `tool: zola@<version>` input. The action checks the release against its own checksum manifest, and
+  `fallback: none` makes a version missing from that manifest fail the build. To upgrade Zola,
+  change the version in `tool`. The site depends on Tera 2 features, so check the Zola changelog
+  before upgrading.
 - Each action is pinned to a commit SHA with its version in a comment. Nothing updates those pins
-  automatically, so they are updated by hand, together with the Zola version and the dprint plugin
-  URLs in `dprint.jsonc`.
+  automatically, so they are updated by hand, together with the Zola version in `tool` and the
+  dprint plugin URLs in `dprint.jsonc`.
 - The repository's Pages source is set to GitHub Actions. That is a one-time repository setting, not
   part of the workflow.
 - To rehearse a deploy locally, build with

@@ -16,24 +16,17 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
-env:
-  ZOLA_VERSION: 0.23.6
-  # The SHA-256 of zola-v0.23.6-x86_64-unknown-linux-gnu.tar.gz. Update it with ZOLA_VERSION.
-  ZOLA_SHA256: 8f5132b3522412d04e395e0b25f6d68613ad272a873e54a2b3ebf664873024a4
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Install Zola
-        run: |
-          curl -sSfL -o zola.tar.gz \
-            "https://github.com/getzola/zola/releases/download/v${ZOLA_VERSION}/zola-v${ZOLA_VERSION}-x86_64-unknown-linux-gnu.tar.gz"
-          echo "${ZOLA_SHA256}  zola.tar.gz" | sha256sum -c
-          tar xzf zola.tar.gz zola
-          sudo install zola /usr/local/bin/zola
-          zola --version
+      # install-action verifies the release against its own checksum manifest.
+      # fallback: none makes a missing version fail instead of building Zola another way.
+      - uses: taiki-e/install-action@4cef1412cce204788f482e778a0b9187f9626a29 # v2.87.21
+        with:
+          tool: zola@0.23.6
+          fallback: none
       - uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
       - name: Build
         run: zola build
