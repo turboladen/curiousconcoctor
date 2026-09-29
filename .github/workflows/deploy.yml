@@ -6,7 +6,7 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# Each job widens this only as far as it needs.
+# A job that needs more declares its own permissions, which replace this block.
 permissions:
   contents: read
 
@@ -44,7 +44,8 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-24.04
-    # deploy-pages publishes the artifact with an OIDC token.
+    # deploy-pages calls the Pages deployment API (pages: write) and proves its origin with an OIDC
+    # token (id-token: write).
     permissions:
       pages: write
       id-token: write

@@ -28,12 +28,13 @@ paths:
   change the version in `tool`. The site depends on Tera 2 features, so check the Zola changelog
   before upgrading.
 - Each action is pinned to a commit SHA with its version in a comment. Dependabot
-  (`.github/dependabot.yml`) opens a weekly pull request when a pinned action releases, and it
-  updates the SHA and the comment together. It cannot see tool versions passed as inputs, so these
-  are updated by hand: the Zola version in `tool` and the `bun-version`, both set in both workflows,
-  the `dprint-version` in `ci.yml`, and the dprint plugin URLs in `dprint.jsonc`.
-- Both workflows run on `ubuntu-24.04`, not `ubuntu-latest`, so a runner image change arrives as a
-  deliberate edit rather than a surprise. Dependabot does not bump it.
+  (`.github/dependabot.yml`) checks weekly and opens a pull request for each pinned action with a
+  newer release, updating the SHA and the comment together. It cannot see tool versions passed as
+  inputs, so these are updated by hand: the Zola version in `tool` and the `bun-version`, both set
+  in both workflows, the `dprint-version` in `ci.yml`, and the dprint plugin URLs in `dprint.jsonc`.
+- Both workflows run on `ubuntu-24.04`, not `ubuntu-latest`, so moving to a newer Ubuntu release
+  takes a deliberate edit. GitHub still refreshes the image's packages weekly. Dependabot does not
+  bump it.
 - `ci.yml` also runs `zizmor`, which audits the workflows and `dependabot.yml` and fails on any
   finding. Its version is pinned in `ci.yml` and `Justfile`, and it is updated by hand.
 - The workflows default to `contents: read`. Only the deploy job gets `pages: write` and
