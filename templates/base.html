@@ -26,21 +26,14 @@
             title="RSS"
             href="{{ get_url(path="rss.xml") | safe }}">
 
-      {# Load favicon #}
-      <link rel="apple-touch-icon"
-            sizes="180x180"
-            href="{{ get_url(path="apple-touch-icon.png") | safe }}">
-      <link rel="icon"
-            type="image/png"
-            sizes="32x32"
+      {# Site icons. The PNG files are rendered from favicon.svg by tools/icons. #}
+      <link rel="icon" type="image/png" sizes="32x32"
             href="{{ get_url(path="favicon-32x32.png") | safe }}">
-      <link rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="{{ get_url(path="favicon-16x16.png") | safe }}">
-      <link rel="manifest" href="{{ get_url(path="site.webmanifest") | safe }}> <link rel="mask-icon" href="{{ get_url(path="safari-pinned-tab.svg") | safe }} color="#5bbad5">
-      <meta name="msapplication-TileColor" content="#da532c">
-      <meta name="theme-color" content="#ffffff">
+      <link rel="icon" type="image/svg+xml" href="{{ get_url(path="favicon.svg") | safe }}">
+      <link rel="apple-touch-icon" href="{{ get_url(path="apple-touch-icon.png") | safe }}">
+      <link rel="manifest" href="{{ get_url(path="site.webmanifest") | safe }}">
+      <meta name="theme-color" content="#fefefe" media="(prefers-color-scheme: light)">
+      <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
 
       {# Link google fonts #}
       <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +62,7 @@
         {%- if config.extra.ogimage -%}
           {% set ogimage = get_url(path=config.extra.ogimage) | safe %}
         {%- else -%}
-          {% set ogimage = get_url(path="android-chrome-512x512.png") | safe %}
+          {% set ogimage = get_url(path="og-image.png") | safe %}
         {%- endif -%}
 
         <meta property="og:image"

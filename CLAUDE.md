@@ -80,6 +80,13 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
 - The header, the page content, and the footer each carry the `container content` classes, which
   keep all three on the same column.
 - `templates/_old-base.html` is not referenced by any other template.
+- `static/favicon.svg` is the site icon's source. The PNG icons and the 1200×630 share image
+  (`og-image.png`) are rendered from it by the pages in `tools/icons/`: serve the repo root with
+  `python3 -m http.server`, open each page in Playwright at the target viewport size, and take a
+  screenshot with `scale: 'css'`, adding `omitBackground: true` for the rounded-tile icons. Zola
+  does not build `tools/`.
+- Running `zola build` while `zola serve` is up rewrites `public/`, which the server also reads, so
+  pages can briefly load without CSS. Check styling after the build finishes.
 
 ## Tera 2
 
