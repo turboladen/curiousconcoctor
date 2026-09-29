@@ -8,16 +8,16 @@
 {% component batch_summary(term) %}
 {% set newest = term.pages | first %}
 {% set oldest = term.pages | last %}
-{% set count = term.pages | length %}
 {% set first_month = oldest.date | date(format="%Y-%m") %}
 {% set last_month = newest.date | date(format="%Y-%m") %}
 <li class="batch">
   <h3 class="batch-name"><a href="{{ term.permalink | safe }}">{{ term.name | title }}</a></h3>
-  <p class="batch-meta">
-    {{ newest.taxonomies.drink_types | first }}
-    · {{ first_month }}{% if last_month != first_month %} → {{ last_month }}{% endif %}
-    · {{ count }} {% if count == 1 %}post{% else %}posts{% endif %}
-  </p>
+  <dl class="batch-facts">
+    <dt>Type</dt><dd>{{ newest.taxonomies.drink_types | first }}</dd>
+    <dt>Posts</dt><dd>{{ term.pages | length }}</dd>
+    <dt>Started</dt><dd>{{ first_month }}</dd>
+    {% if last_month != first_month %}<dt>Last post</dt><dd>{{ last_month }}</dd>{% endif %}
+  </dl>
   <p class="batch-start"><a href="{{ oldest.permalink | safe }}">Start at the beginning</a></p>
 </li>
 {% endcomponent %}

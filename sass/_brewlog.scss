@@ -1,1 +1,70 @@
+.section-label {
+  margin: 2rem 0 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
 
+.batch-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Each batch is a specimen label: a card with an offset honey shadow and a
+// numbered badge riding on its top border.
+.batch {
+  position: relative;
+  margin: 0 0 1.75rem;
+  padding: 0.9rem 1rem 0.8rem;
+  background-color: var(--card);
+  border: 1.5px solid var(--rule);
+  box-shadow: 4px 4px 0 var(--honey);
+}
+
+.batch::before {
+  content: "BATCH " counter(list-item, decimal-leading-zero);
+  position: absolute;
+  top: -0.7rem;
+  right: 0.75rem;
+  padding: 0 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--on-honey);
+  background-color: var(--honey);
+}
+
+.batch-name {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.batch-facts {
+  display: grid;
+  grid-template-columns: max-content 1fr max-content 1fr;
+  gap: 0.1rem 0.75rem;
+  margin: 0;
+  font-size: 0.8rem;
+
+  dt {
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  dd {
+    margin: 0;
+  }
+
+  @media (max-width: 30rem) {
+    grid-template-columns: max-content 1fr;
+  }
+}
+
+.batch-start {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+}

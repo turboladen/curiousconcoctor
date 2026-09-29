@@ -1,9 +1,15 @@
 {% extends "base.html" %} {% block content %}
 <h1 class="title">Brew log</h1>
 
-<h2>Batches</h2>
+<h2 class="section-label">Batches</h2>
 {% set blog = get_section(path="blog/_index.md") %}
-<ul class="batch-list">
+{# The list counts down from the number of batch tags, so the oldest batch is number 1, and the badge reads that number through counter(list-item). The start is explicit because Chromium can fix a reversed list's start while the list is still parsing, before any items exist. #}
+{% set_global batch_total = 0 %}
+{% set all_tags = get_taxonomy(kind="tags") %}
+{% for tag in all_tags.items %}
+  {% if "#" in tag.name %}{% set_global batch_total = batch_total + 1 %}{% endif %}
+{% endfor %}
+<ol class="batch-list" reversed start="{{ batch_total }}">
   {# Posts run newest first, so a batch appears when the loop reaches its oldest post, which orders batches by start date. #}
   {% for page in blog.pages %}
     {% for tag in page.taxonomies.tags %}
@@ -14,9 +20,9 @@
       {% endif %}
     {% endfor %}
   {% endfor %}
-</ul>
+</ol>
 
-<h2>Notes</h2>
+<h2 class="section-label">Notes</h2>
 {% set notes = get_taxonomy_term(kind="post_types", term="sidebar") %}
 <ul>
   {% for post in notes.pages %}{{<post_in_list post={post} />}}{% endfor %}
