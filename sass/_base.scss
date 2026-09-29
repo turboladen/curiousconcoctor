@@ -10,6 +10,8 @@ body {
   font-family: var(--mono);
   font-size: 1rem;
   line-height: 1.65;
+  // Long URLs in post text would otherwise widen the page on phones.
+  overflow-wrap: break-word;
   color: var(--ink);
   background-color: var(--paper);
   background-image:
@@ -52,8 +54,10 @@ a:hover {
   text-decoration-color: var(--ink);
 }
 
+// The ring uses --honey-ink, because --honey fails the 3:1 minimum for
+// focus indicators on the light paper.
 a:focus-visible {
-  outline: 2px solid var(--honey);
+  outline: 2px solid var(--honey-ink);
   outline-offset: 2px;
 }
 
@@ -91,6 +95,7 @@ code {
 }
 
 select {
+  max-width: 100%;
   font: inherit;
   color: var(--ink);
   background-color: var(--card);

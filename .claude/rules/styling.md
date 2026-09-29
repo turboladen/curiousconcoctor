@@ -25,6 +25,7 @@ paths:
 - The header, the page content, and the footer each carry the `container` class. They stack with no
   vertical margins, so their left borders form one continuous margin rule. Give them vertical space
   with `padding-block`, because the `padding` shorthand also resets the column's left padding.
-- The brew log's `<ol reversed>` sets `start` explicitly from a count of the batch tags. Chromium
-  can fix a reversed list's start while the list is still parsing, before any items exist, so the
-  batch badges would count down from zero.
+- The brew log's badges read a named `batch` counter that `index.html` resets inline to one more
+  than the count of batch tags, and each card decrements it. The list keeps `reversed` and an
+  explicit `start` for its own semantics, but the badges never read the built-in `list-item`
+  counter, whose behavior on reversed lists differs between engines.
