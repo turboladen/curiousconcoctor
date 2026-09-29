@@ -11,7 +11,7 @@ post_types = ["update"]
 <image src="header.jpg" width="100%">
 
 It’s time to bottle my Meyer Lemon Melomel; you can see the recipe and fermentation process
-[here](http://curiousconcoctor.com/the-next-step-meyer-lemon-melomel/). This is my first experience
+[here](@/blog/2014-01-19-the-next-step-meyer-lemon-melomel-1/index.md). This is my first experience
 bottling anything, so I’m excited yet have no idea what I’m doing. I bought some
 [Belgian 750ml bottles](http://www.midwestsupplies.com/belgian-750-ml-beer-bottles-case-of-12.html)
 from my LHBS, so I’ll be using those and a 375ml bottle from a tasty

@@ -1,5 +1,5 @@
 # The URL the site will be built for
-base_url = "https://curiousconcoctor.com"
+base_url = "https://turboladen.github.io/curiousconcoctor"
 
 title = "The Curious Concoctor"
 description = "Exploring godly concoctions for mortals."
