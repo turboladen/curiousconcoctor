@@ -8,3 +8,7 @@ updates:
     # A release has a week to be caught and yanked before Dependabot proposes it.
     cooldown:
       default-days: 7
+    # All action updates arrive together in one pull request per week.
+    groups:
+      actions:
+        patterns: ["*"]
