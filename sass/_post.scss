@@ -42,12 +42,9 @@
   color: var(--muted);
 }
 
-// The line under a post that links its drink type and tags. The dashed rule matches the
-// header and footer rules.
+// The line under a post that links its drink type and tags. The footer's dashed rule follows it.
 .post-filed {
   margin: 2.5rem 0 0;
-  padding-top: 1rem;
-  border-top: 1px dashed var(--muted);
   font-size: 0.9rem;
   color: var(--muted);
 }
