@@ -87,18 +87,18 @@ hr {
   border-top: 1px dashed var(--muted);
 }
 
+// Body text is already monospace, so inline code, such as a gravity reading, sits on a card-colored
+// chip to stand out.
 code {
+  padding: 0.1em 0.35em;
   font-family: var(--mono);
   font-size: 0.9em;
-}
-
-select {
-  max-width: 100%;
-  font: inherit;
-  color: var(--ink);
   background-color: var(--card);
-  border: 1px solid var(--rule);
-  padding: 0.4rem;
+  border: 1px solid color-mix(in srgb, var(--rule) 25%, transparent);
+  border-radius: 3px;
+  // A chip that wraps gets a closed border on each line.
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 // The handwritten notes: the site tagline and each post's date.

@@ -35,41 +35,46 @@ function decode(value: string): string {
     .replace(/&amp;/g, "&");
 }
 
+// The selectors whose text content a Page records, one entry per matching element. Text goes to
+// the most recently opened match, so a selector here must not match elements nested in each other.
+const TEXT_SELECTORS = ["title", "style", ".post-filed", ".site-mark"];
+
 class Page {
   elements: Element[] = [];
-  title = "";
-  style = "";
+  texts = new Map<string, string[]>(TEXT_SELECTORS.map(sel => [sel, []]));
 
   constructor(public urlPath: string) {}
 
   static async parse(urlPath: string, html: string): Promise<Page> {
     const page = new Page(urlPath);
-    let titles = 0;
-    await new HTMLRewriter()
-      .on("*", {
-        element(el) {
-          const attrs: Record<string, string> = {};
-          for (const [name, value] of el.attributes) attrs[name] = decode(value);
-          page.elements.push({ tag: el.tagName, attrs });
-        },
-      })
-      // Only the first <title> counts, so an SVG's <title> cannot stand in for the page's.
-      .on("title", {
+    let rewriter = new HTMLRewriter().on("*", {
+      element(el) {
+        const attrs: Record<string, string> = {};
+        for (const [name, value] of el.attributes) attrs[name] = decode(value);
+        page.elements.push({ tag: el.tagName, attrs });
+      },
+    });
+    for (const [sel, list] of page.texts) {
+      rewriter = rewriter.on(sel, {
         element() {
-          titles++;
+          list.push("");
         },
         text(chunk) {
-          if (titles === 1) page.title += chunk.text;
+          list[list.length - 1] += chunk.text;
         },
-      })
-      .on("style", {
-        text(chunk) {
-          page.style += chunk.text;
-        },
-      })
-      .transform(new Response(html))
-      .text();
+      });
+    }
+    await rewriter.transform(new Response(html)).text();
     return page;
+  }
+
+  // Only the first <title> counts, so an SVG's <title> cannot stand in for the page's.
+  get title(): string {
+    return this.texts.get("title")![0] ?? "";
+  }
+
+  get style(): string {
+    return this.texts.get("style")!.join("\n");
   }
 
   find(tag: string, cls?: string): Record<string, string>[] {
@@ -241,6 +246,31 @@ check(function* batchDatesDistinct() {
       else seen.set(key, post.file);
     }
   }
+});
+
+check(function* noJumpMenus(site) {
+  // Every term list is short enough to scan as plain links, so no page needs a <select>.
+  for (const [rel, page] of site.pages) {
+    if (page.find("select").length) yield [rel, "has a <select>; list the terms as links"];
+  }
+});
+
+check(function* postsShowFiledUnder(site) {
+  for (const [rel, page] of site.pages) {
+    if (!/^blog\/[^/]+\/index\.html$/.test(rel)) continue;
+    const filed = page.texts.get(".post-filed")!;
+    if (filed.length !== 1) yield [rel, `has ${filed.length} "Filed under" lines, expected 1`];
+    else if (!filed[0].trim().startsWith("Filed under:")) {
+      yield [rel, `"Filed under" line reads "${filed[0].trim().slice(0, 40)}"`];
+    }
+  }
+});
+
+check(function* titleMarkIsText(site) {
+  // U+FE0E asks for the text form of the alembic, so it takes the honey color instead of
+  // rendering as a color emoji.
+  const mark = site.pages.get("index.html")!.texts.get(".site-mark")![0];
+  if (mark !== "\u2697\uFE0E") yield ["index.html", "the site mark is not the alembic followed by U+FE0E"];
 });
 
 check(function* brewLogNumbering(site) {

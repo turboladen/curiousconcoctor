@@ -29,3 +29,14 @@
 {%- elif taxonomy.name == "post_types" -%}Post type: {{ term.name }}
 {%- else -%}{{ term.name }}{%- endif -%}
 {% endcomponent %}
+
+{% component taxonomy_list(taxonomy, terms) %}
+<h1 class="title">{{ taxonomy.name | replace(from="_", to=" ") | title }}</h1>
+{% if terms %}
+<ul class="term-list">
+  {% for term in terms %}
+  <li><a href="{{ term.permalink | safe }}">{{ term.name }}</a>&nbsp;<span class="term-size">[{{ term.pages | length }}]</span></li>
+  {% endfor %}
+</ul>
+{% endif %}
+{% endcomponent %}

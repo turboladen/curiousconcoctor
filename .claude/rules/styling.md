@@ -10,7 +10,8 @@ paths:
 - All CSS lives in `sass/`. `style.scss` only pulls in the partials: `_tokens.scss` holds the color
   and font custom properties for the light paper theme and the dark blueprint theme, `_base.scss`
   styles plain elements, `_layout.scss` holds the column, header, and footer, `_brewlog.scss` holds
-  the batch labels, and `_post.scss` holds post dates and photo frames.
+  the batch labels, and `_post.scss` holds post dates, photo frames, the "Filed under" line, and the
+  counts on term pages.
 - Zola compiles `style.scss`, and `base.html` inlines the result through `load_data`.
 - Colors come only from the tokens. `--honey` is decorative and fails contrast as text, so
   honey-colored text uses `--honey-ink`. Every text color must pass 4.5:1 in both themes.
