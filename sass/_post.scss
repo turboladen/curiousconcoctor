@@ -48,3 +48,57 @@
   font-size: 0.9rem;
   color: var(--muted);
 }
+
+// Links to the earlier and later posts in the batch, on a card that matches the brew log's batch
+// cards. The brew log link spans the top row, and the two neighbors stack on narrow screens.
+.batch-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem 1.5rem;
+  margin: 2.5rem 0 0;
+  padding: 0.9rem 1rem;
+  font-size: 0.9rem;
+  background-color: var(--card);
+  border: 1.5px solid var(--rule);
+  box-shadow: 4px 4px 0 var(--honey);
+}
+
+.batch-log {
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.batch-prev {
+  grid-column: 1;
+}
+
+.batch-next {
+  grid-column: 2;
+  text-align: right;
+}
+
+// The direction label above each neighbor's title. As an inline-block it takes no part in the
+// link's underline, so only the title is underlined, and its full width puts the title on the
+// next line.
+.batch-dir {
+  display: inline-block;
+  width: 100%;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@media (max-width: 30rem) {
+  .batch-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .batch-next {
+    grid-column: 1;
+    text-align: left;
+  }
+}
