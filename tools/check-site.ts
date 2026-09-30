@@ -37,7 +37,7 @@ function decode(value: string): string {
 
 // The selectors whose text content a Page records, one entry per matching element. Text goes to
 // the most recently opened match, so a selector here must not match elements nested in each other.
-const TEXT_SELECTORS = ["title", "style", ".post-filed", ".site-mark"];
+const TEXT_SELECTORS = ["title", "style", ".post-filed", ".site-mark", ".site-tagline", ".post-date"];
 
 class Page {
   elements: Element[] = [];
@@ -330,6 +330,23 @@ check(function* batchNavLinksNeighbors(site) {
   for (const [rel, page] of site.pages) {
     if (!inBatch.has(rel) && page.find("nav", "batch-nav").length) {
       yield [rel, "has a batch nav but is not in a batch of two or more posts"];
+    }
+  }
+});
+
+check(function* caveatSubsetCoversText(site) {
+  // The Caveat font file holds only the glyphs listed in tools/fonts/caveat-glyphs.txt, so any
+  // other character in the tagline or a post date would fall back to another font.
+  const listed = new Set(readFileSync(join(ROOT, "tools/fonts/caveat-glyphs.txt"), "utf8").replace(/\n/g, ""));
+  for (const [rel, page] of site.pages) {
+    for (const sel of [".site-tagline", ".post-date"]) {
+      const missing = new Set([...page.texts.get(sel)!.join("").trim()].filter(c => !listed.has(c)));
+      if (missing.size) {
+        yield [
+          rel,
+          `${sel} uses ${[...missing].map(c => JSON.stringify(c)).join(" ")}, missing from caveat-glyphs.txt`,
+        ];
+      }
     }
   }
 });
