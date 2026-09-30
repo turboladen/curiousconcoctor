@@ -38,6 +38,7 @@ lazy_async_image = true
 [extra]
 menu_links = [
   { url = "$BASE_URL", name = "Home" },
+  { url = "$BASE_URL/post-types/note", name = "Notes" },
   { url = "$BASE_URL/drink-types", name = "Drink Types" },
   { url = "$BASE_URL/post-types", name = "Post Types" },
   { url = "$BASE_URL/tags", name = "Tags" },

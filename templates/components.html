@@ -26,6 +26,7 @@
 {%- if taxonomy.name == "tags" and "#" in term.name -%}{{ term.name | title }}
 {%- elif taxonomy.name == "tags" -%}Tagged: {{ term.name }}
 {%- elif taxonomy.name == "drink_types" -%}Drink type: {{ term.name }}
+{%- elif taxonomy.name == "post_types" and term.name == "note" -%}Notes
 {%- elif taxonomy.name == "post_types" -%}Post type: {{ term.name }}
 {%- else -%}{{ term.name }}{%- endif -%}
 {% endcomponent %}
@@ -42,10 +43,13 @@
 {% endcomponent %}
 
 {% component batch_nav(page) %}
-{% set_global batch = "" %}
-{% for tag in page.taxonomies.tags %}{% if "#" in tag %}{% set_global batch = tag %}{% endif %}{% endfor %}
-{% if batch %}
-{% set term = get_taxonomy_term(kind="tags", term=batch) %}
+{# A batch post navigates its batch's tag term, and a note navigates the note term. #}
+{% set_global kind = "" %}
+{% set_global name = "" %}
+{% for tag in page.taxonomies.tags %}{% if "#" in tag %}{% set_global kind = "tags" %}{% set_global name = tag %}{% endif %}{% endfor %}
+{% if not name and "note" in page.taxonomies.post_types %}{% set_global kind = "post_types" %}{% set_global name = "note" %}{% endif %}
+{% if name %}
+{% set term = get_taxonomy_term(kind=kind, term=name) %}
 {% if term.pages | length > 1 %}
 {# term.pages runs newest first, so the page seen just before this one is the later post, and the page seen just after it is the earlier one. #}
 {% set_global previous = "" %}
@@ -57,8 +61,8 @@
   {% if p.permalink == page.permalink %}{% set_global found = true %}{% set_global later = previous %}{% endif %}
   {% set_global previous = p %}
 {% endfor %}
-<nav class="batch-nav" aria-label="Batch">
-  <a class="batch-log" href="{{ term.permalink | safe }}">{{ term.name | title }} brew log</a>
+<nav class="batch-nav" aria-label="{% if kind == "tags" %}Batch{% else %}Notes{% endif %}">
+  <a class="batch-log" href="{{ term.permalink | safe }}">{% if kind == "tags" %}{{ term.name | title }} brew log{% else %}All notes{% endif %}</a>
   {% if earlier %}<a class="batch-prev" rel="prev" href="{{ earlier.permalink | safe }}"><span class="batch-dir"><span aria-hidden="true">←</span> Earlier</span> {{ earlier.title }}</a>{% endif %}
   {% if later %}<a class="batch-next" rel="next" href="{{ later.permalink | safe }}"><span class="batch-dir">Later <span aria-hidden="true">→</span></span> {{ later.title }}</a>{% endif %}
 </nav>

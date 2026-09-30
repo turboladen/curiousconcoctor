@@ -5,7 +5,7 @@ date = 2014-08-10
 [taxonomies]
 drink_types = []
 tags = ["acid", "research"]
-post_types = ["sidebar"]
+post_types = ["note"]
 +++
 
 Good info for deciding how to build cider/mead/wine recipes with fruits.

@@ -8,8 +8,8 @@ paths:
 - `templates/base.html` defines the page shell: head and SEO meta, the header nav built from
   `extra.menu_links` in `config.toml`, and a default `content` block that lists every blog post
   grouped by year. `templates/index.html` overrides that block with the brew log: every batch,
-  newest start date first, rendered by the `batch_summary` component, and then the `sidebar` posts
-  under Notes.
+  newest start date first, rendered by the `batch_summary` component, and then the `note` posts
+  under Notes. The nav links to the `note` term page, whose `term_title` wording is "Notes".
 - `base.html` builds each page's `<title>` and `og:title` from a `page_title` it computes: the post
   or page title, the `term_title` component's wording on term pages, the taxonomy name on taxonomy
   list pages, or the section title. The home page's title is the site name alone. Tera 2 does not
@@ -24,9 +24,10 @@ paths:
   heading and title, `taxonomy_list`, and `batch_nav`.
 - `blog-page.html` renders the `batch_nav` component after each post's body. For a post in a batch
   of two or more posts, it links the batch's brew log and the earlier and later posts, with
-  `rel="prev"` and `rel="next"`. It finds the batch through `get_taxonomy_term`, whose pages run
-  newest first, and walks them with `set_global`, because a plain `set` inside a loop cannot carry
-  the neighbors out of it.
+  `rel="prev"` and `rel="next"`. A post with no batch tag and the `note` post type gets the same
+  card over the `note` term, headed "All notes". It finds the term through `get_taxonomy_term`,
+  whose pages run newest first, and walks them with `set_global`, because a plain `set` inside a
+  loop cannot carry the neighbors out of it.
 - `blog-page.html` ends each post that has a drink type or tags with a single "Filed under:" line
   that links its drink type and then its tags. `set_global` tracks whether a separator is due,
   because the line joins two loops.

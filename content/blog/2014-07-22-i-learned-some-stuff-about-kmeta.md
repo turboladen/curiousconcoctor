@@ -5,7 +5,7 @@ date = 2014-07-22
 [taxonomies]
 drink_types = []
 tags = ["process", "sanitization"]
-post_types = ["sidebar"]
+post_types = ["note"]
 +++
 
 I ran across this interesting article about Potassium Metabisulfate from winemakersacademy.com:

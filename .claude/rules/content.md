@@ -22,7 +22,8 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
 - Front matter is TOML (`+++`) with three taxonomies, all declared in `config.toml`:
   - `drink_types` holds one value: `mead`, `cider`, or `liqueur`.
   - `post_types` holds `start` for a batch's opening recipe post, `update` for a log entry, or
-    `sidebar` for a standalone write-up.
+    `note` for a standalone write-up. The `note` term is listed on the home page, linked in the nav
+    as Notes, and titled "Notes" on its page.
   - `tags` holds ingredient tags plus a batch tag such as `"meyer lemon melomel #1"`. The batch tag
     is the only thing that groups a batch's `start` and `update` posts together. The home page
     treats any tag whose name contains `#` as a batch tag, so a batch tag needs a `#` and no other
