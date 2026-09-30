@@ -56,8 +56,6 @@ and plans stay in the gitignored `docs/superpowers/` and are never committed.
 These are visible in the current tree and may be intentional work in progress:
 
 - The nav links to `/about`, but there is no about page in `content/`.
-- The README lists an open idea: separating recipe-and-log posts from reflective write-ups on the
-  site.
 
 <!-- dprint-ignore-start -->
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:1105d646 -->

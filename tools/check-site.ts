@@ -102,9 +102,14 @@ const dirOf = (path: string) => (path.endsWith("/") ? path : posix.dirname(path)
 
 const isExternal = (url: string) => /^[a-z][a-z0-9+.-]*:/i.test(url) || /^(\/\/|#)/.test(url);
 
-type Post = { file: string; date: string; tags: string[] };
+type Post = { file: string; date: string; tags: string[]; postTypes: string[] };
 
-type FrontMatter = { date?: unknown; draft?: boolean; render?: boolean; taxonomies?: { tags?: string[] } };
+type FrontMatter = {
+  date?: unknown;
+  draft?: boolean;
+  render?: boolean;
+  taxonomies?: { tags?: string[]; post_types?: string[] };
+};
 
 // Reads the front matter of every post in content/blog/ that Zola builds, so drafts and posts
 // with render = false are left out, as they are left out of their batch.
@@ -118,7 +123,12 @@ function blogPosts(): Post[] {
     // Zola reads a bare date as midnight UTC and a time without an offset as UTC. The posts use
     // no offsets, so the date text compares in time order once it is in one form.
     const date = String(meta.date ?? "").replace(/Z$/, "");
-    posts.push({ file, date: date.includes("T") ? date : `${date}T00:00:00`, tags: meta.taxonomies?.tags ?? [] });
+    posts.push({
+      file,
+      date: date.includes("T") ? date : `${date}T00:00:00`,
+      tags: meta.taxonomies?.tags ?? [],
+      postTypes: meta.taxonomies?.post_types ?? [],
+    });
   }
   return posts;
 }
@@ -292,31 +302,33 @@ check(function* titleMarkIsText(site) {
 });
 
 check(function* batchNavLinksNeighbors(site) {
-  // Each post in a batch of two or more links the batch's brew log and the posts before and
-  // after it, in date order. Zola groups tags by slug, so the batch key is the tag's slug.
-  const batches = new Map<string, Post[]>();
+  // Each post in a batch of two or more posts links the batch's brew log and the posts before and
+  // after it, in date order. A note, meaning a post with the note type and no batch, does the same
+  // over all the notes. Zola groups tags by slug, so the batch key is the tag's slug.
+  const groups = new Map<string, Post[]>();
+  const add = (log: string, post: Post) => groups.set(log, [...(groups.get(log) ?? []), post]);
   for (const post of blogPosts()) {
     const tags = post.tags.filter(t => t.includes("#"));
     if (tags.length > 1) yield [post.file, `has ${tags.length} batch tags, expected at most 1`];
-    if (tags.length) batches.set(tagSlug(tags[0]), [...(batches.get(tagSlug(tags[0])) ?? []), post]);
+    if (tags.length) add(`${site.baseUrl}/tags/${tagSlug(tags[0])}/`, post);
+    else if (post.postTypes.includes("note")) add(`${site.baseUrl}/post-types/note/`, post);
   }
   const url = (post: Post) => `${site.baseUrl}/blog/${postSlug(post)}/`;
-  const inBatch = new Set<string>();
-  for (const [slug, posts] of batches) {
+  const withNav = new Set<string>();
+  for (const [wantLog, posts] of groups) {
     if (posts.length < 2) continue;
     posts.sort((a, b) => a.date.localeCompare(b.date));
     for (const [i, post] of posts.entries()) {
       const rel = `blog/${postSlug(post)}/index.html`;
-      inBatch.add(rel);
+      withNav.add(rel);
       const page = site.pages.get(rel);
       if (!page) {
-        yield [rel, `is not built, but ${post.file} is in a batch`];
+        yield [rel, `is not built, but ${post.file} needs a nav`];
         continue;
       }
       const navs = page.find("nav", "batch-nav").length;
       if (navs !== 1) yield [rel, `has ${navs} batch navs, expected 1`];
       const log = page.find("a", "batch-log").map(a => a.href);
-      const wantLog = `${site.baseUrl}/tags/${slug}/`;
       if (log.join() !== wantLog) yield [rel, `brew log link is ${log.join(", ") || "missing"}, expected ${wantLog}`];
       for (const [dir, neighbor] of [["prev", posts[i - 1]], ["next", posts[i + 1]]] as const) {
         const got = page.find("a").filter(a => (a.rel ?? "").split(/\s+/).includes(dir)).map(a => a.href);
@@ -328,8 +340,8 @@ check(function* batchNavLinksNeighbors(site) {
     }
   }
   for (const [rel, page] of site.pages) {
-    if (!inBatch.has(rel) && page.find("nav", "batch-nav").length) {
-      yield [rel, "has a batch nav but is not in a batch of two or more posts"];
+    if (!withNav.has(rel) && page.find("nav", "batch-nav").length) {
+      yield [rel, "has a batch nav but is not in a batch or a set of notes with two or more posts"];
     }
   }
 });

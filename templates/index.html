@@ -27,7 +27,7 @@
 </ol>
 
 <h2 class="section-label">Notes</h2>
-{% set notes = get_taxonomy_term(kind="post_types", term="sidebar") %}
+{% set notes = get_taxonomy_term(kind="post_types", term="note") %}
 <ul>
   {% for post in notes.pages %}{{<post_in_list post={post} />}}{% endfor %}
 </ul>
