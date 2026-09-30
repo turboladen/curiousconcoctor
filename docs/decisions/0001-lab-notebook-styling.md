@@ -36,7 +36,8 @@ Several constraints shape how any restyle has to be built:
   and every text color must pass WCAG AA (4.5:1) in both themes.
 - **Fonts:** IBM Plex Mono for all text and Caveat for the tagline and post dates, both self-hosted
   as woff2 files in `static/fonts/` beside their OFL licenses. Their `@font-face` rules live in a
-  `<style>` block in `base.html`, where each URL goes through `get_url`.
+  `<style>` block in `base.html`, where each URL goes through `get_url`. The Caveat file is a subset
+  of the full font, cut to the characters those two places draw.
 - **Batch numbering:** the brew log is an `<ol reversed>` with an explicit `start`, and its badges
   read a named `batch` counter. `index.html` resets that counter inline to one more than the number
   of batch cards, counted with the same loop and test that renders them, and each card decrements
@@ -45,7 +46,7 @@ Several constraints shape how any restyle has to be built:
 ## Consequences
 
 - The site looks the same on every operating system and makes no requests to third-party font hosts.
-  The four font files add about 100 KB, loaded with `font-display: swap`.
+  The four font files add about 66 KB, loaded with `font-display: swap`.
 - Styling changes go through the tokens and partials, and `.claude/rules/styling.md` records the
   rules above for future edits. There is no upstream framework to update, and nothing to override.
 - The notebook direction sets the vocabulary for later design work: labeled tags on posts (fxq.5)

@@ -2,6 +2,7 @@
 paths:
   - "sass/**"
   - "static/fonts/**"
+  - "tools/fonts/**"
   - "templates/**"
 ---
 
@@ -18,6 +19,14 @@ paths:
 - The fonts are self-hosted woff2 files in `static/fonts/`, beside their OFL licenses. Their
   `@font-face` rules live in `base.html`, not in Sass, because each URL must go through `get_url`. A
   relative `url()` in the inlined CSS would resolve against each page's own path.
+- The Caveat file in `static/fonts/` is a subset that holds only the characters in
+  `tools/fonts/caveat-glyphs.txt`: the tagline, digits, the month abbreviations, a comma, and a
+  space. The full font lives beside it as `tools/fonts/caveat-latin-500-normal.full.woff2`, which
+  Zola does not build. `just subset-caveat` rebuilds the subset from the full font with
+  `pyftsubset`, keeping every layout feature, because Caveat's contextual alternates give its
+  lettering a hand-drawn look. Changing the tagline or the date format means editing the glyph file
+  and running the recipe. `tools/check-site.ts` fails when the tagline or a post date uses a
+  character the file lacks.
 - `zola serve` recompiles `style.css` when a Sass file changes, but pages keep the CSS that was
   inlined when the server started. Restart the server to see a style change.
 - The header, the page content, and the footer each carry the `container` class. They stack with no
