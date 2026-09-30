@@ -21,7 +21,12 @@ paths:
   lists posts with `post_in_list`, newest first. A batch tag's page is its brew log, listed oldest
   first. `templates/components.html` holds `post_in_list`, which renders one post as a list item,
   `batch_summary`, which renders one batch on the home page, `term_title`, which words a term page's
-  heading and title, and `taxonomy_list`.
+  heading and title, `taxonomy_list`, and `batch_nav`.
+- `blog-page.html` renders the `batch_nav` component after each post's body. For a post in a batch
+  of two or more posts, it links the batch's brew log and the earlier and later posts, with
+  `rel="prev"` and `rel="next"`. It finds the batch through `get_taxonomy_term`, whose pages run
+  newest first, and walks them with `set_global`, because a plain `set` inside a loop cannot carry
+  the neighbors out of it.
 - `blog-page.html` ends each post that has a drink type or tags with a single "Filed under:" line
   that links its drink type and then its tags. `set_global` tracks whether a separator is due,
   because the line joins two loops.

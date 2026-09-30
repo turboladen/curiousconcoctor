@@ -104,16 +104,34 @@ const isExternal = (url: string) => /^[a-z][a-z0-9+.-]*:/i.test(url) || /^(\/\/|
 
 type Post = { file: string; date: string; tags: string[] };
 
-// Reads the front matter of every post in content/blog/.
+type FrontMatter = { date?: unknown; draft?: boolean; render?: boolean; taxonomies?: { tags?: string[] } };
+
+// Reads the front matter of every post in content/blog/ that Zola builds, so drafts and posts
+// with render = false are left out, as they are left out of their batch.
 function blogPosts(): Post[] {
   const files = [...new Bun.Glob("content/blog/**/*.md").scanSync({ cwd: ROOT })].sort();
-  return files.filter(f => !f.endsWith("_index.md")).map(file => {
+  const posts: Post[] = [];
+  for (const file of files.filter(f => !f.endsWith("_index.md"))) {
     const front = readFileSync(join(ROOT, file), "utf8").split(/^\+\+\+$/m)[1];
-    const meta = Bun.TOML.parse(front) as { date?: unknown; taxonomies?: { tags?: string[] } };
-    // Zola reads a bare date as midnight UTC and a time without an offset as UTC.
+    const meta = Bun.TOML.parse(front) as FrontMatter;
+    if (meta.draft || meta.render === false) continue;
+    // Zola reads a bare date as midnight UTC and a time without an offset as UTC. The posts use
+    // no offsets, so the date text compares in time order once it is in one form.
     const date = String(meta.date ?? "").replace(/Z$/, "");
-    return { file, date: date.includes("T") ? date : `${date}T00:00:00`, tags: meta.taxonomies?.tags ?? [] };
-  });
+    posts.push({ file, date: date.includes("T") ? date : `${date}T00:00:00`, tags: meta.taxonomies?.tags ?? [] });
+  }
+  return posts;
+}
+
+// Zola's slug for a tag: lowercase, with each run of other characters turned into one hyphen.
+const tagSlug = (tag: string) => tag.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+// Zola strips a leading YYYY-MM-DD- date from a post's file or directory name to form its slug.
+function postSlug(post: Post): string {
+  const name = post.file.endsWith("/index.md")
+    ? post.file.split("/").at(-2)!
+    : post.file.split("/").at(-1)!.replace(/\.md$/, "");
+  return name.replace(/^\d{4}-\d{2}-\d{2}-/, "");
 }
 
 class Site {
@@ -271,6 +289,49 @@ check(function* titleMarkIsText(site) {
   // rendering as a color emoji.
   const mark = site.pages.get("index.html")!.texts.get(".site-mark")![0];
   if (mark !== "\u2697\uFE0E") yield ["index.html", "the site mark is not the alembic followed by U+FE0E"];
+});
+
+check(function* batchNavLinksNeighbors(site) {
+  // Each post in a batch of two or more links the batch's brew log and the posts before and
+  // after it, in date order. Zola groups tags by slug, so the batch key is the tag's slug.
+  const batches = new Map<string, Post[]>();
+  for (const post of blogPosts()) {
+    const tags = post.tags.filter(t => t.includes("#"));
+    if (tags.length > 1) yield [post.file, `has ${tags.length} batch tags, expected at most 1`];
+    if (tags.length) batches.set(tagSlug(tags[0]), [...(batches.get(tagSlug(tags[0])) ?? []), post]);
+  }
+  const url = (post: Post) => `${site.baseUrl}/blog/${postSlug(post)}/`;
+  const inBatch = new Set<string>();
+  for (const [slug, posts] of batches) {
+    if (posts.length < 2) continue;
+    posts.sort((a, b) => a.date.localeCompare(b.date));
+    for (const [i, post] of posts.entries()) {
+      const rel = `blog/${postSlug(post)}/index.html`;
+      inBatch.add(rel);
+      const page = site.pages.get(rel);
+      if (!page) {
+        yield [rel, `is not built, but ${post.file} is in a batch`];
+        continue;
+      }
+      const navs = page.find("nav", "batch-nav").length;
+      if (navs !== 1) yield [rel, `has ${navs} batch navs, expected 1`];
+      const log = page.find("a", "batch-log").map(a => a.href);
+      const wantLog = `${site.baseUrl}/tags/${slug}/`;
+      if (log.join() !== wantLog) yield [rel, `brew log link is ${log.join(", ") || "missing"}, expected ${wantLog}`];
+      for (const [dir, neighbor] of [["prev", posts[i - 1]], ["next", posts[i + 1]]] as const) {
+        const got = page.find("a").filter(a => (a.rel ?? "").split(/\s+/).includes(dir)).map(a => a.href);
+        const want = neighbor ? [url(neighbor)] : [];
+        if (got.join() !== want.join()) {
+          yield [rel, `rel=${dir} links ${got.join(", ") || "nothing"}, expected ${want.join() || "nothing"}`];
+        }
+      }
+    }
+  }
+  for (const [rel, page] of site.pages) {
+    if (!inBatch.has(rel) && page.find("nav", "batch-nav").length) {
+      yield [rel, "has a batch nav but is not in a batch of two or more posts"];
+    }
+  }
 });
 
 check(function* brewLogNumbering(site) {

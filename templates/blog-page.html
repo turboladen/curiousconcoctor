@@ -9,6 +9,8 @@
 {{ page.content | safe }}
 </div>
 
+{{<batch_nav page={page} />}}
+
 {% set drink_types = page.taxonomies.drink_types %}
 {% set tags = page.taxonomies.tags %}
 {% if drink_types or tags %}

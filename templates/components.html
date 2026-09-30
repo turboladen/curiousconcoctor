@@ -40,3 +40,28 @@
 </ul>
 {% endif %}
 {% endcomponent %}
+
+{% component batch_nav(page) %}
+{% set_global batch = "" %}
+{% for tag in page.taxonomies.tags %}{% if "#" in tag %}{% set_global batch = tag %}{% endif %}{% endfor %}
+{% if batch %}
+{% set term = get_taxonomy_term(kind="tags", term=batch) %}
+{% if term.pages | length > 1 %}
+{# term.pages runs newest first, so the page seen just before this one is the later post, and the page seen just after it is the earlier one. #}
+{% set_global previous = "" %}
+{% set_global later = "" %}
+{% set_global earlier = "" %}
+{% set_global found = false %}
+{% for p in term.pages %}
+  {% if found and not earlier %}{% set_global earlier = p %}{% endif %}
+  {% if p.permalink == page.permalink %}{% set_global found = true %}{% set_global later = previous %}{% endif %}
+  {% set_global previous = p %}
+{% endfor %}
+<nav class="batch-nav" aria-label="Batch">
+  <a class="batch-log" href="{{ term.permalink | safe }}">{{ term.name | title }} brew log</a>
+  {% if earlier %}<a class="batch-prev" rel="prev" href="{{ earlier.permalink | safe }}"><span class="batch-dir"><span aria-hidden="true">←</span> Earlier</span> {{ earlier.title }}</a>{% endif %}
+  {% if later %}<a class="batch-next" rel="next" href="{{ later.permalink | safe }}"><span class="batch-dir">Later <span aria-hidden="true">→</span></span> {{ later.title }}</a>{% endif %}
+</nav>
+{% endif %}
+{% endif %}
+{% endcomponent %}
