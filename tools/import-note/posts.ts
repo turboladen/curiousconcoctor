@@ -25,7 +25,7 @@ export function noteTitle(name: string): string {
     .map((word, i) =>
       i > 0 && SMALL_WORDS.has(word.toLowerCase())
         ? word.toLowerCase()
-        : word.charAt(0).toUpperCase() + word.slice(1),
+        : word.charAt(0).toUpperCase() + word.slice(1)
     )
     .join(" ");
 }
@@ -88,7 +88,7 @@ export function dropEmpty(entries: Entry[]): { entries: Entry[]; warnings: strin
   return { entries: kept, warnings };
 }
 
-const quote = (s: string) => `"${s.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+const quote = (s: string) => `"${s.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}"`;
 
 function frontMatter(
   title: string,

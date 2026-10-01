@@ -11,12 +11,11 @@ export function parseDateLine(md: string): RawDate | null {
   const month = Number(match[1]);
   const day = Number(match[2]);
   if (month < 1 || month > 12 || day < 1 || day > 31) return null;
-  const year =
-    match[3] === undefined
-      ? null
-      : match[3].length === 2
-        ? 2000 + Number(match[3])
-        : Number(match[3]);
+  const year = match[3] === undefined
+    ? null
+    : match[3].length === 2
+    ? 2000 + Number(match[3])
+    : Number(match[3]);
   return { month, day, year };
 }
 
@@ -24,8 +23,7 @@ const daysIn = (year: number, month: number) => new Date(Date.UTC(year, month, 0
 
 export const toDays = (d: Ymd) => Date.UTC(d.year, d.month - 1, d.day) / 86_400_000;
 
-export const formatYmd = (d: Ymd) =>
-  `${d.year}-${String(d.month).padStart(2, "0")}-${String(d.day).padStart(2, "0")}`;
+export const formatYmd = (d: Ymd) => `${d.year}-${String(d.month).padStart(2, "0")}-${String(d.day).padStart(2, "0")}`;
 
 function closestYear(month: number, day: number, created: Ymd): number {
   let best = created.year;
@@ -56,9 +54,9 @@ export function inferYears(
     let year: number;
     if (entry.year !== null) year = entry.year;
     else if (prev === null) year = closestYear(entry.month, entry.day, created);
-    else if (entry.month < prev.month)
+    else if (entry.month < prev.month) {
       year = prev.month - entry.month <= 2 ? prev.year : prev.year + 1;
-    else year = prev.year;
+    } else year = prev.year;
 
     const day = Math.min(entry.day, daysIn(year, entry.month));
     if (day !== entry.day) {
