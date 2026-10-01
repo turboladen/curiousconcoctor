@@ -26,9 +26,13 @@ paths:
   inferred date still needs a human check. A date line may carry text after a separator, as in
   `5/21. Racked` or `8/13/17: bottling`, and that text starts the entry. A date with an explicit
   year may be followed by text with no separator, as in `8/19/15 Juiced the peaches`. Dates written
-  with a month name, such as `May 4, 2016` or `Oct 2`, are read too. A line such as `1/2 tsp` is
-  never read as a date, and neither is prose that merely starts with a month word. Divider lines
-  made only of dashes, em dashes, underscores, or equals signs are dropped.
+  with a month name, such as `May 4, 2016` or `Oct 2`, are read too, and a two-digit year counts
+  there only when nothing but punctuation follows it. A line such as `1/2 tsp` is never read as a
+  date, and neither is prose that merely starts with a month word.
+- Lines made only of dashes, em dashes, underscores, or equals signs are dropped, even a single one,
+  but a list item is never a divider. Bold and italic render as nested Markdown spans with their
+  inner whitespace moved outside the markers, and a span that crosses a line break is closed and
+  reopened on each line. Literal asterisks in a note are left alone.
 - Images go to the post whose date matches the photo's EXIF capture date, and otherwise stay with
   the entry they sat beside. The importer resizes each image to 1600px on the long side and removes
   every metadata segment, GPS included. `sips` keeps EXIF through a resize, so `stripJpegMetadata`
