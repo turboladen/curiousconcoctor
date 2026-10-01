@@ -4,6 +4,11 @@
 //   bun tools/import-note.ts --list
 //   bun tools/import-note.ts "<note title>" --drink-type <type> [--tags a,b] [--title T]
 //     [--batch B] [--force] [--dry-run]
+//   bun tools/import-note.ts "<note title>" --post-type note [--drink-type <type>] [--tags a,b]
+//
+// --post-type note imports the whole note as one standalone post dated by the note's creation
+// date, with no batch tag. It is the only post type the flag accepts, and --drink-type is
+// optional with it.
 //
 // The script writes drafts. Taxonomies, alt text, and the dates it warns about still need a human
 // pass before the posts are committed.
@@ -17,7 +22,7 @@ import { convertHtml } from "./import-note/html";
 import { processImage } from "./import-note/images";
 import { getNote, listNotes } from "./import-note/notes";
 import { assignImages, batchTitle, buildPosts, dropEmpty, noteTitle } from "./import-note/posts";
-import { splitEntries } from "./import-note/split";
+import { singleEntry, splitEntries } from "./import-note/split";
 
 const DRINK_TYPES = ["mead", "cider", "wine", "liqueur"];
 const BLOG = join(import.meta.dir, "..", "content", "blog");
@@ -28,6 +33,7 @@ const { values, positionals } = parseArgs({
   options: {
     list: { type: "boolean" },
     "drink-type": { type: "string" },
+    "post-type": { type: "string" },
     tags: { type: "string" },
     title: { type: "string" },
     batch: { type: "string" },
@@ -51,14 +57,19 @@ if (values.list) {
 
 const name = positionals[0];
 if (!name) fail("give a note title, or --list");
-const drinkType = values["drink-type"];
-if (!drinkType || !DRINK_TYPES.includes(drinkType)) {
+const postType = values["post-type"];
+if (postType !== undefined && postType !== "note") fail("--post-type can only be \"note\"");
+const standalone = postType === "note";
+const drinkType = values["drink-type"] ?? null;
+if (drinkType === null ? !standalone : !DRINK_TYPES.includes(drinkType)) {
   fail(`--drink-type is required and must be one of: ${DRINK_TYPES.join(", ")}`);
 }
 
 const { created, html } = await getNote(name);
 const converted = convertHtml(html, name);
-const split = splitEntries(converted.lines, created, new Date().getFullYear());
+const split = standalone
+  ? { entries: singleEntry(converted.lines, created), dated: false, warnings: [] as string[] }
+  : splitEntries(converted.lines, created, new Date().getFullYear());
 
 const processed = await Promise.all(converted.images.map(processImage));
 

@@ -11,7 +11,7 @@ export type PostFile = {
 };
 export type BuildOptions = {
   title: string;
-  drinkType: string;
+  drinkType: string | null;
   tags: string[];
   batch: string | null;
   dated: boolean;
@@ -93,7 +93,7 @@ const quote = (s: string) => `"${s.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}
 function frontMatter(
   title: string,
   date: string,
-  drinkType: string,
+  drinkType: string | null,
   tags: string[],
   postType: string,
 ) {
@@ -103,7 +103,7 @@ function frontMatter(
     `date = ${date}`,
     "",
     "[taxonomies]",
-    `drink_types = [${quote(drinkType)}]`,
+    `drink_types = [${drinkType === null ? "" : quote(drinkType)}]`,
     `tags = [${tags.map(quote).join(", ")}]`,
     `post_types = [${quote(postType)}]`,
     "+++",

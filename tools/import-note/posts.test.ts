@@ -126,3 +126,9 @@ test("an image stays with its own entry when two entries share its capture day",
   expect(result.entries[0].lines).toEqual([t("a")]);
   expect(result.entries[1].lines).toHaveLength(2);
 });
+
+test("a post with no drink type has an empty drink_types list", () => {
+  const entries = [{ date: ymd(2014, 8, 16), lines: [t("a")] }];
+  const [post] = buildPosts(entries, [], { ...opts, drinkType: null, dated: false });
+  expect(post.content).toContain("drink_types = []\n");
+});

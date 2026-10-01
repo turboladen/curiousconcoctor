@@ -32,8 +32,11 @@ export function parseDateLine(md: string): RawDate | null {
       stray = true;
     } else {
       const separated = SEPARATOR.exec(tail);
-      if (!separated) return null;
-      rest = separated[1].trim();
+      // A date with an explicit year may be followed by text with no separator, since no fraction
+      // has three parts.
+      const inline = head[4] !== undefined && /^\s+\S/.test(tail);
+      if (!separated && !inline) return null;
+      rest = (separated ? separated[1] : tail).trim();
       // A line such as "**5/21: Racked**" opens bold inside the date match and closes it in the text.
       const unclosed = (/^\**/.exec(head[0])![0].length) - (/\**$/.exec(head[0])![0].length);
       if (unclosed > 0) rest = rest.replace(new RegExp(`\\*{1,${unclosed}}$`), "");

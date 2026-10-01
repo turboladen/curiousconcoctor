@@ -1,6 +1,6 @@
 import { expect, test } from "bun:test";
 import type { Line } from "./html";
-import { splitEntries } from "./split";
+import { singleEntry, splitEntries } from "./split";
 
 const t = (md: string): Line => ({ kind: "text", md });
 const created = { year: 2017, month: 2, day: 17 };
@@ -43,4 +43,9 @@ test("text after a date starts that entry", () => {
 test("a date line with stray punctuation warns and names the line", () => {
   const { warnings } = splitEntries([t("2/19?"), t("note")], created, 2026);
   expect(warnings.some((w) => w.includes("2/19?") && /punctuation/.test(w))).toBe(true);
+});
+
+test("singleEntry keeps every line, date lines included, on the creation date", () => {
+  const lines = [t("notes"), t("10/18/15"), t("later thought")];
+  expect(singleEntry(lines, created)).toEqual([{ date: created, lines }]);
 });
