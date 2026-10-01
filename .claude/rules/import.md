@@ -10,9 +10,11 @@ paths:
   `just import-note "<note title>" --drink-type <type>` writes draft posts for one note. Add
   `--dry-run` to see what it would write, `--title` and `--batch` to override the generated title
   and batch tag, `--tags a,b` for ingredient tags, and `--force` to overwrite existing posts.
-- `--post-type note` imports a note that is not a brew log, such as a study note or a design sketch,
-  as one standalone `note` post dated by the note's creation date. The note's own date lines stay in
-  the text, `--drink-type` is optional, and a post without one gets `drink_types = []`.
+- `--post-type note` imports a note that is not a brew log, such as a study note, as one standalone
+  `note` post dated by the note's creation date. The note's own date lines stay in the text. A brew
+  always has exactly one drink type, so `--drink-type` is required for it. A note is not a drink, so
+  `--drink-type` is an error for a note, whether it came from `--post-type note` or has no dated
+  lines, and the post gets `drink_types = []`.
 - The script writes drafts. After an import, read every warning, check each date against the note's
   plain text, write alt text for every image, and set the taxonomies. Posts follow
   `.claude/rules/content.md`.
