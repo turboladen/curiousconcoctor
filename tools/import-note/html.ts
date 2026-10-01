@@ -71,7 +71,7 @@ export function convertHtml(html: string, title: string): Converted {
   for (const raw of decodeEntities(flattened).split("\n")) {
     const md = tidyEmphasis(raw).replace(/\s+/g, " ").trim();
     // Dividers between entries are visual only, and Markdown would render them as rules.
-    if (md === "" || /^\*+$/.test(md) || /^[-–—_=\s]{2,}$/.test(md)) continue;
+    if (md === "" || /^\*+$/.test(md) || /^[\p{Pd}_=\s\u0000]{2,}$/u.test(md)) continue;
     const image = /^\u0000IMG(\d+)\u0000$/.exec(md);
     lines.push(image ? { kind: "image", index: Number(image[1]) } : { kind: "text", md });
   }

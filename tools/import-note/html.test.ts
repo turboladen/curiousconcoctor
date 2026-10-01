@@ -43,6 +43,12 @@ test("divider lines made of dashes, em dashes, underscores, or equals signs are 
   expect(lines).toEqual([text("a"), text("b")]);
 });
 
+test("a divider with a NUL or a Unicode hyphen is dropped", () => {
+  const html = `<div>a</div><div>\u2014 \u0000-</div><div>\u2010\u2011\u2012</div><div>b</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("a"), text("b")]);
+});
+
 test("a bullet or a line that merely starts with dashes is kept", () => {
   const html = `<ul><li>honey</li></ul><div>--note</div><div>-</div>`;
   const { lines } = convertHtml(html, "x");
