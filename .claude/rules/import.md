@@ -50,3 +50,6 @@ paths:
   space, dividers that contain NUL characters, and photos whose EXIF orientation `sips` does not
   report. Fetch a raw body with
   `osascript -e 'tell application "Notes" to get body of note "<title>" of folder "Homebrew"'`.
+- After a script rewrites a draft, print and read the result again. `just check` cannot catch
+  scrambled prose. Stage files by explicit path, never `git add -A`, so edits made in the working
+  tree by someone else are not swept into a commit.
