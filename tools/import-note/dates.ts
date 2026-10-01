@@ -13,20 +13,52 @@ export type RawDate = {
 };
 
 const DATE_HEAD = /^\**(\d{1,2})\/(\d{1,2})(\?)?(?:\/(\d{4}|\d{2}))?\**/;
+const MONTH_NAMES =
+  "january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sept|sep|oct|nov|dec";
+// The first three letters identify a month, whether it is spelled out or abbreviated.
+const MONTH_PREFIXES = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+const NAMED_HEAD = new RegExp(
+  `^\\**(${MONTH_NAMES})\\b\\.?\\s+(\\d{1,2})(?:,\\s*(\\d{4}|\\d{2}(?=\\**\\s*(?:$|[:.,;)\\-–—]))))?\\**`,
+  "i",
+);
 // A date may be followed by text only after a separator, so "1/2 tsp" and "3/4t" stay text.
 const SEPARATOR = /^(?:\s*[:.,;]\s+|\s*[-–—]\s+|\s+(?=\())(.+)$/;
 
-export function parseDateLine(md: string): RawDate | null {
-  const head = DATE_HEAD.exec(md);
-  if (!head) return null;
-  const month = Number(head[1]);
-  const day = Number(head[2]);
-  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
-  const year = head[4] === undefined ? null : head[4].length === 2 ? 2000 + Number(head[4]) : Number(head[4]);
+type Head = { text: string; month: number; day: number; question: boolean; year: string | undefined };
 
-  const tail = md.slice(head[0].length);
+function matchHead(md: string): Head | null {
+  const numeric = DATE_HEAD.exec(md);
+  if (numeric) {
+    return {
+      text: numeric[0],
+      month: Number(numeric[1]),
+      day: Number(numeric[2]),
+      question: numeric[3] !== undefined,
+      year: numeric[4],
+    };
+  }
+  const named = NAMED_HEAD.exec(md);
+  if (!named) return null;
+  const month = MONTH_PREFIXES.indexOf(named[1].slice(0, 3).toLowerCase()) + 1;
+  return {
+    text: named[0],
+    month,
+    day: Number(named[2]),
+    question: false,
+    year: named[3],
+  };
+}
+
+export function parseDateLine(md: string): RawDate | null {
+  const head = matchHead(md);
+  if (!head) return null;
+  const { month, day } = head;
+  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  const year = head.year === undefined ? null : head.year.length === 2 ? 2000 + Number(head.year) : Number(head.year);
+
+  const tail = md.slice(head.text.length);
   let rest = "";
-  let stray = head[3] !== undefined;
+  let stray = head.question;
   if (tail !== "") {
     if (/^[^\w\s]{1,3}\**$/.test(tail)) {
       stray = true;
@@ -34,15 +66,15 @@ export function parseDateLine(md: string): RawDate | null {
       const separated = SEPARATOR.exec(tail);
       // A date with an explicit year may be followed by text with no separator, since no fraction
       // has three parts.
-      const inline = head[4] !== undefined && /^\s+\S/.test(tail);
+      const inline = head.year !== undefined && /^\s+\S/.test(tail);
       if (!separated && !inline) return null;
       rest = (separated ? separated[1] : tail).trim();
       // A line such as "**5/21: Racked**" opens bold inside the date match and closes it in the text.
-      const unclosed = (/^\**/.exec(head[0])![0].length) - (/\**$/.exec(head[0])![0].length);
+      const unclosed = (/^\**/.exec(head.text)![0].length) - (/\**$/.exec(head.text)![0].length);
       if (unclosed > 0) rest = rest.replace(new RegExp(`\\*{1,${unclosed}}$`), "");
     }
   }
-  return { month, day, year, raw: head[0].replace(/\*/g, ""), rest, stray };
+  return { month, day, year, raw: head.text.replace(/\*/g, ""), rest, stray };
 }
 
 const daysIn = (year: number, month: number) => new Date(Date.UTC(year, month, 0)).getUTCDate();

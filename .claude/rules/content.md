@@ -41,5 +41,7 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
   - `-taste-K` and `-tasting-K`, titled "Taste #K", "Tasting K", or "Tasting #K", for tasting notes.
   - `-last-taste`, titled "Last Taste".
 - Standalone write-ups, such as `2014-07-22-i-learned-some-stuff-about-kmeta`, have no batch stem.
+- Term pages build at hyphenated paths, such as `public/drink-types/wine/index.html` and
+  `public/post-types/note/index.html`. Check the term page after a post introduces a new term.
 
 `content/pages/` holds one-off pages such as `resources.md`. They reuse the blog templates.
