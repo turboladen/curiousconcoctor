@@ -36,3 +36,15 @@ test("tables, checklists, and attachments produce warnings", () => {
   const { warnings } = convertHtml(html, "x");
   expect(warnings).toHaveLength(3);
 });
+
+test("divider lines made of dashes, em dashes, underscores, or equals signs are dropped", () => {
+  const html = `<div>a</div><div>----</div><div>——</div><div>— -</div><div>____</div><div>====</div><div>b</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("a"), text("b")]);
+});
+
+test("a bullet or a line that merely starts with dashes is kept", () => {
+  const html = `<ul><li>honey</li></ul><div>--note</div><div>-</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("- honey"), text("--note"), text("-")]);
+});

@@ -35,6 +35,22 @@ test("a date with an explicit year can be followed by text with no separator", (
   expect(parseDateLine("9/6/2015 Bottling!")).toMatchObject({ year: 2015, rest: "Bottling!" });
 });
 
+test("parseDateLine reads dates written with a month name", () => {
+  expect(parseDateLine("May 4, 2016")).toMatchObject({ month: 5, day: 4, year: 2016, rest: "" });
+  expect(parseDateLine("Oct 2")).toMatchObject({ month: 10, day: 2, year: null, rest: "" });
+  expect(parseDateLine("Oct. 3")).toMatchObject({ month: 10, day: 3, year: null });
+  expect(parseDateLine("September 5: Bottled")).toMatchObject({ month: 9, day: 5, rest: "Bottled" });
+  expect(parseDateLine("Sept 6, 2015 Racked it")).toMatchObject({ month: 9, year: 2015, rest: "Racked it" });
+  expect(parseDateLine("May 4, 2016")?.raw).toBe("May 4, 2016");
+});
+
+test("parseDateLine leaves prose that starts with a month word alone", () => {
+  expect(parseDateLine("Marinated 3 days")).toBeNull();
+  expect(parseDateLine("May add 2 cups")).toBeNull();
+  expect(parseDateLine("March 3 cups honey")).toBeNull();
+  expect(parseDateLine("Octane 4")).toBeNull();
+});
+
 test("parseDateLine leaves fractions and prose that start with numbers alone", () => {
   expect(parseDateLine("3/4t pectic enzyme")).toBeNull();
   expect(parseDateLine("1/2t pectic enzyme")).toBeNull();

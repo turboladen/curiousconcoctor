@@ -52,7 +52,8 @@ export function convertHtml(html: string, title: string): Converted {
   const lines: Line[] = [];
   for (const raw of decodeEntities(flattened).split("\n")) {
     const md = raw.replace(/\*\*\s*\*\*/g, "").replace(/\s+/g, " ").trim();
-    if (md === "" || /^\*+$/.test(md)) continue;
+    // Dividers between entries are visual only, and Markdown would render them as rules.
+    if (md === "" || /^\*+$/.test(md) || /^[-–—_=\s]{2,}$/.test(md)) continue;
     const image = /^\u0000IMG(\d+)\u0000$/.exec(md);
     lines.push(image ? { kind: "image", index: Number(image[1]) } : { kind: "text", md });
   }
