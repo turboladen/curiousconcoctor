@@ -11,6 +11,6 @@ post_types = ["update"]
 Racked to carboy. Serious white film on top of the cap. Mixed consistency–the first and last 1/2Gs
 were thin, the rest pretty thick.
 
-<image src="IMG_2842.jpeg" width="100%" alt="what's this white stuff?">
+![White film dusted across the thick nectarine pulp cap](IMG_2842.jpeg)
 
-<image src="IMG_2845.jpeg" width="100%" alt="a closer look">
+![Close-up of white film flakes clinging to a spoon and the inside of a glass](IMG_2845.jpeg)

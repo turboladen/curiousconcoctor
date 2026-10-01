@@ -12,8 +12,9 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
 - A post without images is a flat file, `YYYY-MM-DD-slug.md`. A post with images is a directory,
   `YYYY-MM-DD-slug/index.md`, and its images sit beside `index.md`. Converting a flat post to a
   directory is how images get added to it.
-- Posts embed images with raw `<image src="IMG_0050.jpeg" width="100%" alt="...">` tags that use
-  paths relative to the post directory, not Markdown image syntax.
+- Posts embed images with Markdown syntax, `![alt text](IMG_0050.jpeg)`, using paths relative to the
+  post directory. Every image needs alt text that describes what the photo shows. The stylesheet
+  sets the width, so no `width` attribute is needed.
 - The template renders the title as the page's only `h1`, so Markdown headings in a post or page
   start at `##`.
 - Links between posts use Zola's `@/` form, e.g.

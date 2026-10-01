@@ -8,6 +8,6 @@ tags = ["spiced apple cyser #1"]
 post_types = ["update"]
 +++
 
-<image src="IMG_2422.jpeg" width="100%" alt="so clear">
+![Glass of clear pale-yellow spiced apple cyser](IMG_2422.jpeg)
 
-<image src="IMG_2423.jpeg" width="100%" alt="leftovers">
+![Glass of clear cyser beside a bottle holding the darker leftovers](IMG_2423.jpeg)

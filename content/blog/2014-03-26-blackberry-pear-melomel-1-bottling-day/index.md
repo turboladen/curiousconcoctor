@@ -10,4 +10,4 @@ post_types = ["update"]
 
 Woot!
 
-<image src="IMG_2384.jpeg" width="100%" alt="bottles">
+![Three large dark bottles beside a glass of pink blackberry pear melomel](IMG_2384.jpeg)

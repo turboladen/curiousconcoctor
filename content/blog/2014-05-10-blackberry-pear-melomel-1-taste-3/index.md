@@ -17,4 +17,4 @@ point, which while pleasant, it’s just too much. The whole concoction just see
 think I’m going to age that last bottle for a good while to see if this mellows out. Seems like a
 good concoction in concept, but needs some polishing up.
 
-<image src="IMG_2587.jpeg" width="100%" alt="popped one">
+![Flute of sparkling pink blackberry pear melomel beside its opened green bottle and corkscrew](IMG_2587.jpeg)

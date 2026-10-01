@@ -19,4 +19,4 @@ The taste is pretty interesting. I definitely still get that not-quite-ripe flav
 that in the nose than on the tongue. It’s quite tart but leaves a pleasant aftertaste, I think.
 Amanda’s response was a _cringe_, _pucker_, then a “wow… I like it, but wow…”
 
-<img src="pre-bottling.jpg" width="100%">
+![A one-gallon jug of dark brown liquid on a tile counter](pre-bottling.jpg)

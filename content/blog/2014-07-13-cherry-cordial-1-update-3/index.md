@@ -19,4 +19,4 @@ for the bottle and stuck it downstairs. Should age for maybe 3 months.
 There was a bunch left in the fermenter, so I strained that and added it to a flip top. Got about
 2/3 full. Tastes pretty good actually.
 
-<image src="IMG_2915.jpeg" width="100%" alt="taste time">
+![Two small green-stemmed glasses of dark red cherry cordial beside a jar and a flip-top bottle](IMG_2915.jpeg)

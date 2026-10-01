@@ -9,7 +9,7 @@ tags = ["lemon", "recipe", "sima", "sima #1", "brewer's yeast powder", "brown su
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![A flip-top bottle of fermenting lemon sima with raisins floating at the top](header.jpg)
 
 ## The Story
 
@@ -44,7 +44,7 @@ I deviated by…
 - Using maybe 10 raisins. Cause why not?
 - Using Brewer’s Yeast.
 
-<image src="IMG_2258.jpeg" width="100%" alt="Brewer's Yeast">
+![Brewer's Yeast](IMG_2258.jpeg)
 
 **12/31/2013.** I’m not prepared with enough bottles to bottle the 4Q+ of must, so I dug up a 750ml
 flip-top and am just using that. After going through the directions for the first day, this is what

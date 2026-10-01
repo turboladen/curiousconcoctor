@@ -8,7 +8,7 @@ tags = ["fig melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![A dark red fermenting bucket wrapped in a black strap](header.jpg)
 
 Sometimes racking really sucks. Not usually, but when it’s a mess it can get to be no fun. …and this
 fig mead is turning out to be the messiest I’ve done so far.

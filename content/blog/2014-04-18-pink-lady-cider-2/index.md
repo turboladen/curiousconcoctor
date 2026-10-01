@@ -18,7 +18,7 @@ down to my LHBS, [Bencomo’s Homebrew Supply](http://www.bencomoshomebrewsupply
 some more
 [White Labs WLP775 English Cider yeast](http://www.whitelabs.com/yeast/wlp775-english-cider-yeast).
 
-<image src="IMG_2537.jpeg" width="100%" alt="brew bucket">
+![Stainless steel Brew Bucket fermenter with a conical bottom and valve on the kitchen counter](IMG_2537.jpeg)
 
 I realized shortly after starting this concoction that making cider like this is so super simple
 and, largely in part due to this simplicity, really rewarding to make. I love the feeling of taking
@@ -39,7 +39,7 @@ apples so they’d fit in
 It’s totally worth it though. In fact, working with the fruit like this is part of what makes the
 payoff so great.
 
-<image src="IMG_2539.jpeg" width="100%" alt="whoops">
+![Pink Lady apple sliced through with metal blades from the juicer stuck in its sides](IMG_2539.jpeg)
 (whoops)
 
 After slicing, I juiced most of the 35lbs of apples; ended up with just under 3G juice. My wife
@@ -47,7 +47,7 @@ started making apple butter with the pulp (added 1c brown sugar and heated)–wh
 realized I wanted pulp for the wort (tannins!), so I stole enough to fill my muslin bag pretty full.
 Added the bag to the cider (no marbles). Cider temp is at 97F now (18:35).
 
-<image src="IMG_2540.jpeg" width="100%" alt="foam">
+![Foamy cider fermenting in the stainless Brew Bucket, seen from above](IMG_2540.jpeg)
 
 Temp only down to 86F at 12am. Pitched the whole vial of yeast, which had been sitting out for about
 8 hours now (that was unintentional). Stirred a ton. Took a reading, then realized there were tons

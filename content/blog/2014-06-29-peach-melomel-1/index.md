@@ -8,7 +8,7 @@ tags = ["peach", "peach melomel #1", "recipe", "Lalvin D47 Yeast"]
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![A bag full of ripe red-gold peaches](header.jpg)
 
 ## The Story
 
@@ -35,7 +35,7 @@ it–meaning that I could’ve probably done well to use more fruit in this mead
 this mead deviated a bit from the original plan, and won’t be quite as comparable to the cider as I
 would’ve liked (just because I’m curious), but it’ll still be tasty.
 
-<image src="IMG_2704.jpeg" width="100%">
+![A one-gallon jug of orange blossom honey](IMG_2704.jpeg)
 
 ## Recipe
 
@@ -49,7 +49,7 @@ would’ve liked (just because I’m curious), but it’ll still be tasty.
 
 ### 6/19.
 
-<image src="IMG_2714.jpeg" width="100%" alt="washing those peaches">
+![washing those peaches](IMG_2714.jpeg)
 
 ### 6/29.
 
@@ -58,7 +58,7 @@ them and left them there for about and hour. Got almost all defrosted, then deci
 peaches in a pot and warm them, just to speed things up. Once about room temp, I was ready to start
 juicing.
 
-<image src="IMG_2850.jpeg" width="100%" alt="heatin em up">
+![Sliced peaches piled in two pots on the stove](IMG_2850.jpeg)
 
 Poured all the honey into the fermentor. Rinsed the honey jug with about a gallon of filtered water
 to get the remains of the honey. Added raisins.
@@ -67,7 +67,7 @@ Lined the fermenter with a 5G painters bag. Juiced all peaches and added them. A
 skins/pulp. Stirred for days with the baster. Took a gravity reading and it was off the scale!
 Tasted, and it seemed like it was all honey and water, so I stirred some more.
 
-<image src="IMG_2852.jpeg" width="100%" alt="gravity">
+![Hydrometer floating in a test jar of pale yellow must](IMG_2852.jpeg)
 
 Mixed the pectic enzyme with about 4oz. tap water, added, and mixed for about another 5 minutes.
 `SG: 1.202`, at about 80F. Not sure how accurate this is, so going to let the juice settle and take

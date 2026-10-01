@@ -8,7 +8,7 @@ tags = ["pyment #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![A hydrometer floating in a test jar of pink pyment](header.jpg)
 
 Racked. `SG: 1.001`.
 

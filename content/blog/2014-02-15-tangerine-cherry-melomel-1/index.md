@@ -8,7 +8,7 @@ tags = ["tangerine", "orange", "cherry", "melomel", "recipe", "tangerine cherry 
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![Wildflower honey, dried tart cherries, and a pot of tangerines simmering](header.jpg)
 
 ## The Story
 
@@ -55,7 +55,7 @@ juice and leaving the fruit a little more in tact. I like to think of it like a 
 press. This is the first time I’ve used it, really, but think it’ll be getting a lot more use in the
 future.
 
-<image src="IMG_2333_1.jpeg" width="100%" alt="Ready to go">
+![Wildflower honey, dried tart cherries, a pot of tangerines, an empty jug, and a hydrometer on the counter](IMG_2333_1.jpeg)
 
 Filled the fermenter with 2L of water from the fridge. Added the OJ. Added the honey. Added about
 3oz of the cherries. Stirred for about 2 mins.

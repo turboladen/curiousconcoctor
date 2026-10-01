@@ -8,7 +8,7 @@ tags = ["nectarine", "nectarine cider #1", "recipe", "White Labs WLP775 English 
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![Chopped nectarines in a zip-top bag](header.jpg)
 
 ## The Story
 
@@ -34,7 +34,7 @@ stuff was super thick).
 - [WLP775 English Cider yeast](http://www.whitelabs.com/yeast/wlp775-english-cider-yeast)
 - 3 T. pectin enzyme
 
-<image src="IMG_2691.jpeg" width="100%" alt="let's do this">
+![Zip-top bags of frozen nectarine slices with a vial of WLP775 English Cider yeast](IMG_2691.jpeg)
 
 ## Log
 

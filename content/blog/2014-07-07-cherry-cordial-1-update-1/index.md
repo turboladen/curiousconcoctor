@@ -8,4 +8,4 @@ tags = ["cherry cordial #1"]
 post_types = ["update"]
 +++
 
-<image src="IMG_2878.jpeg" width="100%" alt="big krausen">
+![big krausen](IMG_2878.jpeg)

@@ -30,7 +30,7 @@ just fear that adding the lavender will be too much. I’m definitely leaning to
 may renege on this. The fragrance of lavender is so refreshing and soothing though, that if I can
 get it right, I think this could be an excellent summer beverage.
 
-<image src="IMG_2395.jpeg" width="100%" alt="all the good things">
+![Jar of Kingsburg wildflower honey beside baskets of fresh strawberries](IMG_2395.jpeg)
 
 ## Recipe
 
@@ -59,5 +59,4 @@ Juiced the pears, added juice. Added pear mash to strawberry mash in muslin bag,
 1.110@78F. Total volume ~= 7L. Pitched yeast in 104F for 15 minutes in 5oz of water. Added and
 stirred my butt off. Covered with lid and cheesecloth.
 
-TODO: [yum]
-<image src="IMG_2397.jpeg" width="100%" alt="yum">
+TODO: [yum] ![Foamy strawberry lavender must in a white bucket with a muslin bag](IMG_2397.jpeg)

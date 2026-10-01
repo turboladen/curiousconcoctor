@@ -10,11 +10,11 @@ post_types = ["update"]
 
 Racked tonight.
 
-<image src="IMG_3053.jpeg" width="100%" alt="pre-rack">
+![Strapped carboy of cloudy brown peach melomel with a thick layer of lees](IMG_3053.jpeg)
 
 Gravity hasn’t changed since last time–still `0.990`.
 
-<image src="IMG_3054.jpeg" width="100%" alt="gravity">
+![Hydrometer in a sample cylinder reading about 0.990](IMG_3054.jpeg)
 
 After letting it off-gas for a bit, I started to enjoy a bit of my sample. It’s still pretty easy,
 so to speak–easy on the fruit, and easier than I was wanting–and that’s what I get for going light
@@ -24,4 +24,4 @@ would need some added complexity–and I’m still not sure that it doesn’t–
 now and keep it simple. I still plan on carbonating this and some bubbles will help that out a bit,
 I think.
 
-<image src="P1050323.jpeg" width="100%" alt="tasting">
+![Stemless glass of pale golden peach melomel on a tile counter](P1050323.jpeg)

@@ -10,4 +10,4 @@ post_types = ["update"]
 
 This does not look promising.
 
-<image src="white-stuff.jpg" width="100%" alt="white-stuff">
+![Bottle of nectarine cider with white clumps floating at the liquid surface](white-stuff.jpg)

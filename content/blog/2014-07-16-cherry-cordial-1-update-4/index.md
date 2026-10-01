@@ -8,12 +8,11 @@ tags = ["cherry cordial #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![Dark, foamy cherry cordial fermenting in a carboy](header.jpg)
 
 Noticed that there seemed to be a fair amount of bubbling in the bottle (which shouldn’t be, since I
 added all that vodka!), so I brought it upstairs and opened the top. To my surprise, I got a cherry
 volcano and lost about a cup full of stuff. In order to knock that off, I added about 1/4 t. Kmeta
 and re-sealed. Thought about airlocking it, but this happened:
 
-TODO: [oops]
-<image src="explosions.jpeg" width="100%" alt="oops">
+TODO: [oops] ![Cherry cordial foaming up and overflowing a jar into the sink](explosions.jpeg)

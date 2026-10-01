@@ -8,7 +8,7 @@ tags = ["lemon", "meyer lemon melomel #1", "bottling day"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![Four wire-capped bottles lined up beside a kitchen window](header.jpg)
 
 It’s time to bottle my Meyer Lemon Melomel; you can see the recipe and fermentation process
 [here](@/blog/2014-01-19-the-next-step-meyer-lemon-melomel-1/index.md). This is my first experience

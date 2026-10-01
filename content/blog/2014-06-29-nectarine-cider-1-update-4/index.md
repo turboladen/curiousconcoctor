@@ -10,4 +10,4 @@ post_types = ["update"]
 
 Looks like it’s separated quite well.
 
-<image src="IMG_2849.jpeg" width="100%" alt="separation">
+![Carboy of nectarine cider separated into a dark amber top layer and cloudy golden layer below](IMG_2849.jpeg)

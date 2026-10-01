@@ -9,7 +9,7 @@ tags = ["apple", "cinnamon", "nutmeg", "orange peel", "recipe", "spiced apple cy
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![A close-up of amber cyser with bubbles at the surface](header.jpg)
 
 ## The Story
 
@@ -59,7 +59,7 @@ Brought cinnamon and nutmeg to a boil in the muslin bag then removed from heat. 
 raisins to fermenter. Added orange peel to the muslin bag and added the bag to the must. Added
 honey. Used the boil water to rinse out the honey jar. Stirred for about 2m.
 
-<image src="IMG_2366.jpeg" width="100%" alt="putting it all together">
+![Amber apple juice must in a white bucket with a muslin spice bag floating at the side](IMG_2366.jpeg)
 
 Pitched yeast at 100F and let sit for 15m. Stirred and poured into fermenter. Stirred briskly for
 about 5m. Tested OG: `1.06x`. Too low so I added 1lb of the GG honey, stirred for another 3m or so.

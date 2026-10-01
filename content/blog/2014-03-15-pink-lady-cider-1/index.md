@@ -8,7 +8,7 @@ tags = ["apple", "pink lady cider #1", "recipe", "White Labs WLP775 English Cide
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%" alt="the ingredients">
+![A bag of Pink Lady apples with a vial of White Labs English Cider Yeast WLP775 lying on top](header.jpg)
 
 ## The Story
 
@@ -42,10 +42,10 @@ OG: `1.052`. Added muslin bag with about 4″ of mash from juicing. Stirred with
 mins. Covered with lid and put cheesecloth over airlock hole. Stored in office closet, where temp is
 about 72F (yeast directions said to ferment at 70-75).
 
-<image src="IMG_2382_1.jpeg" width="100%" alt="Juicing">
+![Foamy fresh apple juice in the juicer pitcher, with spent pulp in the juicer behind it](IMG_2382_1.jpeg)
 
 ### 22:30.
 
 Stirred with baster for a couple mins.
 
-<image src="IMG_2390_1.jpeg" width="100%" alt="yum">
+![Brown apple mash in a white bucket with a muslin bag resting on it](IMG_2390_1.jpeg)

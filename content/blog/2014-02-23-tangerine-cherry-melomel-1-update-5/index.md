@@ -8,7 +8,7 @@ tags = ["tangerine cherry melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![A one-gallon jug of orange-brown melomel with a thin foam line](header.jpg)
 
 ### 7:30pm.
 
@@ -20,4 +20,4 @@ Added the sample back to the must; carboy is almost completely full for once. Af
 a good amount of bubbling. Drank a small glass: it’s sweet and nicely and slightly tart–just enough
 to add some complexity. I really like this tangerine and honey combo so far.
 
-<image src="IMG_2352.jpeg" width="100%" alt="racked">
+![A nearly full one-gallon jug of orange-brown tangerine melomel with an airlock](IMG_2352.jpeg)

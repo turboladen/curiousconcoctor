@@ -15,4 +15,4 @@ up, but the taste is far more balanced now. Still has a honey nose, but not over
 lavender is definitely present too, but just enough. I think this can do about another week in the
 carboy then should be ready for bottling.
 
-<image src="P1050221.jpeg" width="100%" alt="off the oak">
+![Glass of golden melomel between a jar holding oak chips and a jug of red-amber melomel](P1050221.jpeg)
