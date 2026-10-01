@@ -8,6 +8,7 @@
 import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, normalize, posix } from "node:path";
 import config from "../config.toml";
+import { hasJpegGps } from "./import-note/images";
 
 type Failure = [path: string, message: string];
 type Check = (site: Site) => Iterable<Failure>;
@@ -272,6 +273,20 @@ check(function* batchDatesDistinct() {
       const other = seen.get(key);
       if (other) yield [post.file, `shares the date ${post.date} with ${other} in ${tag}`];
       else seen.set(key, post.file);
+    }
+  }
+});
+
+check(function* jpegsHaveNoLocation(site) {
+  // Phone photos record where they were taken in EXIF, so a published JPEG must not carry GPS.
+  const jpegs = new Bun.Glob("**/*.{jpg,jpeg,JPG,JPEG}").scanSync({ cwd: site.build });
+  for (const rel of [...jpegs].sort()) {
+    try {
+      if (hasJpegGps(readFileSync(join(site.build, rel)))) {
+        yield [rel, "records a GPS location in its EXIF; strip the metadata before publishing"];
+      }
+    } catch (error) {
+      yield [rel, `could not be read as a JPEG: ${(error as Error).message}`];
     }
   }
 });

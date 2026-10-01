@@ -1,3 +1,5 @@
+set positional-arguments
+
 serve-and-open:
     zola serve --open
 
@@ -10,8 +12,17 @@ check:
     zola check --skip-external-links
     dprint check
     bun tools/check-site.ts public
+    bun test tools
     uvx zizmor@1.30.1 --offline .
 
 # Rebuilds the Caveat subset from the full font. Run it after editing tools/fonts/caveat-glyphs.txt.
 subset-caveat:
     uvx --from fonttools --with brotli pyftsubset tools/fonts/caveat-latin-500-normal.full.woff2 --text-file=tools/fonts/caveat-glyphs.txt --flavor=woff2 --layout-features='*' --output-file=static/fonts/caveat-latin-500-normal.woff2
+
+# Lists the notes in Apple Notes Hobbies/Homebrew, oldest first.
+list-notes:
+    bun tools/import-note.ts --list
+
+# Imports one note as draft posts, e.g. just import-note "Just lemons" --drink-type mead
+import-note *args:
+    bun tools/import-note.ts "$@"
