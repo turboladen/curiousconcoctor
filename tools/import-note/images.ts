@@ -1,9 +1,9 @@
 // Turns an image from a note into a small JPEG with no metadata.
 
+import { $ } from "bun";
 import { mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { $ } from "bun";
 import type { Ymd } from "./dates";
 import type { Image } from "./html";
 
@@ -70,6 +70,39 @@ export function hasJpegMetadata(jpeg: Uint8Array): boolean {
   let found = false;
   walkSegments(jpeg, (marker, segment) => {
     if (!keepSegment(marker, segment)) found = true;
+  });
+  return found;
+}
+
+const EXIF_TAG = Buffer.from("Exif\0\0");
+const GPS_INFO_TAG = 0x8825;
+
+// Reads the first directory of a TIFF block and reports whether it lists the GPSInfo pointer.
+function tiffHasGps(tiff: Uint8Array): boolean {
+  const order = String.fromCharCode(tiff[0], tiff[1]);
+  if (order !== "II" && order !== "MM") return false;
+  const littleEndian = order === "II";
+  const view = new DataView(tiff.buffer, tiff.byteOffset, tiff.byteLength);
+  const fits = (offset: number, size: number) => offset >= 0 && offset + size <= tiff.length;
+  if (!fits(4, 4)) return false;
+  const directory = view.getUint32(4, littleEndian);
+  if (!fits(directory, 2)) return false;
+  const count = view.getUint16(directory, littleEndian);
+  for (let i = 0; i < count; i++) {
+    const entry = directory + 2 + i * 12;
+    if (!fits(entry, 12)) return false;
+    if (view.getUint16(entry, littleEndian) === GPS_INFO_TAG) return true;
+  }
+  return false;
+}
+
+// Returns true when the JPEG's Exif block records a location. Anything that is not a JPEG has none.
+export function hasJpegGps(jpeg: Uint8Array): boolean {
+  if (jpeg[0] !== 0xff || jpeg[1] !== 0xd8) return false;
+  let found = false;
+  walkSegments(jpeg, (marker, segment) => {
+    const isExif = marker === 0xe1 && Buffer.from(segment.subarray(4, 10)).equals(EXIF_TAG);
+    if (isExif && tiffHasGps(segment.subarray(10))) found = true;
   });
   return found;
 }

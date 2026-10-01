@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { hasJpegMetadata, stripJpegMetadata } from "./images";
+import { hasJpegGps, hasJpegMetadata, stripJpegMetadata } from "./images";
 
 const enc = (s: string) => new TextEncoder().encode(s);
 
@@ -44,4 +44,44 @@ test("bytes after the scan marker are never interpreted as segments", () => {
 
 test("non-JPEG input throws", () => {
   expect(() => stripJpegMetadata(Buffer.from([0x89, 0x50]))).toThrow("not a JPEG");
+});
+
+// Builds an Exif APP1 segment whose IFD0 lists the given tags, each as a LONG with value 0.
+function exifWithTags(tags: number[], littleEndian: boolean): Uint8Array {
+  const tiff = Buffer.alloc(8 + 2 + tags.length * 12 + 4);
+  const u16 = (v: number, o: number) => (littleEndian ? tiff.writeUInt16LE(v, o) : tiff.writeUInt16BE(v, o));
+  const u32 = (v: number, o: number) => (littleEndian ? tiff.writeUInt32LE(v, o) : tiff.writeUInt32BE(v, o));
+  tiff.write(littleEndian ? "II" : "MM", 0, "latin1");
+  u16(0x2a, 2);
+  u32(8, 4);
+  u16(tags.length, 8);
+  tags.forEach((tag, i) => {
+    u16(tag, 10 + i * 12);
+    u16(4, 12 + i * 12);
+    u32(1, 14 + i * 12);
+  });
+  return segment(0xe1, Buffer.concat([enc("Exif\0\0"), tiff]));
+}
+
+test("hasJpegGps finds the GPS pointer in either byte order", () => {
+  for (const littleEndian of [true, false]) {
+    const withGps = Buffer.concat([SOI, jfif, exifWithTags([0x010f, 0x8825], littleEndian), SCAN]);
+    expect(hasJpegGps(withGps)).toBe(true);
+  }
+});
+
+test("hasJpegGps is false for Exif without GPS, for other metadata, and for no metadata", () => {
+  const noGps = Buffer.concat([SOI, jfif, exifWithTags([0x010f, 0x0110], true), SCAN]);
+  expect(hasJpegGps(noGps)).toBe(false);
+  expect(hasJpegGps(Buffer.concat([SOI, jfif, xmp, SCAN]))).toBe(false);
+  expect(hasJpegGps(Buffer.concat([SOI, jfif, SCAN]))).toBe(false);
+});
+
+test("hasJpegGps is false for a file that is not a JPEG", () => {
+  expect(hasJpegGps(Buffer.from("RIFFxxxxWEBP"))).toBe(false);
+});
+
+test("hasJpegGps does not run off the end of a truncated Exif block", () => {
+  const truncated = Buffer.concat([SOI, segment(0xe1, enc("Exif\0\0II*\0")), SCAN]);
+  expect(hasJpegGps(truncated)).toBe(false);
 });
