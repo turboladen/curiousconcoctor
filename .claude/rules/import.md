@@ -40,3 +40,13 @@ paths:
 - `osascript` and `sips` are used only in `notes.ts` and `images.ts`. Every other module is pure,
   and `bun test tools` must pass on Linux because CI runs it there.
 - `tools/check-site.ts` fails the build if a published JPEG records a GPS location.
+- Read the source before editing a draft:
+  `osascript -e 'tell application "Notes" to get plaintext of note "<title>" of folder "Homebrew"'`.
+  Before a PR, run `grep -rn '!\[\](' content/blog` (empty alt text; expect no output),
+  `dprint fmt`, and `just check`, then open the built pages for the batch.
+- When a note converts badly, fix the converter with a failing test instead of hand-editing the
+  draft. Then convert every note with the old and the new code and diff the lines, because all the
+  notes share it. Notes' HTML has quirks: `&amp` without a semicolon, bold runs that hold only a
+  space, dividers that contain NUL characters, and photos whose EXIF orientation `sips` does not
+  report. Fetch a raw body with
+  `osascript -e 'tell application "Notes" to get body of note "<title>" of folder "Homebrew"'`.

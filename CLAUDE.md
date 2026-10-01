@@ -24,11 +24,12 @@ ported into Markdown. There is no application code. `tools/check-site.ts` checks
   Bun and uv installed.
 - `zola build` writes the site to `public/`, which is gitignored. `zola check` also validates links.
   Add `--skip-external-links` to check only internal links, which is fast and works offline.
-- `dprint fmt` formats Markdown, TOML, and the other configured types. `dprint check` reports
-  without writing. Markdown is hard-wrapped at 100 columns (`textWrap: always`), so reformatting a
-  post reflows its paragraphs. Templates (`templates/**/*.html`) and the files that `bd` writes are
-  excluded from formatting. The beads block in this file sits between `dprint-ignore-start` and
-  `dprint-ignore-end` markers, so `bd` can rewrite it.
+- `dprint fmt` formats Markdown, TOML, `tools/**/*.ts`, and the other configured types.
+  `dprint check` reports without writing. Markdown is hard-wrapped at 100 columns
+  (`textWrap: always`), so reformatting a post reflows its paragraphs. Templates
+  (`templates/**/*.html`) and the files that `bd` writes are excluded from formatting. The beads
+  block in this file sits between `dprint-ignore-start` and `dprint-ignore-end` markers, so `bd` can
+  rewrite it.
 - Running `zola build` while `zola serve` is up rewrites `public/`, which the server also reads, so
   pages can briefly load without CSS. Check styling after the build finishes.
 - Style changes are verified in Playwright. Useful checks: sweep every `<loc>` in `/sitemap.xml`
