@@ -21,7 +21,8 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
   `[text](@/blog/2014-03-15-pink-lady-cider-1/index.md)`. The target must match the file's current
   path, so moving a flat post into a directory breaks every `@/` link that points at it.
 - Front matter is TOML (`+++`) with three taxonomies, all declared in `config.toml`:
-  - `drink_types` holds one value: `mead`, `cider`, or `liqueur`.
+  - `drink_types` holds one value: `mead`, `cider`, `wine`, or `liqueur`. Zola creates a term the
+    first time a post uses it, so a new type needs no change to `config.toml` or the templates.
   - `post_types` holds `start` for a batch's opening recipe post, `update` for a log entry, or
     `note` for a standalone write-up. The `note` term is listed on the home page, linked in the nav
     as Notes, and titled "Notes" on its page.
@@ -40,5 +41,7 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
   - `-taste-K` and `-tasting-K`, titled "Taste #K", "Tasting K", or "Tasting #K", for tasting notes.
   - `-last-taste`, titled "Last Taste".
 - Standalone write-ups, such as `2014-07-22-i-learned-some-stuff-about-kmeta`, have no batch stem.
+- Term pages build at hyphenated paths, such as `public/drink-types/wine/index.html` and
+  `public/post-types/note/index.html`. Check the term page after a post introduces a new term.
 
 `content/pages/` holds one-off pages such as `resources.md`. They reuse the blog templates.

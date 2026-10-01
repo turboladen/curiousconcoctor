@@ -49,10 +49,53 @@ test("a divider with a NUL or a Unicode hyphen is dropped", () => {
   expect(lines).toEqual([text("a"), text("b")]);
 });
 
-test("a bullet or a line that merely starts with dashes is kept", () => {
-  const html = `<ul><li>honey</li></ul><div>--note</div><div>-</div>`;
+test("a line that merely starts with dashes is kept", () => {
+  const html = `<ul><li>honey</li></ul><div>--note</div>`;
   const { lines } = convertHtml(html, "x");
-  expect(lines).toEqual([text("- honey"), text("--note"), text("-")]);
+  expect(lines).toEqual([text("- honey"), text("--note")]);
+});
+
+test("a divider of one character is dropped too", () => {
+  const html = `<div>a</div><div>-</div><div>—</div><div>_</div><div>=</div><div>b</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("a"), text("b")]);
+});
+
+test("a list item whose only content is dashes is kept", () => {
+  const html = `<ul><li>-</li><li>--</li><li>x</li></ul>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("- -"), text("- --"), text("- x")]);
+});
+
+test("empty emphasis in the middle of a line leaves no markers", () => {
+  const html = `<div>a<b></b>b</div><div>c<i></i>d</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("ab"), text("cd")]);
+});
+
+test("nested emphasis closes in order", () => {
+  const html = `<div><b>a <i>b </i>c</b> d</div><div>x<b><i> y </i></b>z</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("**a *b* c** d"), text("x ***y*** z")]);
+});
+
+test("literal asterisks in the text are left alone", () => {
+  const html = `<div>2 * 3 = 6 and 4*5</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("2 * 3 = 6 and 4*5")]);
+});
+
+test("emphasis that spans a line break is closed and reopened on each line", () => {
+  const html = `<div><b>one<br>two</b> three</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("**one**"), text("**two** three")]);
+});
+
+test("an image inside emphasis stays an image line", () => {
+  const b64 = Buffer.from([0xff, 0xd8, 0xff, 0xd9]).toString("base64");
+  const html = `<div><b>a<br><img src="data:image/jpeg;base64,${b64}"><br>b</b></div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("**a**"), { kind: "image", index: 0 }, text("**b**")]);
 });
 
 test("whitespace inside emphasis markers moves outside them", () => {

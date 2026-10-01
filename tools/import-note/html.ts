@@ -29,16 +29,64 @@ function decodeEntities(s: string): string {
   );
 }
 
+// Bold and italic tags become private-use characters first, so literal asterisks in a note's text
+// are never mistaken for emphasis. They turn into Markdown markers only after each line is balanced.
+const BOLD_OPEN = "\uE000";
+const BOLD_CLOSE = "\uE001";
+const ITALIC_OPEN = "\uE002";
+const ITALIC_CLOSE = "\uE003";
+const EMPHASIS_CHARS = /[\uE000-\uE003]/g;
+
+// Emphasis can open on one line and close on a later one. Each line has to be balanced by itself,
+// so the open styles carry over: a line closes them at its end and the next line reopens them.
+function balance(line: string, carried: string[]): { line: string; open: string[] } {
+  const open = [...carried];
+  for (const c of line) {
+    if (c === BOLD_OPEN || c === ITALIC_OPEN) {
+      open.push(c);
+    } else if (c === BOLD_CLOSE || c === ITALIC_CLOSE) {
+      const index = open.lastIndexOf(c === BOLD_CLOSE ? BOLD_OPEN : ITALIC_OPEN);
+      if (index >= 0) open.splice(index, 1);
+    }
+  }
+  const closers = open
+    .map((c) => (c === BOLD_OPEN ? BOLD_CLOSE : ITALIC_CLOSE))
+    .reverse()
+    .join("");
+  return { line: carried.join("") + line + closers, open };
+}
+
 // Markdown does not close emphasis that has whitespace just inside its markers, so the whitespace
 // moves outside. Emphasis around nothing but whitespace leaves only the whitespace.
-function tidyEmphasis(s: string): string {
-  return s.replace(/(\*{1,2})([^*]+)\1/g, (_match, mark: string, inner: string) => {
-    const core = inner.trim();
-    if (core === "") return inner;
-    const lead = inner.slice(0, inner.length - inner.trimStart().length);
-    const trail = inner.slice(inner.trimEnd().length);
-    return `${lead}${mark}${core}${mark}${trail}`;
-  });
+function wrapEmphasis(mark: string, inner: string): string {
+  const core = inner.trim();
+  if (core === "") return inner;
+  const lead = inner.slice(0, inner.length - inner.trimStart().length);
+  const trail = inner.slice(inner.trimEnd().length);
+  return `${lead}${mark}${core}${mark}${trail}`;
+}
+
+// Renders one balanced line, nesting each style inside the one that opened first.
+function renderEmphasis(line: string): string {
+  let i = 0;
+  const run = (closer: string | null, active: Set<string>): string => {
+    let out = "";
+    while (i < line.length) {
+      const c = line[i++];
+      if (c === BOLD_OPEN || c === ITALIC_OPEN) {
+        const bold = c === BOLD_OPEN;
+        const mark = bold ? "**" : "*";
+        const inner = run(bold ? BOLD_CLOSE : ITALIC_CLOSE, new Set([...active, mark]));
+        out += active.has(mark) ? inner : wrapEmphasis(mark, inner);
+      } else if (c === BOLD_CLOSE || c === ITALIC_CLOSE) {
+        if (c === closer) return out;
+      } else {
+        out += c;
+      }
+    }
+    return out;
+  };
+  return run(null, new Set());
 }
 
 // Each non-empty line becomes its own paragraph later, so the output has no hard line breaks.
@@ -63,17 +111,29 @@ export function convertHtml(html: string, title: string): Converted {
     .replace(/<h3[^>]*>/gi, "\n#### ")
     .replace(/<li[^>]*>/gi, "\n- ")
     .replace(/<\/(div|p|h[1-6]|li|ul|ol)>|<br\s*\/?>/gi, "\n")
-    .replace(/<\/?(b|strong)\b[^>]*>/gi, "**")
-    .replace(/<\/?(i|em)\b[^>]*>/gi, "*")
+    .replace(/<(b|strong)\b[^>]*>/gi, BOLD_OPEN)
+    .replace(/<\/(b|strong)>/gi, BOLD_CLOSE)
+    .replace(/<(i|em)\b[^>]*>/gi, ITALIC_OPEN)
+    .replace(/<\/(i|em)>/gi, ITALIC_CLOSE)
     .replace(/<[^>]+>/g, "");
 
   const lines: Line[] = [];
+  let open: string[] = [];
   for (const raw of decodeEntities(flattened).split("\n")) {
-    const md = tidyEmphasis(raw).replace(/\s+/g, " ").trim();
-    // Dividers between entries are visual only, and Markdown would render them as rules.
-    if (md === "" || /^\*+$/.test(md) || /^[\p{Pd}_=\s\u0000]{2,}$/u.test(md)) continue;
-    const image = /^\u0000IMG(\d+)\u0000$/.exec(md);
-    lines.push(image ? { kind: "image", index: Number(image[1]) } : { kind: "text", md });
+    // An image keeps its own line however much emphasis surrounds it.
+    const image = /^\s*\u0000IMG(\d+)\u0000\s*$/.exec(raw.replace(EMPHASIS_CHARS, ""));
+    if (image) {
+      lines.push({ kind: "image", index: Number(image[1]) });
+      continue;
+    }
+    const balanced = balance(raw, open);
+    open = balanced.open;
+    const md = renderEmphasis(balanced.line).replace(/\s+/g, " ").trim();
+    if (md === "" || /^\*+$/.test(md)) continue;
+    // Dividers between entries are visual only, and Markdown would render them as rules. A list
+    // item is never a divider, even when its text is a dash.
+    if (!md.startsWith("- ") && /^[\p{Pd}_=\s\u0000]+$/u.test(md)) continue;
+    lines.push({ kind: "text", md });
   }
 
   const first = lines[0];
