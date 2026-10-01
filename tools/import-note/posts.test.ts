@@ -116,3 +116,13 @@ test("consecutive bullets stay in one list", () => {
   const [post] = buildPosts(entries, [], { ...opts, dated: false });
   expect(post.content).toContain("- honey\n- water\n\nthen\n");
 });
+
+test("an image stays with its own entry when two entries share its capture day", () => {
+  const entries = [
+    { date: ymd(2017, 2, 15), lines: [t("a")] },
+    { date: ymd(2017, 2, 15), lines: [t("b"), { kind: "image" as const, index: 0 }] },
+  ];
+  const result = assignImages(entries, [ymd(2017, 2, 15)]);
+  expect(result.entries[0].lines).toEqual([t("a")]);
+  expect(result.entries[1].lines).toHaveLength(2);
+});

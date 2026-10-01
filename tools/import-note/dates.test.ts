@@ -21,6 +21,8 @@ test("parseDateLine keeps the text that follows a date", () => {
   expect(parseDateLine("7/29, 7:25pm")).toMatchObject({ month: 7, day: 29, rest: "7:25pm" });
   expect(parseDateLine("9/2/19 (Labor Day)")).toMatchObject({ year: 2019, rest: "(Labor Day)" });
   expect(parseDateLine("8/13/17 - bottling")).toMatchObject({ rest: "bottling" });
+  expect(parseDateLine("**5/21: Racked**")).toMatchObject({ month: 5, day: 21, rest: "Racked" });
+  expect(parseDateLine("**5/21**: Racked")).toMatchObject({ rest: "Racked" });
 });
 
 test("parseDateLine leaves fractions and prose that start with numbers alone", () => {

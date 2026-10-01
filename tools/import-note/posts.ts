@@ -58,7 +58,7 @@ export function assignImages(
     for (const line of entry.lines) {
       if (line.kind !== "image") continue;
       const when = taken[line.index];
-      if (!when) continue;
+      if (!when || toDays(entry.date) === toDays(when)) continue;
       const to = result.findIndex((e) => toDays(e.date) === toDays(when));
       if (to >= 0) {
         if (to !== from) moves.push({ from, line, to });

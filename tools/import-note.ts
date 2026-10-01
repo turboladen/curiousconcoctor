@@ -19,6 +19,7 @@ import { getNote, listNotes } from "./import-note/notes";
 import { assignImages, batchTitle, buildPosts, dropEmpty, noteTitle } from "./import-note/posts";
 import { splitEntries } from "./import-note/split";
 
+const DRINK_TYPES = ["mead", "cider", "wine", "liqueur"];
 const BLOG = join(import.meta.dir, "..", "content", "blog");
 
 const { values, positionals } = parseArgs({
@@ -51,14 +52,15 @@ if (values.list) {
 const name = positionals[0];
 if (!name) fail("give a note title, or --list");
 const drinkType = values["drink-type"];
-if (!drinkType) fail("--drink-type is required (mead, cider, liqueur, or wine)");
+if (!drinkType || !DRINK_TYPES.includes(drinkType)) {
+  fail(`--drink-type is required and must be one of: ${DRINK_TYPES.join(", ")}`);
+}
 
 const { created, html } = await getNote(name);
 const converted = convertHtml(html, name);
 const split = splitEntries(converted.lines, created, new Date().getFullYear());
 
-const processed = [];
-for (const image of converted.images) processed.push(await processImage(image));
+const processed = await Promise.all(converted.images.map(processImage));
 
 const assigned = assignImages(
   split.entries,
@@ -68,6 +70,10 @@ const kept = dropEmpty(assigned.entries);
 if (kept.entries.length === 0) fail(`note "${name}" has no content`);
 
 const title = values.title ?? (split.dated ? batchTitle(name) : noteTitle(name));
+const batch = values.batch ?? (split.dated ? title.toLowerCase() : null);
+if (split.dated && !batch?.includes("#")) {
+  fail(`the batch tag "${batch}" needs a #, as in "just lemons #1"; pass --title or --batch with one`);
+}
 const posts = buildPosts(
   kept.entries,
   processed.map((p) => p.jpeg),
@@ -78,7 +84,7 @@ const posts = buildPosts(
       .split(",")
       .map((t) => t.trim())
       .filter(Boolean),
-    batch: values.batch ?? (split.dated ? title.toLowerCase() : null),
+    batch,
     dated: split.dated,
   },
 );
