@@ -9,7 +9,8 @@ paths:
 - `tools/check-site.ts` checks a finished build, not the sources, so it sees what readers get. Run
   it with `just check`, or run `bun tools/check-site.ts <dir>` on a build made with the `base_url`
   in `config.toml`. It has no dependencies: Bun parses the HTML with its built-in `HTMLRewriter` and
-  imports `config.toml` directly. Keep it a single file with no `package.json`.
+  imports `config.toml` directly. Keep it free of dependencies and `package.json`; it may import
+  other files under `tools/`, such as `import-note/images.ts` for the GPS check.
 - A check is a generator function passed to `check()`. It takes the `Site` and yields
   `[path, message]` pairs, one per failure. `site.pages` maps each built HTML file to a parsed
   `Page`, and `site.sitePath` and `site.serves` turn a URL into a site path and test whether the

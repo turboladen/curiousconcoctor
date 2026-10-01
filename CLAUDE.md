@@ -8,15 +8,20 @@ repository.
 This repository holds the source for The Curious Concoctor, a homebrewing blog (mead, cider,
 liqueur) built with the [Zola](https://www.getzola.org) static site generator and published at
 https://turboladen.github.io/curiousconcoctor/. Most of the content consists of 2014-era brew logs
-ported into Markdown. There is no application code. `tools/check-site.ts` checks the built site.
+ported into Markdown. There is no application code. `tools/check-site.ts` checks the built site, and
+`tools/import-note.ts` imports notes from Apple Notes.
 
 ## Commands
 
 - `just serve` runs `zola serve`, a live-reloading dev server on http://127.0.0.1:1111.
 - `just serve-and-open` does the same and opens a browser.
+- `just list-notes` lists the notes in Apple Notes `Hobbies/Homebrew`.
+- `just import-note` writes draft posts for one of those notes. `.claude/rules/import.md` has its
+  arguments.
 - `just check` runs what CI runs on pull requests: `zola build`, `zola check`, `dprint check`, and
-  `tools/check-site.ts`, a Bun script that checks the built HTML in `public/`, and `zizmor`, which
-  audits the GitHub workflows. It needs Bun and uv installed.
+  `tools/check-site.ts`, a Bun script that checks the built HTML in `public/`, `bun test tools`,
+  which runs the importer's unit tests, and `zizmor`, which audits the GitHub workflows. It needs
+  Bun and uv installed.
 - `zola build` writes the site to `public/`, which is gitignored. `zola check` also validates links.
   Add `--skip-external-links` to check only internal links, which is fast and works offline.
 - `dprint fmt` formats Markdown, TOML, and the other configured types. `dprint check` reports
@@ -47,6 +52,7 @@ Before creating a file under one of those paths, read the matching rules file fi
 - `.claude/rules/deploy.md` covers the CI and deploy workflows, the pinned Zola release, and the
   subpath the site lives under.
 - `.claude/rules/checks.md` covers `tools/check-site.ts` and how to add a check.
+- `.claude/rules/import.md` covers `tools/import-note.ts` and importing Apple Notes.
 
 Durable design decisions are ADRs in `docs/decisions/`, numbered `NNNN-topic.md`. Superpowers specs
 and plans stay in the gitignored `docs/superpowers/` and are never committed.

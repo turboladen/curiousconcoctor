@@ -32,6 +32,8 @@ jobs:
         run: zola check --skip-external-links
       - name: Check site
         run: bun tools/check-site.ts public
+      - name: Test tools
+        run: bun test tools
 
   # Audits the workflows and dependabot.yml for security problems such as broad permissions.
   zizmor:
