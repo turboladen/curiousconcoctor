@@ -60,8 +60,8 @@ if (!name) fail("give a note title, or --list");
 const postType = values["post-type"];
 if (postType !== undefined && postType !== "note") fail("--post-type can only be \"note\"");
 const standalone = postType === "note";
-const drinkType = values["drink-type"] ?? null;
-if (drinkType === null ? !standalone : !DRINK_TYPES.includes(drinkType)) {
+const drinkType = values["drink-type"];
+if (drinkType === undefined ? !standalone : !DRINK_TYPES.includes(drinkType)) {
   fail(`--drink-type is required and must be one of: ${DRINK_TYPES.join(", ")}`);
 }
 
@@ -90,7 +90,7 @@ const posts = buildPosts(
   processed.map((p) => p.jpeg),
   {
     title,
-    drinkType,
+    drinkTypes: drinkType === undefined ? [] : [drinkType],
     tags: (values.tags ?? "")
       .split(",")
       .map((t) => t.trim())

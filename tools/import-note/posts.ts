@@ -11,7 +11,7 @@ export type PostFile = {
 };
 export type BuildOptions = {
   title: string;
-  drinkType: string | null;
+  drinkTypes: string[];
   tags: string[];
   batch: string | null;
   dated: boolean;
@@ -93,7 +93,7 @@ const quote = (s: string) => `"${s.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}
 function frontMatter(
   title: string,
   date: string,
-  drinkType: string | null,
+  drinkTypes: string[],
   tags: string[],
   postType: string,
 ) {
@@ -103,7 +103,7 @@ function frontMatter(
     `date = ${date}`,
     "",
     "[taxonomies]",
-    `drink_types = [${drinkType === null ? "" : quote(drinkType)}]`,
+    `drink_types = [${drinkTypes.map(quote).join(", ")}]`,
     `tags = [${tags.map(quote).join(", ")}]`,
     `post_types = [${quote(postType)}]`,
     "+++",
@@ -146,7 +146,7 @@ export function buildPosts(entries: Entry[], jpegs: Uint8Array[], opts: BuildOpt
     const base = `${day}-${slug}`;
     return {
       path: images.length > 0 ? `${base}/index.md` : `${base}.md`,
-      content: `${frontMatter(title, date, opts.drinkType, tags, postType)}\n${joinBody(parts)}\n`,
+      content: `${frontMatter(title, date, opts.drinkTypes, tags, postType)}\n${joinBody(parts)}\n`,
       images,
     };
   });

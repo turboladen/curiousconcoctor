@@ -7,7 +7,7 @@ const img = (index: number): Line => ({ kind: "image", index });
 const ymd = (year: number, month: number, day: number) => ({ year, month, day });
 const opts = {
   title: "Just Lemons #1",
-  drinkType: "mead",
+  drinkTypes: ["mead"],
   tags: ["lemon"],
   batch: "just lemons #1",
   dated: true,
@@ -127,8 +127,8 @@ test("an image stays with its own entry when two entries share its capture day",
   expect(result.entries[1].lines).toHaveLength(2);
 });
 
-test("a post with no drink type has an empty drink_types list", () => {
+test("a post with no drink types has an empty drink_types list", () => {
   const entries = [{ date: ymd(2014, 8, 16), lines: [t("a")] }];
-  const [post] = buildPosts(entries, [], { ...opts, drinkType: null, dated: false });
+  const [post] = buildPosts(entries, [], { ...opts, drinkTypes: [], dated: false });
   expect(post.content).toContain("drink_types = []\n");
 });
