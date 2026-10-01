@@ -10,7 +10,7 @@ post_types = ["update"]
 
 `FG: 0.995` (`6.96%`). Pretty dry!
 
-<image src="IMG_2564.jpeg" width="100%" alt="bottling">
+![Corked Belgian bottles and capped 12 oz bottles beside a corker and capper](IMG_2564.jpeg)
 
 Added 24g wildflower sage honey from
 [Kristina’s Ranch Market](http://www.kristinasranchmarket.com/retailer/store_templates/shell_id_1.asp?storeID=BF75627F34754A0CA5145783079AF04D)

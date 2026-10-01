@@ -13,4 +13,4 @@ quite sweet, but the strong honey fragrance has dissipated a bit, leaving it fee
 balanced. You definitely get both the tangerine and the cherry, which I was afraid wouldn’t come
 through. I’m pretty pleased and am looking forward to finishing off the last bottle.
 
-<image src="IMG_3093.jpeg" width="100%" alt="yum">
+![Glass of orange tangerine cherry melomel on a table with food and wine bottles](IMG_3093.jpeg)

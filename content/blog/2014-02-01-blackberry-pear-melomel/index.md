@@ -8,7 +8,7 @@ tags = ["blackberry", "pear", "melomel", "blackberry pear melomel #1"]
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![A yellow Dutch oven full of chopped pear and blackberries, with a wooden spoon resting on it](header.jpg)
 
 I’m super excited about what’s to come with my
 [Meyer Lemon Melomel](@/blog/2013-12-the-lemons-started-it-all-sima/index.md), and that excitement

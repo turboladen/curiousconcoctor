@@ -8,7 +8,7 @@ tags = ["pyment #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![A jug of red pyment with the gallon mark embossed on the glass](header.jpg)
 
 Alright, so since
 [I fubared my last racking of this mead](@/blog/2014-07-20-strawberry-lavender-melomel-1-update-14/index.md),

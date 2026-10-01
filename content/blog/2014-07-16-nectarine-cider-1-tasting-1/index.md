@@ -8,7 +8,7 @@ tags = ["nectarine cider #1", "tasting"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![Cider being poured from a brown bottle into a frosted glass](header.jpg)
 
 Talked with the guys at [Bencomo’s](http://www.bencomoshomebrewsupply.com/) and they seemed to think
 the white file stuff was just wild yeast, and that it may still be fermenting. I, thus, had a taste,

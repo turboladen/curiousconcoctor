@@ -11,6 +11,6 @@ post_types = ["update"]
 Racked onto 1 teaspoon pectic enzyme (mixed with 1oz water). Tasted pretty strong of lavender, but
 overall really good! Should mellow with age. `SG: 1.002`.
 
-<image src="IMG_2944.jpeg" width="100%" alt="gravity">
+![Hydrometer floating in a tall cylinder of amber melomel](IMG_2944.jpeg)
 
-<image src="IMG_2944.jpeg" width="100%" alt="more gravity">
+![Hydrometer in the sample cylinder, second view of the gravity reading](IMG_2944.jpeg)

@@ -12,7 +12,7 @@ I’d given what turns out to be the last bottle of this stuff to a friend of mi
 wife probably two months ago. Come last Thursday night they still hadn’t cracked it open and he
 suggested we do so. What a nice little time capsule that turned out to be. 🙂
 
-<image src="IMG_3035.jpeg" width="100%" alt="last ones">
+![Two glasses of fizzy golden cider beside the last bottle, labeled Loveless Lady Pink Lady Apple Cider](IMG_3035.jpeg)
 
 As you can see, it was still carbonated quite well (as I imagine it should be after only 3 months).
 Other than that though, really everything else about the cider had mellowed. The bouquet was really

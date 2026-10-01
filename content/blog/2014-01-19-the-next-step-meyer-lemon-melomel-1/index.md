@@ -8,7 +8,7 @@ tags = ["lemon", "recipe", "meyer lemon melomel #1"]
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![A glass of golden, Meyer lemon mead on a table beside a cut-glass pitcher](header.jpg)
 
 ## The Story
 
@@ -70,7 +70,7 @@ absolutely wasteful by dumping the juice down the drain.
 Boil all. Scrape off crap with a ladle. Don’t boil too hard. Add the lemon peel (from all 8 lemons),
 then the juice (from 4 or 5. Doing more since the Meyer lemons are so tasty). Let cool to `80F`.
 
-<image src="Stirring.jpg" width="100%">
+![Lemon peels swirling in a pot of dark honey water](Stirring.jpg)
 
 ## 9pm.
 

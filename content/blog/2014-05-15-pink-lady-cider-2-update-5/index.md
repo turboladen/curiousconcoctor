@@ -10,4 +10,4 @@ post_types = ["update"]
 
 My wife made me some sweet labels!
 
-<image src="IMG_2600.jpeg" width="100%" alt="labels!">
+![Bottles of Pink Lady cider with gold apple-shaped labels, numbered out of 15](IMG_2600.jpeg)

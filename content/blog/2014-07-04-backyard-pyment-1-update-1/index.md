@@ -8,7 +8,7 @@ tags = ["pyment #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![Dark pyment must with bubbles and foam, seen from above](header.jpg)
 
 Seemed like some of the viney/earthy taste and smell has dissipated a bit. More stirring.
 

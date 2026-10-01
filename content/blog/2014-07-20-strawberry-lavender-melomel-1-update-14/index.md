@@ -8,13 +8,13 @@ tags = ["strawberry lavender melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="IMG_2968.jpeg" width="100%" alt="pre rack">
+![One-gallon jug of reddish-brown strawberry lavender melomel before racking](IMG_2968.jpeg)
 
-<image src="IMG_2969.jpeg" width="100%" alt="gravity">
+![Hydrometer floating in a cylinder of golden melomel](IMG_2969.jpeg)
 
 Accidentally oaked this puppy!
 
-<image src="IMG_2970.jpeg" width="100%" alt="oak">
+![Dark oak chips floating and settled in a gallon jug of amber melomel](IMG_2970.jpeg)
 
 There was a fair amount of lees, so I thought it was my current grape mead–didn’t realize till I
 tasted this after racking it onto the oak chips. …So… Used 8g of chips. Boiled for about 4 mins,

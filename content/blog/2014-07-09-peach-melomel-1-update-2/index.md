@@ -12,6 +12,6 @@ Just gravity readings tonight.
 
 `SG: 0.990`.
 
-<image src="IMG_2880.jpeg" width="100%" alt="gravity">
+![Hydrometer reading 0.990 in a tall jar of pale green-yellow melomel](IMG_2880.jpeg)
 
-<image src="IMG_2881.jpeg" width="100%" alt="lil taste">
+![Small pour of cloudy peach melomel in a stemless wine glass](IMG_2881.jpeg)

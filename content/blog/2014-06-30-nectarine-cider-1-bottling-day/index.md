@@ -8,15 +8,15 @@ tags = ["nectarine cider #1", "bottling day"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![Rows of capped brown beer bottles drying on a rack](header.jpg)
 
 Racked the top layer to bucket with 70g priming sugar + 4 oz water. Racked the rest to a 1g carboy
 and added 1oz wildflower honey + 3oz water.
 
-<image src="IMG_2856.jpeg" width="100%" alt="extras">
+![Leftover golden cider in a one-gallon jug beside a turkey baster](IMG_2856.jpeg)
 
-<image src="IMG_2857.jpeg" width="100%" alt="in glass">
+![Cloudy golden cider in a faceted glass](IMG_2857.jpeg)
 
-<image src="IMG_2858.jpeg" width="100%" alt="in glass 2">
+![Close view of hazy nectarine cider in a faceted glass](IMG_2858.jpeg)
 
-<image src="IMG_2859.jpeg" width="100%" alt="bottles">
+![Capped amber bottles of nectarine cider standing on a tile counter](IMG_2859.jpeg)

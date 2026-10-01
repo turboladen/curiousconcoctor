@@ -16,4 +16,4 @@ Looks like more separation of pulp and liquid. Yeast really working tho!
 
 `SG = 1.012`. Stirred more. Tastes pretty good–like a nectarine cider.
 
-<image src="IMG_0050.jpeg" width="100%" alt="SG">
+![Hydrometer floating in a test cylinder of yellow nectarine cider, taking the specific gravity](IMG_0050.jpeg)

@@ -14,7 +14,7 @@ My co-concocting friend went out of town for the weekend and on his way back inf
 picked up something like 20 lbs. of Bing cherries (!). Shortly after, he dropped off a hefty grocery
 bag full of them for me to experiment with–which I was more than happy to do.
 
-<image src="IMG_2713.jpeg" width="100%" alt="prepped cherries">
+![Pitted cherries spilling from a zip bag onto a yellow cutting board](IMG_2713.jpeg)
 
 Since receiving my Brew Bucket, I’d sort of decided in the back of my brain that from now on I’d
 focus on doing 5 gallon batches of whatever it is I was going to concoct. Also, since most of what
@@ -73,4 +73,4 @@ stirred, airlocked.
 
 Shook/stirred every day from here on out.
 
-<image src="IMG_2876.jpeg" width="100%" alt="more cherries">
+![Wrinkled cooked cherries in a pot with a black ladle](IMG_2876.jpeg)

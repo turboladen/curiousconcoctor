@@ -10,4 +10,4 @@ post_types = ["update"]
 
 Tasting!
 
-<image src="IMG_2379.jpeg" width="100%" alt="tasting">
+![Stemless wine glass of cloudy rose-pink blackberry pear melomel](IMG_2379.jpeg)

@@ -8,9 +8,9 @@ tags = ["peach melomel #1", "tasting"]
 post_types = ["update"]
 +++
 
-<image src="P1050326.jpeg" width="100%" alt="one">
+![Two green-stemmed glasses of pale golden peach melomel beside the bottle](P1050326.jpeg)
 
 I’m kinda bummed. I used all those peaches and the flavor here is completely dominated by the honey
 fragrance and taste. Hoping it’ll even out over time.
 
-<image src="P1050327.jpeg" width="100%" alt="two">
+![Overhead view of two glasses of peach melomel and a swing-top bottle](P1050327.jpeg)

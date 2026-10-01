@@ -8,7 +8,7 @@ tags = ["lemon", "meyer lemon melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![A one-gallon jug of cloudy melomel beside a hydrometer in a test jar](header.jpg)
 
 ## 9:45.
 
@@ -21,11 +21,11 @@ is 66F. Taste: yeast is gone, although a little yeast smell still. Honey is pres
 of lemon tartness. Could maybe use a little more sweetness, but it’s tasting pretty good. Capped the
 carboy and moved to my closet.
 
-<image src="IMG_2301.jpeg" width="100%" alt="More racking">
+![Racking cane in a jug of cloudy melomel, with a hydrometer in a test cylinder alongside](IMG_2301.jpeg)
 
 ## 1:45pm.
 
 Swapped cap for airlock. Also, more air in this carboy now. Could’ve probably gotten a little more
 liquid out, but didn’t wanna chance pulling in sediment. Am filtering the lees to drink now. 🙂
 
-<image src="IMG_2303.jpeg" width="100%" alt="Drinky time">
+![A stemless glass with a small pour of pale yellow melomel filtered from the lees](IMG_2303.jpeg)

@@ -13,4 +13,4 @@ slightly evident in flavor.
 
 Still a little harsh, but is certainly getting drinkable.
 
-<image src="IMG_2910.jpeg" width="100%" alt="Yum">
+![Amber tangerine cherry melomel in a stemmed wine glass](IMG_2910.jpeg)

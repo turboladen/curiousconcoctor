@@ -16,4 +16,4 @@ notes in the fragrance (ie honey isn’t lost). Nice color. A tiny hint of bitte
 back end–not sure if i don’t like the bitter or if that’s a good thing for evening out the
 sweetness.
 
-<image src="IMG_2853.jpeg" width="100%">
+![A glass of golden mead on a table with red patterned placemats](IMG_2853.jpeg)

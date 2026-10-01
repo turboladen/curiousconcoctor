@@ -13,8 +13,8 @@ floating fruit. Washed 12 12 oz. bottles; let soak for 15 mins in sink. Sanitize
 Mixed 23g wildflower honey with 5oz boiled water for priming. Letting that come to room temp before
 racking onto that.
 
-<image src="IMG_2407.jpeg" width="100%" alt="bottling">
+![Jug of cloudy cider beside upside-down bottles, a bag of caps and a capper](IMG_2407.jpeg)
 
 Yielded just under 9 bottles, the last one having some fruit chunks. `FG: 0.998`. `ABV: 7.08%`.
 
-<image src="IMG_2409.jpeg" width="100%" alt="bottled">
+![Nine capped amber bottles of Pink Lady cider on the counter](IMG_2409.jpeg)

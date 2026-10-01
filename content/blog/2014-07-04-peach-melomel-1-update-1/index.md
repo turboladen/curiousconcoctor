@@ -10,4 +10,4 @@ post_types = ["update"]
 
 Still smells nice—both peach and honey are present. Still a bit thick. `SG: 1.004`.
 
-<image src="IMG_2869.jpeg" width="100%" alt="gravity">
+![Hydrometer floating in a tall jar of golden peach melomel](IMG_2869.jpeg)

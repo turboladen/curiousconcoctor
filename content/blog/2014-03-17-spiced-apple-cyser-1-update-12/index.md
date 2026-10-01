@@ -10,4 +10,4 @@ post_types = ["update"]
 
 Racked.
 
-<image src="IMG_2374.jpeg" width="100%" alt="racked">
+![A gallon jug of cloudy amber cyser beside a swing-top bottle holding the overflow](IMG_2374.jpeg)

@@ -8,4 +8,4 @@ tags = ["cherry cordial #1"]
 post_types = ["update"]
 +++
 
-<image src="IMG_3314.jpeg" width="100%" alt="yum">
+![Glass of dark red cherry cordial beside an emptied fruit jar and a filled bottle](IMG_3314.jpeg)

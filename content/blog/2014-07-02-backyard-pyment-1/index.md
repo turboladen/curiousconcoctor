@@ -8,7 +8,7 @@ tags = ["pyment #1", "Lalvin K1-V116 Yeast", "recipe", "oak", "pyment"]
 post_types = ["start"]
 +++
 
-<image src="header.jpg" width="100%">
+![Purple and green grapes hanging from a vine against a brick wall](header.jpg)
 
 ## The Story
 

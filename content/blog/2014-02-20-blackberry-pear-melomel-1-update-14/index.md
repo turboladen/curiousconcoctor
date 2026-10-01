@@ -8,14 +8,14 @@ tags = ["blackberry", "pear", "melomel", "blackberry pear melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![A pink-red melomel in a 2-liter bottle fitted with an airlock](header.jpg)
 
 Racked, but decided to use a 2L bottle instead of a 1G carboy so as to reduce the amount of
 headspace. the bung didn’t really fit too well, so after I took the pic, I wrapped it with some
 [Glad Press ‘N’ Seal](http://www.glad.com/food-storage/plastic-wrap/press-n-seal/) to keep as much
 oxygen out as possible.
 
-<image src="IMG_2343.jpeg" width="100%" alt="2L">
+![A pink-red melomel in a glass juice bottle with an airlock, filled nearly to the neck](IMG_2343.jpeg)
 
 Secondary. 1 vanilla bean, split but didn’t clear seeds out; cut off top. SG: `1.003`. pH: `~3.8`.
 Bottled in a 2Q bottle, so barely any room in there for oxygen. Looks like I still managed to

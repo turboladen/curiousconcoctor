@@ -10,4 +10,4 @@ post_types = ["update"]
 
 My wife made some sweet labels!
 
-<image src="IMG_2515.jpeg" width="100%" alt="labels!">
+![Two bottles with kraft paper Loveless Labs Apple Cider labels](IMG_2515.jpeg)

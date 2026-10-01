@@ -8,7 +8,7 @@ tags = ["lemon", "meyer lemon melomel #1"]
 post_types = ["update"]
 +++
 
-<image src="header.jpg" width="100%">
+![A jug of amber melomel with lemon peel and raisins floating in it](header.jpg)
 
 Bubbling at 1:10 still (that seems weird). Racked to 2nd carboy using OG water siphon (pretty well
 sanitized I think); looks like I transferred over some sediment, but almost all the lemon and old
@@ -21,8 +21,8 @@ fermentation. Bunged and airlocked with tap water and KMeta.
 
 Before the rack:
 
-<image src="IMG_2298.jpeg" width="100%" alt="Yum">
+![A one-gallon jug of amber melomel with lemon peel and raisins floating on top and sediment below](IMG_2298.jpeg)
 
 After the rack:
 
-<image src="IMG_2299.jpeg" width="100%" alt="Yum again">
+![Clearer melomel under an airlock beside the old jug holding only lemon peel and raisins](IMG_2299.jpeg)
