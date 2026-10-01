@@ -15,20 +15,23 @@ export function splitEntries(
   const preamble: Line[] = [];
   const raws: RawDate[] = [];
   const bodies: Line[][] = [];
+  const warnings: string[] = [];
   for (const line of lines) {
     const date = line.kind === "text" ? parseDateLine(line.md) : null;
     if (date) {
       raws.push(date);
-      bodies.push([]);
+      bodies.push(date.rest === "" ? [] : [{ kind: "text", md: date.rest }]);
+      if (date.stray) warnings.push(`the date line "${date.raw}" has stray punctuation`);
     } else {
       (bodies.length > 0 ? bodies[bodies.length - 1] : preamble).push(line);
     }
   }
   if (raws.length === 0) {
-    return { entries: [{ date: created, lines: preamble }], dated: false, warnings: [] };
+    return { entries: [{ date: created, lines: preamble }], dated: false, warnings };
   }
-  const { dates, warnings } = inferYears(raws, created, maxYear);
-  const entries = bodies.map((body, i) => ({ date: dates[i], lines: body }));
+  const inferred = inferYears(raws, created, maxYear);
+  warnings.push(...inferred.warnings);
+  const entries = bodies.map((body, i) => ({ date: inferred.dates[i], lines: body }));
   entries[0].lines = [...preamble, ...entries[0].lines];
   return { entries, dated: true, warnings };
 }

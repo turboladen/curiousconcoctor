@@ -18,7 +18,9 @@ paths:
   one `note` post. Entries with no text and no images are not written.
 - Most log dates omit the year, so `dates.ts` infers it from the last explicit year or the note's
   creation date. A month that drops by one or two is treated as a typo and keeps the year. Every
-  inferred date still needs a human check.
+  inferred date still needs a human check. A date line may carry text after a separator, as in
+  `5/21. Racked` or `8/13/17: bottling`, and that text starts the entry. A line such as `1/2 tsp` is
+  never read as a date.
 - Images go to the post whose date matches the photo's EXIF capture date, and otherwise stay with
   the entry they sat beside. The importer resizes each image to 1600px on the long side and removes
   every metadata segment, GPS included. `sips` keeps EXIF through a resize, so `stripJpegMetadata`

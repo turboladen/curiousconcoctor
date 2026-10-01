@@ -1,22 +1,42 @@
 // Parses the date-only lines that start a log entry and fills in the years the author left out.
 
 export type Ymd = { year: number; month: number; day: number };
-export type RawDate = { month: number; day: number; year: number | null };
+// raw is the date as written, rest is any text that followed it on the same line, and stray is true
+// when the date carried punctuation that the author probably did not mean.
+export type RawDate = {
+  month: number;
+  day: number;
+  year: number | null;
+  raw: string;
+  rest: string;
+  stray: boolean;
+};
 
-const DATE_LINE = /^\**(\d{1,2})\/(\d{1,2})(?:\/(\d{4}|\d{2}))?[^\w\s]{0,3}\**$/;
+const DATE_HEAD = /^\**(\d{1,2})\/(\d{1,2})(\?)?(?:\/(\d{4}|\d{2}))?\**/;
+// A date may be followed by text only after a separator, so "1/2 tsp" and "3/4t" stay text.
+const SEPARATOR = /^(?:\s*[:.,;]\s+|\s*[-–—]\s+|\s+(?=\())(.+)$/;
 
 export function parseDateLine(md: string): RawDate | null {
-  const match = DATE_LINE.exec(md);
-  if (!match) return null;
-  const month = Number(match[1]);
-  const day = Number(match[2]);
+  const head = DATE_HEAD.exec(md);
+  if (!head) return null;
+  const month = Number(head[1]);
+  const day = Number(head[2]);
   if (month < 1 || month > 12 || day < 1 || day > 31) return null;
-  const year = match[3] === undefined
-    ? null
-    : match[3].length === 2
-    ? 2000 + Number(match[3])
-    : Number(match[3]);
-  return { month, day, year };
+  const year = head[4] === undefined ? null : head[4].length === 2 ? 2000 + Number(head[4]) : Number(head[4]);
+
+  const tail = md.slice(head[0].length);
+  let rest = "";
+  let stray = head[3] !== undefined;
+  if (tail !== "") {
+    if (/^[^\w\s]{1,3}\**$/.test(tail)) {
+      stray = true;
+    } else {
+      const separated = SEPARATOR.exec(tail);
+      if (!separated) return null;
+      rest = separated[1].trim();
+    }
+  }
+  return { month, day, year, raw: head[0].replace(/\*/g, ""), rest, stray };
 }
 
 const daysIn = (year: number, month: number) => new Date(Date.UTC(year, month, 0)).getUTCDate();
@@ -50,7 +70,7 @@ export function inferYears(
   const warnings: string[] = [];
   let prev: Ymd | null = null;
   for (const entry of raws) {
-    const label = `${entry.month}/${entry.day}${entry.year === null ? "" : `/${entry.year}`}`;
+    const label = entry.raw;
     let year: number;
     if (entry.year !== null) year = entry.year;
     else if (prev === null) year = closestYear(entry.month, entry.day, created);

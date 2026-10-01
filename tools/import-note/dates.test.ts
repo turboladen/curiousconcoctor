@@ -2,22 +2,41 @@ import { expect, test } from "bun:test";
 import { formatYmd, inferYears, parseDateLine, type RawDate } from "./dates";
 
 test("parseDateLine accepts bare dates with stray punctuation and rejects prose", () => {
-  expect(parseDateLine("9/24")).toEqual({ month: 9, day: 24, year: null });
-  expect(parseDateLine("9/23/21")).toEqual({ month: 9, day: 23, year: 2021 });
-  expect(parseDateLine("5/3/2020")).toEqual({ month: 5, day: 3, year: 2020 });
-  expect(parseDateLine("2/19?")).toEqual({ month: 2, day: 19, year: null });
-  expect(parseDateLine("9/7.")).toEqual({ month: 9, day: 7, year: null });
-  expect(parseDateLine("**3/2**")).toEqual({ month: 3, day: 2, year: null });
-  expect(parseDateLine("9/20/30")).toEqual({ month: 9, day: 20, year: 2030 });
+  expect(parseDateLine("9/24")).toMatchObject({ month: 9, day: 24, year: null, rest: "" });
+  expect(parseDateLine("9/23/21")).toMatchObject({ month: 9, day: 23, year: 2021 });
+  expect(parseDateLine("5/3/2020")).toMatchObject({ month: 5, day: 3, year: 2020 });
+  expect(parseDateLine("2/19?")).toMatchObject({ month: 2, day: 19, year: null, stray: true });
+  expect(parseDateLine("9/7.")).toMatchObject({ month: 9, day: 7, year: null, stray: true });
+  expect(parseDateLine("**3/2**")).toMatchObject({ month: 3, day: 2, year: null, stray: false });
+  expect(parseDateLine("9/20/30")).toMatchObject({ month: 9, day: 20, year: 2030 });
+  expect(parseDateLine("12/30?/19")).toMatchObject({ month: 12, day: 30, year: 2019, stray: true });
   expect(parseDateLine("Pink Lady Cider 9/2019")).toBeNull();
-  expect(parseDateLine("12/26 racked")).toBeNull();
   expect(parseDateLine("13/40")).toBeNull();
+});
+
+test("parseDateLine keeps the text that follows a date", () => {
+  expect(parseDateLine("8/13/17: bottling")).toMatchObject({ month: 8, day: 13, year: 2017, rest: "bottling" });
+  expect(parseDateLine("5/21. Racked")).toMatchObject({ month: 5, day: 21, rest: "Racked" });
+  expect(parseDateLine("1/2/19, 8:00am")).toMatchObject({ year: 2019, rest: "8:00am" });
+  expect(parseDateLine("7/29, 7:25pm")).toMatchObject({ month: 7, day: 29, rest: "7:25pm" });
+  expect(parseDateLine("9/2/19 (Labor Day)")).toMatchObject({ year: 2019, rest: "(Labor Day)" });
+  expect(parseDateLine("8/13/17 - bottling")).toMatchObject({ rest: "bottling" });
+});
+
+test("parseDateLine leaves fractions and prose that start with numbers alone", () => {
+  expect(parseDateLine("3/4t pectic enzyme")).toBeNull();
+  expect(parseDateLine("1/2t pectic enzyme")).toBeNull();
+  expect(parseDateLine("1/2 tsp yeast nutrient")).toBeNull();
+  expect(parseDateLine("12/26 racked")).toBeNull();
 });
 
 const raw = (month: number, day: number, year: number | null = null): RawDate => ({
   month,
   day,
   year,
+  raw: `${month}/${day}${year === null ? "" : `/${year}`}`,
+  rest: "",
+  stray: false,
 });
 const created = { year: 2016, month: 1, day: 16 };
 const years = (dates: { year: number }[]) => dates.map((d) => d.year);
@@ -59,9 +78,9 @@ test("a one-month back-step is treated as a typo, keeps the year, and warns", ()
   expect(warnings.some((w) => /before the previous entry/.test(w))).toBe(true);
 });
 
-test("a year in the future warns", () => {
+test("a year in the future warns and names the date as written", () => {
   const { warnings } = inferYears([raw(9, 20, 2030)], { year: 2020, month: 8, day: 14 }, 2026);
-  expect(warnings.some((w) => /future/.test(w))).toBe(true);
+  expect(warnings.some((w) => /future/.test(w) && w.includes("9/20/2030"))).toBe(true);
 });
 
 test("an impossible day is clamped with a warning", () => {

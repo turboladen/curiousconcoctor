@@ -28,3 +28,19 @@ test("image lines stay in the entry they sit in", () => {
   const { entries } = splitEntries(lines, created, 2026);
   expect(entries[0].lines).toEqual([t("a"), { kind: "image", index: 0 }]);
 });
+
+test("text after a date starts that entry", () => {
+  const lines = [t("ingredients"), t("5/21. Racked"), t("Cleared."), t("8/13/17: bottling")];
+  const { entries } = splitEntries(lines, created, 2026);
+  expect(entries.map((e) => e.date)).toEqual([
+    { year: 2017, month: 5, day: 21 },
+    { year: 2017, month: 8, day: 13 },
+  ]);
+  expect(entries[0].lines).toEqual([t("ingredients"), t("Racked"), t("Cleared.")]);
+  expect(entries[1].lines).toEqual([t("bottling")]);
+});
+
+test("a date line with stray punctuation warns and names the line", () => {
+  const { warnings } = splitEntries([t("2/19?"), t("note")], created, 2026);
+  expect(warnings.some((w) => w.includes("2/19?") && /punctuation/.test(w))).toBe(true);
+});
