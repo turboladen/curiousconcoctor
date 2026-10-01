@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { hasJpegGps, hasJpegMetadata, stripJpegMetadata } from "./images";
+import { hasJpegGps, hasJpegMetadata, jpegOrientation, stripJpegMetadata } from "./images";
 
 const enc = (s: string) => new TextEncoder().encode(s);
 
@@ -84,4 +84,39 @@ test("hasJpegGps is false for a file that is not a JPEG", () => {
 test("hasJpegGps does not run off the end of a truncated Exif block", () => {
   const truncated = Buffer.concat([SOI, segment(0xe1, enc("Exif\0\0II*\0")), SCAN]);
   expect(hasJpegGps(truncated)).toBe(false);
+});
+
+// Builds an Exif APP1 segment whose IFD0 holds one Orientation entry (a SHORT).
+function exifWithOrientation(value: number, littleEndian: boolean): Uint8Array {
+  const tiff = Buffer.alloc(8 + 2 + 12 + 4);
+  const u16 = (v: number, o: number) => littleEndian ? tiff.writeUInt16LE(v, o) : tiff.writeUInt16BE(v, o);
+  tiff.write(littleEndian ? "II" : "MM", 0, "latin1");
+  u16(0x2a, 2);
+  tiff.writeUInt32LE(0, 4);
+  if (littleEndian) tiff.writeUInt32LE(8, 4);
+  else tiff.writeUInt32BE(8, 4);
+  u16(1, 8);
+  u16(0x0112, 10);
+  u16(3, 12);
+  if (littleEndian) tiff.writeUInt32LE(1, 14);
+  else tiff.writeUInt32BE(1, 14);
+  u16(value, 18);
+  return segment(0xe1, Buffer.concat([enc("Exif\0\0"), tiff]));
+}
+
+test("jpegOrientation reads the Orientation tag in either byte order", () => {
+  for (const littleEndian of [true, false]) {
+    for (const value of [1, 3, 6, 8]) {
+      const jpeg = Buffer.concat([SOI, jfif, exifWithOrientation(value, littleEndian), SCAN]);
+      expect(jpegOrientation(jpeg)).toBe(value);
+    }
+  }
+});
+
+test("jpegOrientation is 1 when there is no Exif, no tag, a bad value, or no JPEG", () => {
+  expect(jpegOrientation(Buffer.concat([SOI, jfif, SCAN]))).toBe(1);
+  expect(jpegOrientation(Buffer.concat([SOI, jfif, exifWithTags([0x010f], true), SCAN]))).toBe(1);
+  expect(jpegOrientation(Buffer.concat([SOI, jfif, exifWithOrientation(0, true), SCAN]))).toBe(1);
+  expect(jpegOrientation(Buffer.concat([SOI, jfif, exifWithOrientation(9, true), SCAN]))).toBe(1);
+  expect(jpegOrientation(Buffer.from("RIFFxxxxWEBP"))).toBe(1);
 });

@@ -14,7 +14,8 @@ const EXTENSIONS: Record<string, string> = {
   "image/heic": "heic",
   "image/gif": "gif",
 };
-// EXIF orientation values that sips can undo with a plain rotation.
+// Each key is an EXIF orientation that a plain rotation fixes, and each value is the clockwise
+// rotation in degrees that fixes it.
 const ROTATION: Record<number, number> = { 3: 180, 6: 90, 8: 270 };
 const MIRRORED = new Set([2, 4, 5, 7]);
 
@@ -76,39 +77,59 @@ export function hasJpegMetadata(jpeg: Uint8Array): boolean {
 
 const EXIF_TAG = Buffer.from("Exif\0\0");
 const GPS_INFO_TAG = 0x8825;
+const ORIENTATION_TAG = 0x0112;
 
-// Reads the first directory of a TIFF block and reports whether it lists the GPSInfo pointer.
-function tiffHasGps(tiff: Uint8Array): boolean {
+type TagHit = { view: DataView; entry: number; littleEndian: boolean };
+
+// Looks for a tag in the first directory of a TIFF block. Every read is bounds-checked, so a
+// truncated or malformed block yields null instead of throwing.
+function ifd0Entry(tiff: Uint8Array, tag: number): TagHit | null {
   const order = String.fromCharCode(tiff[0], tiff[1]);
-  if (order !== "II" && order !== "MM") return false;
+  if (order !== "II" && order !== "MM") return null;
   const littleEndian = order === "II";
   const view = new DataView(tiff.buffer, tiff.byteOffset, tiff.byteLength);
   const fits = (offset: number, size: number) => offset >= 0 && offset + size <= tiff.length;
-  if (!fits(4, 4)) return false;
+  if (!fits(4, 4)) return null;
   const directory = view.getUint32(4, littleEndian);
-  if (!fits(directory, 2)) return false;
+  if (!fits(directory, 2)) return null;
   const count = view.getUint16(directory, littleEndian);
   for (let i = 0; i < count; i++) {
     const entry = directory + 2 + i * 12;
-    if (!fits(entry, 12)) return false;
-    if (view.getUint16(entry, littleEndian) === GPS_INFO_TAG) return true;
+    if (!fits(entry, 12)) return null;
+    if (view.getUint16(entry, littleEndian) === tag) return { view, entry, littleEndian };
   }
-  return false;
+  return null;
 }
 
-// Returns true when the JPEG's Exif block records a location. Anything that is not a JPEG has none.
-export function hasJpegGps(jpeg: Uint8Array): boolean {
-  if (jpeg[0] !== 0xff || jpeg[1] !== 0xd8) return false;
-  let found = false;
+// Anything that is not a JPEG has no Exif block, so it has no tags.
+function findExifTag(jpeg: Uint8Array, tag: number): TagHit | null {
+  if (jpeg[0] !== 0xff || jpeg[1] !== 0xd8) return null;
+  const result: { hit: TagHit | null } = { hit: null };
   walkSegments(jpeg, (marker, segment) => {
-    const isExif = marker === 0xe1 && Buffer.from(segment.subarray(4, 10)).equals(EXIF_TAG);
-    if (isExif && tiffHasGps(segment.subarray(10))) found = true;
+    if (result.hit || marker !== 0xe1) return;
+    if (!Buffer.from(segment.subarray(4, 10)).equals(EXIF_TAG)) return;
+    result.hit = ifd0Entry(segment.subarray(10), tag);
   });
-  return found;
+  return result.hit;
+}
+
+// Returns true when the JPEG's Exif block records a location.
+export function hasJpegGps(jpeg: Uint8Array): boolean {
+  return findExifTag(jpeg, GPS_INFO_TAG) !== null;
+}
+
+// Returns the EXIF orientation, 1 through 8, or 1 when the JPEG has none or an invalid one.
+export function jpegOrientation(jpeg: Uint8Array): number {
+  const hit = findExifTag(jpeg, ORIENTATION_TAG);
+  if (!hit) return 1;
+  const value = hit.view.getUint16(hit.entry + 8, hit.littleEndian);
+  return value >= 1 && value <= 8 ? value : 1;
 }
 
 // sips keeps EXIF through a resize and through a PNG round trip, so it only resizes and rotates
-// here. The metadata is removed afterwards by stripJpegMetadata.
+// here, and stripJpegMetadata removes the metadata afterward. sips reports no orientation for
+// these images and does not rotate the pixels when it converts, so the orientation is read from
+// the converted JPEG's own EXIF before that tag is stripped.
 export async function processImage(
   img: Image,
 ): Promise<{ taken: Ymd | null; jpeg: Uint8Array; warnings: string[] }> {
@@ -118,15 +139,15 @@ export async function processImage(
     const out = join(dir, "out.jpg");
     await writeFile(src, img.bytes);
 
-    const info = await $`sips -g creation -g orientation ${src}`.text();
+    const info = await $`sips -g creation ${src}`.text();
     const date = /creation:\s*(\d{4}):(\d{2}):(\d{2})/.exec(info);
     const taken = date
       ? { year: Number(date[1]), month: Number(date[2]), day: Number(date[3]) }
       : null;
-    const orientation = Number(/orientation:\s*(\d)/.exec(info)?.[1] ?? 1);
 
     const warnings: string[] = [];
     await $`sips -s format jpeg -Z ${MAX_SIDE} ${src} --out ${out}`.quiet();
+    const orientation = jpegOrientation(await readFile(out));
     if (ROTATION[orientation]) await $`sips -r ${ROTATION[orientation]} ${out}`.quiet();
     if (MIRRORED.has(orientation)) {
       warnings.push(`image has mirrored orientation ${orientation}; not corrected`);

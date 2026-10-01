@@ -1,4 +1,4 @@
-// Reads notes from the Apple Notes app through AppleScript. macOS only.
+// Reads notes from the Apple Notes app through AppleScript, so it runs only on macOS.
 
 import { $ } from "bun";
 import type { Ymd } from "./dates";
