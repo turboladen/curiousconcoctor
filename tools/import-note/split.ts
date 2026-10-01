@@ -5,6 +5,12 @@ import type { Line } from "./html";
 
 export type Entry = { date: Ymd; lines: Line[] };
 
+// Keeps a standalone note whole: every line, date lines included, stays in one entry on the note's
+// creation date.
+export function singleEntry(lines: Line[], created: Ymd): Entry[] {
+  return [{ date: created, lines }];
+}
+
 // The text before the first date is the batch's ingredient list. It joins the first dated entry,
 // which makes the start post.
 export function splitEntries(

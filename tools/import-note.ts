@@ -4,6 +4,11 @@
 //   bun tools/import-note.ts --list
 //   bun tools/import-note.ts "<note title>" --drink-type <type> [--tags a,b] [--title T]
 //     [--batch B] [--force] [--dry-run]
+//   bun tools/import-note.ts "<note title>" --post-type note [--tags a,b]
+//
+// --post-type note imports the whole note as one standalone post dated by the note's creation
+// date, with no batch tag. It is the only post type the flag accepts. A note is not a drink, so
+// --drink-type is an error for a note, including a note with no dated lines.
 //
 // The script writes drafts. Taxonomies, alt text, and the dates it warns about still need a human
 // pass before the posts are committed.
@@ -16,8 +21,8 @@ import { formatYmd } from "./import-note/dates";
 import { convertHtml } from "./import-note/html";
 import { processImage } from "./import-note/images";
 import { getNote, listNotes } from "./import-note/notes";
-import { assignImages, batchTitle, buildPosts, dropEmpty, noteTitle } from "./import-note/posts";
-import { splitEntries } from "./import-note/split";
+import { assignImages, batchTitle, type BuildOptions, buildPosts, dropEmpty, noteTitle } from "./import-note/posts";
+import { singleEntry, splitEntries } from "./import-note/split";
 
 const DRINK_TYPES = ["mead", "cider", "wine", "liqueur"];
 const BLOG = join(import.meta.dir, "..", "content", "blog");
@@ -28,6 +33,7 @@ const { values, positionals } = parseArgs({
   options: {
     list: { type: "boolean" },
     "drink-type": { type: "string" },
+    "post-type": { type: "string" },
     tags: { type: "string" },
     title: { type: "string" },
     batch: { type: "string" },
@@ -51,14 +57,19 @@ if (values.list) {
 
 const name = positionals[0];
 if (!name) fail("give a note title, or --list");
+const postType = values["post-type"];
+if (postType !== undefined && postType !== "note") fail("--post-type can only be \"note\"");
+const standalone = postType === "note";
 const drinkType = values["drink-type"];
-if (!drinkType || !DRINK_TYPES.includes(drinkType)) {
-  fail(`--drink-type is required and must be one of: ${DRINK_TYPES.join(", ")}`);
+if (drinkType !== undefined && !DRINK_TYPES.includes(drinkType)) {
+  fail(`--drink-type must be one of: ${DRINK_TYPES.join(", ")}`);
 }
 
 const { created, html } = await getNote(name);
 const converted = convertHtml(html, name);
-const split = splitEntries(converted.lines, created, new Date().getFullYear());
+const split = standalone
+  ? { entries: singleEntry(converted.lines, created), dated: false, warnings: [] as string[] }
+  : splitEntries(converted.lines, created, new Date().getFullYear());
 
 const processed = await Promise.all(converted.images.map(processImage));
 
@@ -70,23 +81,26 @@ const kept = dropEmpty(assigned.entries);
 if (kept.entries.length === 0) fail(`note "${name}" has no content`);
 
 const title = values.title ?? (split.dated ? batchTitle(name) : noteTitle(name));
-const batch = values.batch ?? (split.dated ? title.toLowerCase() : null);
-if (split.dated && !batch?.includes("#")) {
-  fail(`the batch tag "${batch}" needs a #, as in "just lemons #1"; pass --title or --batch with one`);
+const tags = (values.tags ?? "")
+  .split(",")
+  .map((t) => t.trim())
+  .filter(Boolean);
+let options: BuildOptions;
+if (split.dated) {
+  if (drinkType === undefined) fail(`--drink-type is required (${DRINK_TYPES.join(", ")})`);
+  const batch = values.batch ?? title.toLowerCase();
+  if (!batch.includes("#")) {
+    fail(`the batch tag "${batch}" needs a #, as in "just lemons #1"; pass --title or --batch with one`);
+  }
+  options = { kind: "batch", title, tags, drinkType, batch };
+} else {
+  if (drinkType !== undefined) fail("this imports as a note, and a note is not a drink; omit --drink-type");
+  options = { kind: "note", title, tags };
 }
 const posts = buildPosts(
   kept.entries,
   processed.map((p) => p.jpeg),
-  {
-    title,
-    drinkType,
-    tags: (values.tags ?? "")
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean),
-    batch,
-    dated: split.dated,
-  },
+  options,
 );
 
 const conflicts = posts.map((p) => p.path).filter((path) => existsSync(join(BLOG, path)));

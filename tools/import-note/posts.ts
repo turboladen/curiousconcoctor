@@ -9,13 +9,14 @@ export type PostFile = {
   content: string;
   images: { name: string; bytes: Uint8Array }[];
 };
-export type BuildOptions = {
-  title: string;
-  drinkType: string;
-  tags: string[];
-  batch: string | null;
-  dated: boolean;
-};
+// A batch is a drink, so it always has exactly one drink type. A note is not a drink, so it has
+// none, and its front matter lists none.
+export type BuildOptions =
+  & { title: string; tags: string[] }
+  & (
+    | { kind: "batch"; drinkType: string; batch: string }
+    | { kind: "note" }
+  );
 
 const SMALL_WORDS = new Set(["and", "of", "with", "the", "a", "in"]);
 
@@ -93,7 +94,7 @@ const quote = (s: string) => `"${s.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}
 function frontMatter(
   title: string,
   date: string,
-  drinkType: string,
+  drinkTypes: string[],
   tags: string[],
   postType: string,
 ) {
@@ -103,7 +104,7 @@ function frontMatter(
     `date = ${date}`,
     "",
     "[taxonomies]",
-    `drink_types = [${quote(drinkType)}]`,
+    `drink_types = [${drinkTypes.map(quote).join(", ")}]`,
     `tags = [${tags.map(quote).join(", ")}]`,
     `post_types = [${quote(postType)}]`,
     "+++",
@@ -122,6 +123,7 @@ function joinBody(parts: string[]): string {
 
 export function buildPosts(entries: Entry[], jpegs: Uint8Array[], opts: BuildOptions): PostFile[] {
   const stem = slugify(opts.title);
+  const drinkTypes = opts.kind === "batch" ? [opts.drinkType] : [];
   const perDay = new Map<string, number>();
   let updates = 0;
   return entries.map((entry, i) => {
@@ -130,11 +132,11 @@ export function buildPosts(entries: Entry[], jpegs: Uint8Array[], opts: BuildOpt
     perDay.set(day, nth + 1);
     const date = nth === 0 ? day : `${day}T${String(12 + nth).padStart(2, "0")}:00:00`;
 
-    const postType = !opts.dated ? "note" : i === 0 ? "start" : "update";
+    const postType = opts.kind === "note" ? "note" : i === 0 ? "start" : "update";
     if (postType === "update") updates += 1;
     const title = postType === "update" ? `${opts.title}: Update ${updates}` : opts.title;
     const slug = postType === "update" ? `${stem}-update-${updates}` : stem;
-    const tags = opts.dated && opts.batch ? [...opts.tags, opts.batch] : opts.tags;
+    const tags = opts.kind === "batch" ? [...opts.tags, opts.batch] : opts.tags;
 
     const images: PostFile["images"] = [];
     const parts = entry.lines.map((line) => {
@@ -146,7 +148,7 @@ export function buildPosts(entries: Entry[], jpegs: Uint8Array[], opts: BuildOpt
     const base = `${day}-${slug}`;
     return {
       path: images.length > 0 ? `${base}/index.md` : `${base}.md`,
-      content: `${frontMatter(title, date, opts.drinkType, tags, postType)}\n${joinBody(parts)}\n`,
+      content: `${frontMatter(title, date, drinkTypes, tags, postType)}\n${joinBody(parts)}\n`,
       images,
     };
   });

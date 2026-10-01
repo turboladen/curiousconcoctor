@@ -25,6 +25,16 @@ test("parseDateLine keeps the text that follows a date", () => {
   expect(parseDateLine("**5/21**: Racked")).toMatchObject({ rest: "Racked" });
 });
 
+test("a date with an explicit year can be followed by text with no separator", () => {
+  expect(parseDateLine("8/19/15 Juiced the peaches, added all pulp.")).toMatchObject({
+    month: 8,
+    day: 19,
+    year: 2015,
+    rest: "Juiced the peaches, added all pulp.",
+  });
+  expect(parseDateLine("9/6/2015 Bottling!")).toMatchObject({ year: 2015, rest: "Bottling!" });
+});
+
 test("parseDateLine leaves fractions and prose that start with numbers alone", () => {
   expect(parseDateLine("3/4t pectic enzyme")).toBeNull();
   expect(parseDateLine("1/2t pectic enzyme")).toBeNull();

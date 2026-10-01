@@ -6,12 +6,13 @@ const t = (md: string): Line => ({ kind: "text", md });
 const img = (index: number): Line => ({ kind: "image", index });
 const ymd = (year: number, month: number, day: number) => ({ year, month, day });
 const opts = {
+  kind: "batch" as const,
   title: "Just Lemons #1",
   drinkType: "mead",
   tags: ["lemon"],
   batch: "just lemons #1",
-  dated: true,
 };
+const noteOpts = { kind: "note" as const, title: "Boysenberry Hopped Mead", tags: ["lemon"] };
 
 test("slugify and titles", () => {
   expect(slugify("Just Lemons #1")).toBe("just-lemons-1");
@@ -95,11 +96,7 @@ test("a post with images is a directory and its images are numbered", () => {
 
 test("an undated note is one note post with no batch tag", () => {
   const entries = [{ date: ymd(2015, 9, 4), lines: [t("a")] }];
-  const [post] = buildPosts(entries, [], {
-    ...opts,
-    title: "Boysenberry Hopped Mead",
-    dated: false,
-  });
+  const [post] = buildPosts(entries, [], noteOpts);
   expect(post.path).toBe("2015-09-04-boysenberry-hopped-mead.md");
   expect(post.content).toContain(`tags = ["lemon"]`);
   expect(post.content).toContain(`post_types = ["note"]`);
@@ -107,13 +104,13 @@ test("an undated note is one note post with no batch tag", () => {
 
 test("quotes and backslashes in a title are escaped in TOML", () => {
   const entries = [{ date: ymd(2015, 9, 4), lines: [t("a")] }];
-  const [post] = buildPosts(entries, [], { ...opts, title: `The "Big" One\\`, dated: false });
+  const [post] = buildPosts(entries, [], { ...noteOpts, title: `The "Big" One\\` });
   expect(post.content).toContain(`title = "The \\"Big\\" One\\\\"`);
 });
 
 test("consecutive bullets stay in one list", () => {
   const entries = [{ date: ymd(2015, 9, 4), lines: [t("- honey"), t("- water"), t("then")] }];
-  const [post] = buildPosts(entries, [], { ...opts, dated: false });
+  const [post] = buildPosts(entries, [], noteOpts);
   expect(post.content).toContain("- honey\n- water\n\nthen\n");
 });
 
@@ -125,4 +122,16 @@ test("an image stays with its own entry when two entries share its capture day",
   const result = assignImages(entries, [ymd(2017, 2, 15)]);
   expect(result.entries[0].lines).toEqual([t("a")]);
   expect(result.entries[1].lines).toHaveLength(2);
+});
+
+test("a note has an empty drink_types list because a note is not a drink", () => {
+  const entries = [{ date: ymd(2014, 8, 16), lines: [t("a")] }];
+  const [post] = buildPosts(entries, [], noteOpts);
+  expect(post.content).toContain("drink_types = []\n");
+});
+
+test("a batch post lists its one drink type", () => {
+  const entries = [{ date: ymd(2017, 2, 15), lines: [t("a")] }];
+  const [post] = buildPosts(entries, [], opts);
+  expect(post.content).toContain(`drink_types = ["mead"]\n`);
 });

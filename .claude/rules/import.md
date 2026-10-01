@@ -10,6 +10,11 @@ paths:
   `just import-note "<note title>" --drink-type <type>` writes draft posts for one note. Add
   `--dry-run` to see what it would write, `--title` and `--batch` to override the generated title
   and batch tag, `--tags a,b` for ingredient tags, and `--force` to overwrite existing posts.
+- `--post-type note` imports a note that is not a brew log, such as a study note, as one standalone
+  `note` post dated by the note's creation date. The note's own date lines stay in the text. A brew
+  always has exactly one drink type, so `--drink-type` is required for it. A note is not a drink, so
+  `--drink-type` is an error for a note, whether it came from `--post-type note` or has no dated
+  lines, and the post gets `drink_types = []`.
 - The script writes drafts. After an import, read every warning, check each date against the note's
   plain text, write alt text for every image, and set the taxonomies. Posts follow
   `.claude/rules/content.md`.
@@ -19,8 +24,9 @@ paths:
 - Most log dates omit the year, so `dates.ts` infers it from the last explicit year or the note's
   creation date. A month that drops by one or two is treated as a typo and keeps the year. Every
   inferred date still needs a human check. A date line may carry text after a separator, as in
-  `5/21. Racked` or `8/13/17: bottling`, and that text starts the entry. A line such as `1/2 tsp` is
-  never read as a date.
+  `5/21. Racked` or `8/13/17: bottling`, and that text starts the entry. A date with an explicit
+  year may be followed by text with no separator, as in `8/19/15 Juiced the peaches`. A line such as
+  `1/2 tsp` is never read as a date.
 - Images go to the post whose date matches the photo's EXIF capture date, and otherwise stay with
   the entry they sat beside. The importer resizes each image to 1600px on the long side and removes
   every metadata segment, GPS included. `sips` keeps EXIF through a resize, so `stripJpegMetadata`
