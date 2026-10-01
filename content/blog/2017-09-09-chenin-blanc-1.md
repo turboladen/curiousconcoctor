@@ -1,6 +1,6 @@
 +++
 title = "Chenin Blanc #1"
-date = 2017-09-03
+date = 2017-09-09
 
 [taxonomies]
 drink_types = ["wine"]

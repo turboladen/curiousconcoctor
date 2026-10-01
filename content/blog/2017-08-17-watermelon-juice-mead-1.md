@@ -17,4 +17,4 @@ post_types = ["start"]
 - Juice from 1 small lemon
 - 1t yeast nutrient (urea and DAP)
 
-Dissolved honey in hot water. Gravity of juice alone: 1.40
+Dissolved honey in hot water. Gravity of juice alone: 1.040
