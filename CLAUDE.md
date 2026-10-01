@@ -5,7 +5,7 @@ repository.
 
 ## What this is
 
-This repository holds the source for The Curious Concoctor, a homebrewing blog (mead, cider,
+This repository holds the source for The Curious Concoctor, a homebrewing blog (mead, cider, wine,
 liqueur) built with the [Zola](https://www.getzola.org) static site generator and published at
 https://turboladen.github.io/curiousconcoctor/. Most of the content consists of 2014-era brew logs
 ported into Markdown. There is no application code. `tools/check-site.ts` checks the built site.
