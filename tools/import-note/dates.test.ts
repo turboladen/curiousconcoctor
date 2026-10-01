@@ -44,6 +44,13 @@ test("parseDateLine reads dates written with a month name", () => {
   expect(parseDateLine("May 4, 2016")?.raw).toBe("May 4, 2016");
 });
 
+test("a month-name date accepts a two-digit year only when nothing but punctuation follows", () => {
+  expect(parseDateLine("May 4, 16")).toMatchObject({ month: 5, day: 4, year: 2016, rest: "" });
+  expect(parseDateLine("May 4, 16: racked")).toMatchObject({ year: 2016, rest: "racked" });
+  expect(parseDateLine("**May 4, 16**")).toMatchObject({ year: 2016, rest: "" });
+  expect(parseDateLine("May 4, 16 oz bottles")?.year).toBeNull();
+});
+
 test("parseDateLine leaves prose that starts with a month word alone", () => {
   expect(parseDateLine("Marinated 3 days")).toBeNull();
   expect(parseDateLine("May add 2 cups")).toBeNull();

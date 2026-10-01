@@ -17,7 +17,10 @@ const MONTH_NAMES =
   "january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|jun|jul|aug|sept|sep|oct|nov|dec";
 // The first three letters identify a month, whether it is spelled out or abbreviated.
 const MONTH_PREFIXES = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-const NAMED_HEAD = new RegExp(`^\\**(${MONTH_NAMES})\\b\\.?\\s+(\\d{1,2})(?:,\\s*(\\d{4}))?\\**`, "i");
+const NAMED_HEAD = new RegExp(
+  `^\\**(${MONTH_NAMES})\\b\\.?\\s+(\\d{1,2})(?:,\\s*(\\d{4}|\\d{2}(?=\\**\\s*(?:$|[:.,;)\\-–—]))))?\\**`,
+  "i",
+);
 // A date may be followed by text only after a separator, so "1/2 tsp" and "3/4t" stay text.
 const SEPARATOR = /^(?:\s*[:.,;]\s+|\s*[-–—]\s+|\s+(?=\())(.+)$/;
 
