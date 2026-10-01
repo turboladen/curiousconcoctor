@@ -13,13 +13,31 @@ const ENTITIES: Record<string, string> = {
   nbsp: " ",
 };
 
+// Notes sometimes writes an ampersand entity without its semicolon, as in "&amp stirred", and
+// browsers accept that for a few legacy entities.
 function decodeEntities(s: string): string {
-  return s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (match, entity: string) => {
-    if (entity[0] === "#") {
-      const hex = entity[1].toLowerCase() === "x";
-      return String.fromCodePoint(parseInt(entity.slice(hex ? 2 : 1), hex ? 16 : 10));
-    }
-    return ENTITIES[entity.toLowerCase()] ?? match;
+  return s.replace(
+    /&(?:(#x[0-9a-f]+|#\d+|[a-z]+);|(amp|lt|gt|quot|nbsp)(?![a-z0-9]))/gi,
+    (match, withSemicolon: string | undefined, legacy: string | undefined) => {
+      const entity = withSemicolon ?? legacy!;
+      if (entity[0] === "#") {
+        const hex = entity[1].toLowerCase() === "x";
+        return String.fromCodePoint(parseInt(entity.slice(hex ? 2 : 1), hex ? 16 : 10));
+      }
+      return ENTITIES[entity.toLowerCase()] ?? match;
+    },
+  );
+}
+
+// Markdown does not close emphasis that has whitespace just inside its markers, so the whitespace
+// moves outside. Emphasis around nothing but whitespace leaves only the whitespace.
+function tidyEmphasis(s: string): string {
+  return s.replace(/(\*{1,2})([^*]+)\1/g, (_match, mark: string, inner: string) => {
+    const core = inner.trim();
+    if (core === "") return inner;
+    const lead = inner.slice(0, inner.length - inner.trimStart().length);
+    const trail = inner.slice(inner.trimEnd().length);
+    return `${lead}${mark}${core}${mark}${trail}`;
   });
 }
 
@@ -51,7 +69,7 @@ export function convertHtml(html: string, title: string): Converted {
 
   const lines: Line[] = [];
   for (const raw of decodeEntities(flattened).split("\n")) {
-    const md = raw.replace(/\*\*\s*\*\*/g, "").replace(/\s+/g, " ").trim();
+    const md = tidyEmphasis(raw).replace(/\s+/g, " ").trim();
     // Dividers between entries are visual only, and Markdown would render them as rules.
     if (md === "" || /^\*+$/.test(md) || /^[-–—_=\s]{2,}$/.test(md)) continue;
     const image = /^\u0000IMG(\d+)\u0000$/.exec(md);

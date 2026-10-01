@@ -48,3 +48,21 @@ test("a bullet or a line that merely starts with dashes is kept", () => {
   const { lines } = convertHtml(html, "x");
   expect(lines).toEqual([text("- honey"), text("--note"), text("-")]);
 });
+
+test("whitespace inside emphasis markers moves outside them", () => {
+  const html = `<div>It’s <b>really </b>clarified</div><div>a<i> b</i> c</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("It’s **really** clarified"), text("a *b* c")]);
+});
+
+test("a bold run that holds only a space keeps the space", () => {
+  const html = `<div>still active<b> </b>(yay)</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("still active (yay)")]);
+});
+
+test("an ampersand entity with no semicolon still decodes", () => {
+  const html = `<div>hot water &amp stirred</div><div>R&ampD stays</div>`;
+  const { lines } = convertHtml(html, "x");
+  expect(lines).toEqual([text("hot water & stirred"), text("R&ampD stays")]);
+});
