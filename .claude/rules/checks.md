@@ -19,9 +19,13 @@ paths:
   never failed may not test anything. For a check that should never fire, break a copy of the build
   on purpose and confirm that the check catches it.
 - `site.documents()` yields the URLs of every page and of the web manifest's icons. Each page
-  contributes its `href`, `src`, `og:image`, `og:url`, and inline `<style>` `url()` values. Add a
-  new source there, such as `srcset`, when the site starts using one.
+  contributes its `href`, `src`, `poster`, `og:image`, `og:url`, and inline `<style>` `url()`
+  values. Add a new source there, such as `srcset`, when the site starts using one.
 - `KNOWN_MISSING` lists linked paths that do not exist yet. An entry that starts resolving fails the
   run, so delete it when its page lands.
 - Node's `posix.dirname` drops a trailing slash, so resolve relative URLs against `dirOf`, which
   keeps a page's own directory.
+- Two checks guard the videos. `videosHaveControlsAndCaptions` needs every `<video>` to have
+  controls and a non-empty caption in `figure.video`. `videoFilesAreSmallAndPrivate` fails any MP4,
+  MOV, M4V, or WebM over 10 MB, or one that records a location, which `tools/video.ts` detects in
+  the QuickTime location tag and the `©xyz` atom.

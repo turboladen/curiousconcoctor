@@ -18,3 +18,6 @@ The site targets Zola 0.23, which uses Tera 2, and most Tera 1 examples found on
   `set_global`, because a plain `set` inside a loop is scoped to that iteration.
 - An attribute cannot be read straight off a function call, as in `get_taxonomy(kind="tags").items`.
   Assign the result with `set` first.
+- A component called from Markdown cannot see the current page. Pass it as a bare attribute, as in
+  `{{ <video page src="x.mp4" poster="x.jpg" /> }}`, and read `page.permalink` inside. The block
+  form is `{% <video page ...> %}body{% </video> %}`, and the component reads the body as `body`.

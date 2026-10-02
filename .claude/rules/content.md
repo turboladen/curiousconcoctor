@@ -15,6 +15,13 @@ Posts live in `content/blog/`, sorted by date and rendered with `templates/blog-
 - Posts embed images with Markdown syntax, `![alt text](IMG_0050.jpeg)`, using paths relative to the
   post directory. Every image needs alt text that describes what the photo shows. The stylesheet
   sets the width, so no `width` attribute is needed.
+- Videos use the `video` component, called from a directory post's Markdown as
+  `{% <video page src="crush.mp4" poster="crush.jpg"> %}Caption text.{% </video> %}`. The caption is
+  the text alternative, so describe what the clip shows and what it sounds like. The MP4 and its
+  poster sit beside `index.md`. Never commit a phone original: they hold a GPS location and run to
+  hundreds of megabytes. `just transcode-video IN.MOV content/blog/<post>/crush.mp4` shrinks a clip
+  to 720p H.264, strips every tag, and writes `crush.jpg` as the poster. `dprint` joins the call
+  onto one line, which still works.
 - The template renders the title as the page's only `h1`, so Markdown headings in a post or page
   start at `##`.
 - Links between posts use Zola's `@/` form, e.g.

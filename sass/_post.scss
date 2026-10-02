@@ -29,6 +29,31 @@
   box-shadow: 0 2px 10px var(--shadow);
 }
 
+// A video is a print too: the same card-colored frame and strip of tape as a photo, with the caption
+// under the picture. The clips are mostly portrait, which would fill a screen at the column's width,
+// so the player's height is capped and the picture sits centered inside it.
+.post-body figure.video {
+  margin: 1.75rem 0;
+  padding: 0.9rem 0.6rem 0.6rem;
+  background:
+    linear-gradient(var(--tape), var(--tape)) center top / 5.5rem 0.9rem
+    no-repeat,
+    var(--card);
+  box-shadow: 0 2px 10px var(--shadow);
+}
+
+.post-body figure.video video {
+  display: block;
+  width: 100%;
+  max-height: 36rem;
+}
+
+.post-body figure.video figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
 // The count line under a term page's heading.
 .term-count {
   margin: -0.5rem 0 1.5rem;

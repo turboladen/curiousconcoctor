@@ -69,3 +69,13 @@
 {% endif %}
 {% endif %}
 {% endcomponent %}
+
+{% component video(page, src, poster) %}
+<figure class="video">
+  <video controls preload="metadata" playsinline poster="{{ page.permalink ~ poster }}">
+    <source src="{{ page.permalink ~ src }}" type="video/mp4">
+    <a href="{{ page.permalink ~ src }}">Download the video</a>
+  </video>
+  <figcaption>{{ body | trim }}</figcaption>
+</figure>
+{% endcomponent %}

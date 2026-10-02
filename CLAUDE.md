@@ -18,6 +18,8 @@ ported into Markdown. There is no application code. `tools/check-site.ts` checks
 - `just list-notes` lists the notes in Apple Notes `Hobbies/Homebrew`.
 - `just import-note` writes draft posts for one of those notes. `.claude/rules/import.md` has its
   arguments.
+- `just transcode-video` shrinks a phone video to a web-sized MP4 with a poster and strips its
+  metadata. `.claude/rules/content.md` shows how a post embeds it.
 - `just check` runs what CI runs on pull requests: `zola build`, `zola check`, `dprint check`, and
   `tools/check-site.ts`, a Bun script that checks the built HTML in `public/`, `bun test tools`,
   which runs the importer's unit tests, and `zizmor`, which audits the GitHub workflows. It needs
