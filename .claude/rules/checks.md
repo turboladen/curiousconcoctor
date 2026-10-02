@@ -25,3 +25,7 @@ paths:
   run, so delete it when its page lands.
 - Node's `posix.dirname` drops a trailing slash, so resolve relative URLs against `dirOf`, which
   keeps a page's own directory.
+- Two checks guard the videos. `videosHaveControlsAndCaptions` needs every `<video>` to have
+  controls and a non-empty caption in `figure.video`. `videoFilesAreSmallAndPrivate` fails any MP4,
+  MOV, M4V, or WebM over 10 MB, or one that records a location, which `tools/video.ts` detects in
+  the QuickTime location tag and the `©xyz` atom.
