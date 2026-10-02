@@ -37,6 +37,10 @@ paths:
   the entry they sat beside. The importer resizes each image to 1600px on the long side and removes
   every metadata segment, GPS included. `sips` keeps EXIF through a resize, so `stripJpegMetadata`
   removes it afterward.
+- The importer warns about each Notes attachment that is not a photo, naming the file and its date,
+  because AppleScript cannot save attachments and only photos embedded in the body survive. It also
+  refuses a batch whose slug stem or batch tag already belongs to an existing post, and suggests the
+  next free number. `--force` skips that check along with the exact-path check.
 - `osascript` and `sips` are used only in `notes.ts` and `images.ts`. Every other module is pure,
   and `bun test tools` must pass on Linux because CI runs it there.
 - `tools/check-site.ts` fails the build if a published JPEG records a GPS location.
