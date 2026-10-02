@@ -29,3 +29,6 @@ Picked at night, 8/17/19.
 ![A single cluster of green grapes on a white marble counter beside a sink drainer](photo-2.jpg)
 
 ![A stainless-steel grape crusher piled with green grapes, set over a bucket lined with white cloth](photo-3.jpg)
+
+{% <video page src="pressing.mp4" poster="pressing.jpg"> %} Juice running from the stainless-steel
+press into a pot. {% </video> %}

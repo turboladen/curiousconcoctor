@@ -15,3 +15,6 @@ post_types = ["update"]
   0.6ml left, meaning 0.6% tartaric. ...which is about what I want.
 - Pitched Lalvin K1-V1116. Stirred for a minute or two
 - Placed back in front of AC vent.
+
+{% <video page src="titration.mp4" poster="titration.jpg"> %} The acid test: a syringe held over a
+test tube of wine, with the pink end point showing. {% </video> %}
