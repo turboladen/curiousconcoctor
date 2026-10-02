@@ -26,3 +26,8 @@ list-notes:
 # Imports one note as draft posts, e.g. just import-note "Just lemons" --drink-type mead
 import-note *args:
     bun tools/import-note.ts "$@"
+
+# Shrinks a phone video to a web-sized MP4, strips its metadata, and writes a poster beside it.
+# Example: just transcode-video ~/Desktop/clip.MOV content/blog/some-post/crush.mp4
+transcode-video *args:
+    bun tools/transcode-video.ts "$@"

@@ -9,6 +9,7 @@ import { existsSync, readFileSync, statSync } from "node:fs";
 import { join, normalize, posix } from "node:path";
 import config from "../config.toml";
 import { hasJpegGps } from "./import-note/images";
+import { hasVideoLocation, MAX_VIDEO_BYTES } from "./video";
 
 type Failure = [path: string, message: string];
 type Check = (site: Site) => Iterable<Failure>;
@@ -38,7 +39,15 @@ function decode(value: string): string {
 
 // The selectors whose text content a Page records, one entry per matching element. Text goes to
 // the most recently opened match, so a selector here must not match elements nested in each other.
-const TEXT_SELECTORS = ["title", "style", ".post-filed", ".site-mark", ".site-tagline", ".post-date"];
+const TEXT_SELECTORS = [
+  "title",
+  "style",
+  ".post-filed",
+  ".site-mark",
+  ".site-tagline",
+  ".post-date",
+  "figure.video figcaption",
+];
 
 class Page {
   elements: Element[] = [];
@@ -287,6 +296,38 @@ check(function* jpegsHaveNoLocation(site) {
       }
     } catch (error) {
       yield [rel, `could not be read as a JPEG: ${(error as Error).message}`];
+    }
+  }
+});
+
+check(function* videosHaveControlsAndCaptions(site) {
+  // The video component wraps each player in figure.video with a caption, which is the text
+  // alternative for people who cannot watch it.
+  for (const [rel, page] of site.pages) {
+    const videos = page.find("video");
+    if (videos.length === 0) continue;
+    const captions = page.texts.get("figure.video figcaption")!.filter(text => text.trim() !== "");
+    if (captions.length !== videos.length) {
+      yield [rel, `has ${videos.length} <video> but ${captions.length} captions in figure.video`];
+    }
+    for (const video of videos) {
+      if (!("controls" in video)) yield [rel, "has a <video> with no controls"];
+    }
+  }
+});
+
+check(function* videoFilesAreSmallAndPrivate(site) {
+  // Phone videos carry a GPS location in their QuickTime tags and run to hundreds of megabytes.
+  // just transcode-video shrinks a clip and strips its tags.
+  const videos = new Bun.Glob("**/*.{mp4,mov,m4v,webm}").scanSync({ cwd: site.build });
+  for (const rel of [...videos].sort()) {
+    const bytes = readFileSync(join(site.build, rel));
+    if (bytes.length > MAX_VIDEO_BYTES) {
+      const mb = (bytes.length / 1024 / 1024).toFixed(1);
+      yield [rel, `is ${mb} MB, over the ${MAX_VIDEO_BYTES / 1024 / 1024} MB limit; run just transcode-video`];
+    }
+    if (hasVideoLocation(bytes)) {
+      yield [rel, "records a location in its metadata; run just transcode-video to strip it"];
     }
   }
 });
