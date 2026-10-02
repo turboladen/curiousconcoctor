@@ -6,8 +6,8 @@
 // size limit or still records a location, and it never changes the input.
 
 import { $ } from "bun";
-import { readFileSync, statSync } from "node:fs";
-import { hasVideoLocation, MAX_VIDEO_BYTES, posterArgs, transcodeArgs } from "./video";
+import { existsSync, readFileSync, statSync } from "node:fs";
+import { hasVideoLocation, MAX_VIDEO_BYTES, posterArgs, posterSeconds, transcodeArgs } from "./video";
 
 const [input, output] = Bun.argv.slice(2);
 if (!input || !output?.endsWith(".mp4")) {
@@ -25,7 +25,14 @@ const run = async (args: string[]) => {
 };
 
 await run(transcodeArgs(input, output));
-await run(posterArgs(output, poster, 1));
+const duration = Number(
+  (await $`ffprobe -v error -show_entries format=duration -of csv=p=0 ${output}`.nothrow().text()).trim(),
+);
+await run(posterArgs(output, poster, posterSeconds(duration)));
+if (!existsSync(poster)) {
+  console.error(`error: ffmpeg wrote no poster frame for ${output}`);
+  process.exit(1);
+}
 
 const megabytes = (bytes: number) => (bytes / 1024 / 1024).toFixed(1);
 const size = statSync(output).size;

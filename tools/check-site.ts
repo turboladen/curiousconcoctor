@@ -98,6 +98,7 @@ class Page {
     for (const { tag, attrs } of this.elements) {
       if (attrs.href) yield attrs.href;
       if (attrs.src) yield attrs.src;
+      if (attrs.poster) yield attrs.poster;
       if (tag === "meta" && ["og:image", "og:url"].includes(attrs.property)) {
         yield attrs.content ?? "";
       }
@@ -319,8 +320,11 @@ check(function* videosHaveControlsAndCaptions(site) {
 check(function* videoFilesAreSmallAndPrivate(site) {
   // Phone videos carry a GPS location in their QuickTime tags and run to hundreds of megabytes.
   // just transcode-video shrinks a clip and strips its tags.
-  const videos = new Bun.Glob("**/*.{mp4,mov,m4v,webm}").scanSync({ cwd: site.build });
-  for (const rel of [...videos].sort()) {
+  // Phone originals are named IMG_1234.MOV, so the extension match ignores case.
+  const videos = [...new Bun.Glob("**/*").scanSync({ cwd: site.build })].filter(rel =>
+    /\.(mp4|mov|m4v|webm)$/i.test(rel)
+  );
+  for (const rel of videos.sort()) {
     const bytes = readFileSync(join(site.build, rel));
     if (bytes.length > MAX_VIDEO_BYTES) {
       const mb = (bytes.length / 1024 / 1024).toFixed(1);

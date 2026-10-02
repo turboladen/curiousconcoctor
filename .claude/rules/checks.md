@@ -19,8 +19,8 @@ paths:
   never failed may not test anything. For a check that should never fire, break a copy of the build
   on purpose and confirm that the check catches it.
 - `site.documents()` yields the URLs of every page and of the web manifest's icons. Each page
-  contributes its `href`, `src`, `og:image`, `og:url`, and inline `<style>` `url()` values. Add a
-  new source there, such as `srcset`, when the site starts using one.
+  contributes its `href`, `src`, `poster`, `og:image`, `og:url`, and inline `<style>` `url()`
+  values. Add a new source there, such as `srcset`, when the site starts using one.
 - `KNOWN_MISSING` lists linked paths that do not exist yet. An entry that starts resolving fails the
   run, so delete it when its page lands.
 - Node's `posix.dirname` drops a trailing slash, so resolve relative URLs against `dirOf`, which
