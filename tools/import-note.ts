@@ -14,14 +14,23 @@
 // pass before the posts are committed.
 
 import { existsSync } from "node:fs";
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { parseArgs } from "node:util";
+import { type ExistingPost, findCollisions, parseTags } from "./import-note/collisions";
 import { formatYmd } from "./import-note/dates";
 import { convertHtml } from "./import-note/html";
 import { processImage } from "./import-note/images";
-import { getNote, listNotes } from "./import-note/notes";
-import { assignImages, batchTitle, type BuildOptions, buildPosts, dropEmpty, noteTitle } from "./import-note/posts";
+import { getNote, listNotes, unimportedAttachments } from "./import-note/notes";
+import {
+  assignImages,
+  batchTitle,
+  type BuildOptions,
+  buildPosts,
+  dropEmpty,
+  noteTitle,
+  slugify,
+} from "./import-note/posts";
 import { singleEntry, splitEntries } from "./import-note/split";
 
 const DRINK_TYPES = ["mead", "cider", "wine", "liqueur"];
@@ -65,7 +74,7 @@ if (drinkType !== undefined && !DRINK_TYPES.includes(drinkType)) {
   fail(`--drink-type must be one of: ${DRINK_TYPES.join(", ")}`);
 }
 
-const { created, html } = await getNote(name);
+const { created, html, attachments } = await getNote(name);
 const converted = convertHtml(html, name);
 const split = standalone
   ? { entries: singleEntry(converted.lines, created), dated: false, warnings: [] as string[] }
@@ -103,6 +112,39 @@ const posts = buildPosts(
   options,
 );
 
+// Existing posts that an import would overwrite are governed by the path check below, so they are
+// left out here.
+async function readExistingPosts(skip: Set<string>): Promise<ExistingPost[]> {
+  const found: ExistingPost[] = [];
+  for (const entry of await readdir(BLOG, { withFileTypes: true })) {
+    if (entry.name === "_index.md") continue;
+    const file = entry.isDirectory() ? `${entry.name}/index.md` : entry.name;
+    if (!file.endsWith(".md") || skip.has(file) || !existsSync(join(BLOG, file))) continue;
+    const text = await readFile(join(BLOG, file), "utf8");
+    found.push({ name: entry.name.replace(/\.md$/, ""), tags: parseTags(text) });
+  }
+  return found;
+}
+
+if (!values.force) {
+  const batch = options.kind === "batch" ? options.batch : null;
+  const clash = findCollisions(
+    await readExistingPosts(new Set(posts.map((p) => p.path))),
+    slugify(title),
+    batch,
+  );
+  if (clash.posts.length > 0) {
+    const shown = clash.posts.slice(0, 3).join(", ");
+    const more = clash.posts.length > 3 ? `, and ${clash.posts.length - 3} more` : "";
+    const hint = clash.nextNumber === null || batch === null || !/#\d+/.test(title)
+      ? "pass --title with a different name"
+      : `try --title "${title.replace(/#\d+/, `#${clash.nextNumber}`)}" --batch "${
+        batch!.replace(/#\d+/, `#${clash.nextNumber}`)
+      }"`;
+    fail(`"${title}" collides with existing posts (${shown}${more}); ${hint}, or use --force`);
+  }
+}
+
 const conflicts = posts.map((p) => p.path).filter((path) => existsSync(join(BLOG, path)));
 if (conflicts.length > 0 && !values.force) {
   fail(`already exists (use --force to overwrite): ${conflicts.join(", ")}`);
@@ -123,6 +165,9 @@ console.log(`${values["dry-run"] ? "Would write" : "Wrote"} ${posts.length} post
 for (const post of posts) console.log(`  ${post.path} (${post.images.length} image(s))`);
 const warnings = [
   ...converted.warnings,
+  ...(attachments === null
+    ? ["could not read the note's attachment list, so non-photo attachments are not reported"]
+    : unimportedAttachments(attachments, converted.images.length)),
   ...split.warnings,
   ...processed.flatMap((p) => p.warnings),
   ...assigned.warnings,
