@@ -42,7 +42,7 @@ menu_links = [
   { url = "$BASE_URL/drink-types", name = "Drink Types" },
   { url = "$BASE_URL/post-types", name = "Post Types" },
   { url = "$BASE_URL/tags", name = "Tags" },
-  { url = "$BASE_URL/about", name = "About" },
+  { url = "$BASE_URL/pages/about", name = "About" },
   { url = "$BASE_URL/rss.xml", name = "RSS" },
 ]
 ogimage = "og-image.png"

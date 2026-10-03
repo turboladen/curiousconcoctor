@@ -60,12 +60,6 @@ Before creating a file under one of those paths, read the matching rules file fi
 Durable design decisions are ADRs in `docs/decisions/`, numbered `NNNN-topic.md`. Superpowers specs
 and plans stay in the gitignored `docs/superpowers/` and are never committed.
 
-## Known gaps
-
-These are visible in the current tree and may be intentional work in progress:
-
-- The nav links to `/about`, but there is no about page in `content/`.
-
 <!-- dprint-ignore-start -->
 <!-- BEGIN BEADS INTEGRATION v:1 profile:minimal hash:1105d646 -->
 ## Beads Issue Tracker
