@@ -5,6 +5,22 @@
 </li>
 {% endcomponent %}
 
+{% component timeline_entry(post) %}
+{# A post in a batch shows the batch's tag as a link to its brew log, and a note shows the Notes term. #}
+{% set_global label_kind = "" %}
+{% set_global label_name = "" %}
+{% for tag in post.taxonomies.tags %}{% if "#" in tag %}{% set_global label_kind = "tags" %}{% set_global label_name = tag %}{% endif %}{% endfor %}
+{% if not label_name and "note" in post.taxonomies.post_types %}{% set_global label_kind = "post_types" %}{% set_global label_name = "note" %}{% endif %}
+<li class="timeline-entry">
+  <time datetime="{{ post.date | date(format="%Y-%m-%d") }}">{{ post.date | date(format="%b %e") }}</time>
+  <a href="{{ post.permalink | safe }}">{{ post.title }}</a>
+  {% if label_name %}
+  {% set label_term = get_taxonomy_term(kind=label_kind, term=label_name) %}
+  <a class="timeline-batch" href="{{ label_term.permalink | safe }}">{% if label_kind == "tags" %}{{ label_name | title }}{% else %}Note{% endif %}</a>
+  {% endif %}
+</li>
+{% endcomponent %}
+
 {% component batch_summary(term) %}
 {% set newest = term.pages | first %}
 {% set oldest = term.pages | last %}

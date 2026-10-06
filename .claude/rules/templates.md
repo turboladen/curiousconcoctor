@@ -35,5 +35,9 @@ paths:
   overrides the `title` block, which wraps the computed `<title>`, and empties the `seo` block.
   GitHub Pages serves it at whatever missing path was requested, so its links must be absolute, as
   `get_url` and `config.base_url` make them.
-- `templates/blog.html` lists every post at `/blog/` with `post_in_list`.
+- `templates/blog.html` renders the Timeline at `/blog/`: every post, newest first, under year and
+  month headings, each row built by the `timeline_entry` component with a link to its batch's brew
+  log or, for a note, to the Notes term. It walks `section.pages` once and starts a heading when the
+  month changes, because `group_by` returns its groups in no particular order. The nav and the home
+  page both link to it.
 - `templates/_old-base.html` is not referenced by any other template.
