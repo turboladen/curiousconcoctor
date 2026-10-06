@@ -1,6 +1,23 @@
 {% extends "base.html" %} {% block content %}
 <h1 class="title">{{ section.title }}</h1>
-<ul>
-  {% for post in section.pages %}{{<post_in_list post={post} />}}{% endfor %}
-</ul>
+<p class="timeline-intro">Every post across every batch, newest first.</p>
+{# group_by returns its groups in no particular order, so this walks section.pages in their newest-first date order and starts a new heading whenever the year or month changes. #}
+{% set_global current_year = "" %}
+{% set_global current_month = "" %}
+{% for post in section.pages %}
+  {% set year = post.date | date(format="%Y") %}
+  {% set month = post.date | date(format="%Y-%m") %}
+  {% if month != current_month %}
+    {% if current_month %}</ul>{% endif %}
+    {% if year != current_year %}
+      <h2 class="year-title"><time>{{ year }}</time></h2>
+      {% set_global current_year = year %}
+    {% endif %}
+    <h3 class="section-label">{{ post.date | date(format="%B") }}</h3>
+    <ul class="timeline">
+    {% set_global current_month = month %}
+  {% endif %}
+  {{<timeline_entry post={post} />}}
+{% endfor %}
+{% if current_month %}</ul>{% endif %}
 {% endblock content %}

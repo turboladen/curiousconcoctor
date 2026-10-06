@@ -1,6 +1,8 @@
 {% extends "base.html" %} {% block content %}
 <h1 class="title">Brew log</h1>
 
+<p><a href="{{ get_url(path='@/blog/_index.md') }}">See every post in date order</a></p>
+
 <h2 class="section-label">Batches</h2>
 {% set blog = get_section(path="blog/_index.md") %}
 {# A batch renders where the loop reaches its oldest post, which orders batches by start date. The first pass counts them with the same test, so the badges number down to BATCH 01. #}
